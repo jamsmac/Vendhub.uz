@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.gitignore
+*.md
+docs
+memory
+supabase
+.env*.local
+.claude
+Dockerfile
+.dockerignore

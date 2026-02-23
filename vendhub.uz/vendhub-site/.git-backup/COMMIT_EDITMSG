@@ -1,0 +1,10 @@
+feat: add machine model detail page and update partners
+
+- Add /machines/jq-002-a detail page with specs, features, and CTA
+- Add machine hero image (jq-002-a-hero.png)
+- Add i18n translations for machine model page (ru + uz)
+- Add "View details" link in MachinesSection types accordion
+- Display coffee model name (JQ-002-A) in machine type header
+- Remove IT Park from partners list (now 4 partners)
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>

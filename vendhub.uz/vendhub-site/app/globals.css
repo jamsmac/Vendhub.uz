@@ -1,0 +1,57 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+@layer components {
+  .coffee-card {
+    @apply bg-white rounded-2xl shadow-md border border-espresso/5 overflow-hidden transition-all duration-300;
+  }
+
+  .btn-espresso {
+    @apply bg-gradient-to-r from-espresso to-espresso-light text-white font-medium rounded-xl px-6 py-3 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .btn-caramel {
+    @apply bg-gradient-to-r from-caramel to-caramel-dark text-white font-medium rounded-xl px-6 py-3 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .pill {
+    @apply rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer select-none;
+  }
+
+  .pill-active {
+    @apply bg-espresso-dark text-cream shadow-md;
+  }
+
+  .pill-inactive {
+    @apply bg-foam text-espresso/50 hover:bg-espresso/10;
+  }
+
+  .price-tag {
+    @apply font-bold tabular-nums text-espresso;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .section-padding {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  /* Admin panel form inputs */
+  .admin-input {
+    @apply w-full px-4 py-2.5 bg-foam border border-espresso/10 rounded-xl text-espresso placeholder-espresso/30 focus:outline-none focus:ring-2 focus:ring-espresso/20 focus:border-espresso/30 transition-all text-sm;
+  }
+
+  .admin-checkbox {
+    @apply w-4 h-4 rounded border-espresso/20 text-espresso focus:ring-espresso/20 accent-espresso;
+  }
+}
+
+/* Animation delay utilities */
+.d1 { animation-delay: 0.1s; }
+.d2 { animation-delay: 0.2s; }
+.d3 { animation-delay: 0.3s; }
+.d4 { animation-delay: 0.4s; }
+.d5 { animation-delay: 0.5s; }
+.d6 { animation-delay: 0.6s; }
