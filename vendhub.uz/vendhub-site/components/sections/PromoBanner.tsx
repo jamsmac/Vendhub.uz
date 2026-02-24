@@ -7,7 +7,7 @@ export default async function PromoBanner() {
   const t = await getTranslations('promoBanner')
 
   return (
-    <div className="mt-12 px-4">
+    <section aria-label="Promotion" className="mt-12 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="rounded-2xl overflow-hidden bg-gradient-to-r from-caramel to-caramel-dark p-8 sm:p-12 text-white">
           {/* Badge */}
@@ -31,6 +31,6 @@ export default async function PromoBanner() {
           </a>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
