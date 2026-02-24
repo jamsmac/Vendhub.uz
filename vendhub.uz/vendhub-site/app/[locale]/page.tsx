@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-cream">
+      <main id="main" className="min-h-screen bg-cream">
         <HeroSection />
         <StatsSection />
         <QuickActions />

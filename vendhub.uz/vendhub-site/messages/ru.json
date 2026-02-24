@@ -24,6 +24,16 @@
     "errorFallback": "Что-то пошло не так. Попробуйте обновить страницу."
   },
 
+  "seo": {
+    "title": "VendHub — Кофе из автоматов в пару кликов",
+    "description": "25+ видов напитков. 16 автоматов в больницах, университетах и общественных местах Ташкента. Программа лояльности и скидки.",
+    "ogDescription": "25+ видов напитков. 16 автоматов в Ташкенте.",
+    "ogImageAlt": "VendHub — Кофе из автоматов в Ташкенте",
+    "jsonLdDescription": "Сеть вендинговых автоматов в Ташкенте — кофе, чай, снеки",
+    "jsonLdArea": "Ташкент",
+    "skipToContent": "Перейти к содержимому"
+  },
+
   "nav": {
     "home": "Главная",
     "machines": "Автоматы",
@@ -788,17 +798,22 @@
     "promotions": {
       "title": "Акции",
       "add": "Добавить акцию",
+      "duplicate": "Дублировать",
+      "duplicated": "Акция продублирована",
       "table": {
         "title": "Название",
         "badge": "Бейдж",
         "promoCode": "Промокод",
         "active": "Активна",
         "validUntil": "Действует до",
+        "visibility": "Тип",
         "actions": "Действия"
       },
       "activeYes": "Да",
       "activeNo": "Нет",
       "noExpiry": "Бессрочно",
+      "visibilityVisible": "Код",
+      "visibilityAction": "Действие",
       "count": "{count} акций",
       "empty": "Акции не найдены",
       "deleteTitle": "Удалить акцию?",
@@ -815,7 +830,19 @@
         "description": "Описание",
         "gradient": "Градиент (CSS)",
         "sortOrder": "Порядок сортировки",
-        "conditions": "Условия"
+        "conditions": "Условия",
+        "visibilityType": "Тип видимости",
+        "visibilityVisible": "Код виден сразу",
+        "visibilityAction": "Требуется действие",
+        "actionInstruction": "Инструкция для пользователя",
+        "actionInstructionPlaceholder": "Например: Зарегистрируйтесь в Telegram-боте",
+        "discountType": "Тип скидки",
+        "discountTypeNone": "Не указана",
+        "discountTypePercent": "Процент",
+        "discountTypeFixed": "Фиксированная",
+        "discountTypeSpecial": "Специальная",
+        "discountValue": "Значение скидки",
+        "discountValuePlaceholder": "20 или 5 000 UZS"
       }
     },
     "cooperation": {
@@ -889,6 +916,7 @@
     },
     "loyalty": {
       "title": "Уровни лояльности",
+      "addTier": "Добавить уровень",
       "table": {
         "level": "Уровень",
         "emoji": "Эмодзи",
@@ -900,7 +928,76 @@
       "empty": "Уровни не найдены",
       "loadError": "Ошибка загрузки уровней",
       "updated": "Уровень обновлён",
-      "saveError": "Ошибка сохранения"
+      "created": "Уровень добавлен",
+      "deleted": "Уровень удалён",
+      "saveError": "Ошибка сохранения",
+      "deleteError": "Ошибка удаления",
+      "deleteTierTitle": "Удалить уровень?",
+      "deleteTierMessage": "Уровень «{name}» будет удалён безвозвратно.",
+      "editTierTitle": "Редактировать уровень",
+      "newTierTitle": "Новый уровень",
+      "privilegeMatrix": "Привилегии по уровням",
+      "managePrivileges": "Управление привилегиями",
+      "privilegeKey": "Ключ (slug)",
+      "privilegeLabel": "Отображаемое имя",
+      "addPrivilege": "Добавить привилегию",
+      "privilegeCreated": "Привилегия добавлена",
+      "privilegeUpdated": "Привилегия обновлена",
+      "privilegeDeleted": "Привилегия удалена",
+      "privilegeDeleteTitle": "Удалить привилегию?",
+      "privilegeDeleteMessage": "Привилегия «{name}» будет удалена из всех уровней.",
+      "form": {
+        "level": "Название уровня",
+        "emoji": "Эмодзи",
+        "discount": "Скидка %",
+        "threshold": "Порог (UZS)",
+        "cashback": "Кэшбэк %",
+        "sortOrder": "Порядок",
+        "privileges": "Привилегии"
+      }
+    },
+    "bonusActions": {
+      "title": "Бонусные действия",
+      "add": "Добавить действие",
+      "tabs": {
+        "all": "Все",
+        "earn": "Заработать",
+        "spend": "Потратить"
+      },
+      "count": "{count} действий",
+      "table": {
+        "title": "Название",
+        "icon": "Иконка",
+        "points": "Баллы",
+        "type": "Тип",
+        "active": "Активно",
+        "sort": "Порядок",
+        "actions": "Действия"
+      },
+      "typeEarn": "Заработок",
+      "typeSpend": "Трата",
+      "activeYes": "Да",
+      "activeNo": "Нет",
+      "empty": "Действия не найдены",
+      "deleteTitle": "Удалить действие?",
+      "deleteMessage": "Действие «{name}» будет удалено безвозвратно.",
+      "loadError": "Ошибка загрузки действий",
+      "deleteError": "Ошибка удаления",
+      "deleted": "Действие удалено",
+      "updated": "Действие обновлено",
+      "created": "Действие добавлено",
+      "saveError": "Ошибка сохранения",
+      "editTitle": "Редактировать действие",
+      "newTitle": "Новое действие",
+      "form": {
+        "title": "Название",
+        "description": "Описание",
+        "icon": "Иконка (Lucide)",
+        "pointsAmount": "Количество баллов",
+        "pointsAmountPlaceholder": "20 000, 1%, x3...",
+        "type": "Тип",
+        "sortOrder": "Порядок сортировки"
+      }
     },
     "content": {
       "title": "Управление контентом",

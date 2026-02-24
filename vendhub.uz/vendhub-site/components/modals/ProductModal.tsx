@@ -79,6 +79,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
         <button
           type="button"
           onClick={onClose}
+          aria-label={tc('close')}
           className="absolute top-3 right-3 bg-white/80 backdrop-blur-sm rounded-full p-1.5 text-chocolate/60 hover:text-chocolate transition-colors"
         >
           <X size={20} />

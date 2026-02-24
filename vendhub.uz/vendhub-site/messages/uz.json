@@ -24,6 +24,16 @@
     "errorFallback": "Nimadir xato ketdi. Sahifani yangilashga urinib ko'ring."
   },
 
+  "seo": {
+    "title": "VendHub — Avtomatlardan kofe bir necha bosishda",
+    "description": "25+ xil ichimlik. Toshkentdagi kasalxonalar, universitetlar va jamoat joylarida 16 ta avtomat. Sodiqlik dasturi va chegirmalar.",
+    "ogDescription": "25+ xil ichimlik. Toshkentda 16 ta avtomat.",
+    "ogImageAlt": "VendHub — Toshkentda avtomat kofe",
+    "jsonLdDescription": "Toshkentdagi vending avtomatlari tarmog'i — kofe, choy, gazaklar",
+    "jsonLdArea": "Toshkent",
+    "skipToContent": "Asosiy mazmunga o'tish"
+  },
+
   "nav": {
     "home": "Bosh sahifa",
     "machines": "Avtomatlar",
