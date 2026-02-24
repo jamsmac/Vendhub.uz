@@ -5,10 +5,11 @@ import { useTranslations } from 'next-intl'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Pill from '@/components/ui/Pill'
 import PromotionsTab from '@/components/benefits/PromotionsTab'
+import type { Promotion } from '@/lib/types'
 
 type Tab = 'promos' | 'loyalty'
 
-export default function BenefitsSection({ loyaltyTab }: { loyaltyTab: ReactNode }) {
+export default function BenefitsSection({ loyaltyTab, promotions }: { loyaltyTab: ReactNode; promotions: Promotion[] }) {
   const t = useTranslations('benefits')
   const [activeTab, setActiveTab] = useState<Tab>('promos')
 
@@ -39,7 +40,7 @@ export default function BenefitsSection({ loyaltyTab }: { loyaltyTab: ReactNode 
         </div>
 
         <div role="tabpanel">
-          {activeTab === 'promos' ? <PromotionsTab /> : loyaltyTab}
+          {activeTab === 'promos' ? <PromotionsTab promotions={promotions} /> : loyaltyTab}
         </div>
       </div>
     </section>

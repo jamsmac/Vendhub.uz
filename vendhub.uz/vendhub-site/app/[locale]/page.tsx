@@ -13,13 +13,20 @@ import LoyaltyTab from '@/components/benefits/LoyaltyTab'
 import PartnerSection from '@/components/sections/PartnerSection'
 import AboutSection from '@/components/sections/AboutSection'
 import { supabase } from '@/lib/supabase'
-import { partners as fallbackPartners } from '@/lib/data'
-import type { Partner } from '@/lib/types'
+import {
+  partners as fallbackPartners,
+  machines as fallbackMachines,
+  promotions as fallbackPromotions,
+} from '@/lib/data'
+import type { Partner, Machine, MachineTypeDetail, Promotion } from '@/lib/types'
 
 export default async function Home() {
-  const [cmsResult, partnersResult] = await Promise.all([
+  const [cmsResult, partnersResult, machinesResult, machineTypesResult, promosResult] = await Promise.all([
     supabase.from('site_content').select('key, value').eq('section', 'partnership'),
     supabase.from('partners').select('*').order('sort_order', { ascending: true }),
+    supabase.from('machines').select('*').order('name'),
+    supabase.from('machine_types').select('*').eq('is_active', true).order('sort_order'),
+    supabase.from('promotions').select('*').eq('is_active', true).order('sort_order'),
   ])
 
   const partnerCmsData: Record<string, string> = {}
@@ -29,6 +36,10 @@ export default async function Home() {
     }
   }
   const partnerList = (partnersResult.data?.length ? partnersResult.data : fallbackPartners) as Partner[]
+  const machineList = (machinesResult.data?.length ? machinesResult.data : fallbackMachines) as Machine[]
+  const machineTypeList = (machineTypesResult.data ?? []) as MachineTypeDetail[]
+  const promoList = (promosResult.data?.length ? promosResult.data : fallbackPromotions) as Promotion[]
+
   return (
     <>
       <Header />
@@ -40,10 +51,10 @@ export default async function Home() {
         <PromoBanner />
         <WhyVendHub />
 
-        <MachinesSection />
+        <MachinesSection initialMachines={machineList} initialMachineTypes={machineTypeList} />
         <MenuSection />
 
-        <BenefitsSection loyaltyTab={<LoyaltyTab />} />
+        <BenefitsSection loyaltyTab={<LoyaltyTab />} promotions={promoList} />
         <PartnerSection partners={partnerList} cmsData={partnerCmsData} />
         <AboutSection />
       </main>

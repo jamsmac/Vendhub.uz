@@ -204,6 +204,7 @@
   },
 
   "promotions": {
+    "validUntil": "до {date}",
     "howToUse": "Как использовать промокод?",
     "copied": "Промокод скопирован!",
     "conditions": "Условия",

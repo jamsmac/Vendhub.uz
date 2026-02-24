@@ -204,6 +204,7 @@
   },
 
   "promotions": {
+    "validUntil": "{date} gacha",
     "howToUse": "Promokodni qanday ishlatish mumkin?",
     "copied": "Promokod nusxalandi!",
     "conditions": "Shartlar",

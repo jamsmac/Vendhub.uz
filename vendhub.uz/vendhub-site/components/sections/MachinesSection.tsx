@@ -1,10 +1,8 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import { Search, X, LocateFixed, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { supabase } from '@/lib/supabase'
-import { machines as fallbackMachines } from '@/lib/data'
 import { useModal } from '@/lib/modal-context'
 import type { Machine } from '@/lib/types'
 import { useGeolocation } from '@/lib/useGeolocation'
@@ -27,7 +25,12 @@ const MACHINE_TYPE_META = {
   cold: { imageSrc: '/images/machines/js-001-a01-hero.jpg' },
 } as const
 
-export default function MachinesSection() {
+interface MachinesSectionProps {
+  initialMachines: Machine[]
+  initialMachineTypes: MachineTypeDetail[]
+}
+
+export default function MachinesSection({ initialMachines, initialMachineTypes }: MachinesSectionProps) {
   const { openMachineModal } = useModal()
   const t = useTranslations('machines')
   const geo = useGeolocation()
@@ -36,26 +39,8 @@ export default function MachinesSection() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all')
   const [sortNearest, setSortNearest] = useState(false)
-  const [machines, setMachines] = useState<Machine[]>(fallbackMachines)
-  const [machineTypes, setMachineTypes] = useState<MachineTypeDetail[]>([])
-
-  useEffect(() => {
-    supabase
-      .from('machines')
-      .select('*')
-      .order('name')
-      .then(({ data, error }) => {
-        if (!error && data?.length) setMachines(data as Machine[])
-      })
-    supabase
-      .from('machine_types')
-      .select('*')
-      .eq('is_active', true)
-      .order('sort_order')
-      .then(({ data, error }) => {
-        if (!error && data) setMachineTypes(data as MachineTypeDetail[])
-      })
-  }, [])
+  const machines = initialMachines
+  const machineTypes = initialMachineTypes
 
   const fallbackMachineTypes = useMemo<MachineTypeDetail[]>(
     () => [
@@ -178,13 +163,11 @@ export default function MachinesSection() {
       return true
     })
 
-    if (userLocation) {
-      const withDist = sortByDistance(result, userLocation.lat, userLocation.lng)
-      if (sortNearest) return withDist
-      return withDist
+    if (sortNearest && userLocation) {
+      return sortByDistance(result, userLocation.lat, userLocation.lng)
     }
 
-    return result
+    return result as MachineWithDistance[]
   }, [machines, searchQuery, statusFilter, typeFilter, userLocation, sortNearest])
 
   return (
