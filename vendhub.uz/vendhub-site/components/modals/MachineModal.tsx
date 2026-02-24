@@ -12,14 +12,8 @@ import NavigationSelector from '@/components/ui/NavigationSelector'
 import { getProductPresentation } from '@/lib/productPresentation'
 import { useProductsData } from '@/lib/useProductsData'
 import { useModal } from '@/lib/modal-context'
+import { CATEGORY_EMOJI } from '@/lib/categoryStyles'
 import type { Machine } from '@/lib/types'
-
-const CATEGORY_EMOJI: Record<string, string> = {
-  coffee: '\u2615',
-  tea: '\uD83C\uDF75',
-  snack: '\uD83E\uDD50',
-  other: '\uD83E\uDD64',
-}
 
 interface MachineModalProps {
   machine: Machine

@@ -5,6 +5,7 @@ import {
   useContext,
   useState,
   useCallback,
+  useMemo,
   ReactNode,
 } from 'react'
 import type { Product, Machine } from '@/lib/types'
@@ -38,10 +39,13 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     setModal({ type: null, data: null })
   }, [])
 
+  const value = useMemo(
+    () => ({ modal, openProductModal, openMachineModal, closeModal }),
+    [modal, openProductModal, openMachineModal, closeModal]
+  )
+
   return (
-    <ModalContext.Provider
-      value={{ modal, openProductModal, openMachineModal, closeModal }}
-    >
+    <ModalContext.Provider value={value}>
       {children}
     </ModalContext.Provider>
   )

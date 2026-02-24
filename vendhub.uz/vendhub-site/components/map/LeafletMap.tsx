@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import L from 'leaflet'
@@ -56,7 +56,7 @@ function createClusterIcon(count: number) {
 function FitBounds({ machines }: { machines: Machine[] }) {
   const map = useMap()
 
-  useMemo(() => {
+  useEffect(() => {
     const points = machines
       .filter((m) => m.latitude != null && m.longitude != null)
       .map((m) => [m.latitude!, m.longitude!] as L.LatLngTuple)

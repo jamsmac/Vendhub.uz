@@ -180,6 +180,7 @@ export default function AdminMachinesPage() {
                         <button
                           type="button"
                           onClick={() => openEdit(machine)}
+                          aria-label="Edit"
                           className="p-2 text-espresso/40 hover:text-espresso transition-colors rounded-lg hover:bg-foam"
                         >
                           <Pencil size={15} />
@@ -189,6 +190,7 @@ export default function AdminMachinesPage() {
                           onClick={() =>
                             setDeleteTarget({ id: machine.id, name: machine.name })
                           }
+                          aria-label="Delete"
                           className="p-2 text-espresso/40 hover:text-red-500 transition-colors rounded-lg hover:bg-red-50"
                         >
                           <Trash2 size={15} />

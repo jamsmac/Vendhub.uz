@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useEffect, useCallback } from 'react'
+import { ReactNode, useEffect, useCallback, useRef } from 'react'
 
 interface ModalProps {
   isOpen: boolean
@@ -15,6 +15,9 @@ export default function Modal({
   children,
   className = '',
 }: ModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
+
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -24,14 +27,51 @@ export default function Modal({
 
   useEffect(() => {
     if (isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement
       document.addEventListener('keydown', handleEscape)
       document.body.style.overflow = 'hidden'
+
+      // Focus the dialog after mount
+      requestAnimationFrame(() => {
+        dialogRef.current?.focus()
+      })
     }
     return () => {
       document.removeEventListener('keydown', handleEscape)
       document.body.style.overflow = ''
+
+      // Restore focus on close
+      previousFocusRef.current?.focus()
     }
   }, [isOpen, handleEscape])
+
+  // Focus trap: keep Tab cycling within the modal
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key !== 'Tab' || !dialogRef.current) return
+
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    },
+    []
+  )
 
   if (!isOpen) return null
 
@@ -41,8 +81,13 @@ export default function Modal({
       onClick={onClose}
     >
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
+        onKeyDown={handleKeyDown}
         className={[
-          'animate-slideUp max-w-md w-full mx-auto bg-white rounded-2xl shadow-2xl',
+          'animate-slideUp max-w-md w-full mx-auto bg-white rounded-2xl shadow-2xl outline-none',
           className,
         ]
           .filter(Boolean)

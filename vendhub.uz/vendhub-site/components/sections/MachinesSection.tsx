@@ -2,8 +2,9 @@
 
 import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Search, X, ChevronDown, LocateFixed, Loader2 } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { supabase } from '@/lib/supabase'
 import { machines } from '@/lib/data'
 import { useModal } from '@/lib/modal-context'
@@ -34,7 +35,7 @@ const MACHINE_TYPE_META: Record<
   },
   snack: {
     emoji: '\uD83C\uDF6A',
-    imageSrc: '/images/machines/snack-machine.png',
+    imageSrc: '/images/machines/tcn-csc-8c-v49-hero.jpg',
     imageAlt: 'Snack machine',
   },
   cold: {
@@ -44,9 +45,16 @@ const MACHINE_TYPE_META: Record<
   },
 }
 
+const MACHINE_DETAIL_ROUTES: Partial<Record<MachineType, string>> = {
+  coffee: '/machines/jq-002-a',
+  snack: '/machines/tcn-csc-8c-v49',
+  cold: '/machines/js-001-a01',
+}
+
 export default function MachinesSection() {
   const { openMachineModal } = useModal()
   const t = useTranslations('machines')
+  const locale = useLocale()
   const geo = useGeolocation()
   const [activeTab, setActiveTab] = useState<Tab>('map')
   const [searchQuery, setSearchQuery] = useState('')
@@ -67,6 +75,97 @@ export default function MachinesSection() {
         if (data) setMachineTypes(data as MachineTypeDetail[])
       })
   }, [])
+
+  const fallbackMachineTypes = useMemo<MachineTypeDetail[]>(
+    () => [
+      {
+        id: 'fallback-coffee',
+        slug: 'coffee',
+        name: t('types.coffeeMachine'),
+        model_name: 'JQ-002-A',
+        description: '',
+        hero_image_url: MACHINE_TYPE_META.coffee.imageSrc ?? null,
+        specs: [
+          { label: t('types.dimensions'), value: t('types.dimensionsValue') },
+          { label: t('types.display'), value: t('types.displayValue') },
+          { label: t('types.payment'), value: t('types.paymentValue') },
+          { label: t('types.features'), value: t('types.featuresValue') },
+        ],
+        advantages: [],
+        gallery_images: [],
+        is_active: true,
+        badge: null,
+        sort_order: 1,
+        created_at: '',
+        updated_at: '',
+      },
+      {
+        id: 'fallback-snack',
+        slug: 'snack',
+        name: t('types.snackMachine'),
+        model_name: 'TCN CSC-8C(V49)',
+        description: '',
+        hero_image_url: MACHINE_TYPE_META.snack.imageSrc ?? null,
+        specs: [
+          { label: t('types.dimensions'), value: t('types.snackDimensionsValue') },
+          { label: t('types.display'), value: t('types.snackDisplayValue') },
+          { label: t('types.payment'), value: t('types.snackPaymentValue') },
+          { label: t('types.features'), value: t('types.snackFeaturesValue') },
+        ],
+        advantages: [],
+        gallery_images: [],
+        is_active: true,
+        badge: null,
+        sort_order: 2,
+        created_at: '',
+        updated_at: '',
+      },
+      {
+        id: 'fallback-cold',
+        slug: 'cold',
+        name: t('types.coldDrinks'),
+        model_name: 'JS-001-A01',
+        description: '',
+        hero_image_url: MACHINE_TYPE_META.cold.imageSrc ?? null,
+        specs: [
+          { label: t('types.dimensions'), value: t('types.coldDimensionsValue') },
+          { label: t('types.display'), value: t('types.coldDisplayValue') },
+          { label: t('types.payment'), value: t('types.coldPaymentValue') },
+          { label: t('types.features'), value: t('types.coldFeaturesValue') },
+        ],
+        advantages: [],
+        gallery_images: [],
+        is_active: true,
+        badge: null,
+        sort_order: 3,
+        created_at: '',
+        updated_at: '',
+      },
+    ],
+    [t]
+  )
+
+  const resolvedMachineTypes = useMemo(() => {
+    const bySlug = new Map<string, MachineTypeDetail>()
+
+    fallbackMachineTypes.forEach((mt) => bySlug.set(mt.slug, mt))
+
+    machineTypes.forEach((mt) => {
+      const base = bySlug.get(mt.slug)
+
+      bySlug.set(mt.slug, {
+        ...(base ?? mt),
+        ...mt,
+        model_name: mt.model_name ?? base?.model_name ?? null,
+        hero_image_url: mt.hero_image_url ?? base?.hero_image_url ?? null,
+        specs: mt.specs?.length ? mt.specs : (base?.specs ?? []),
+        advantages: mt.advantages?.length ? mt.advantages : (base?.advantages ?? []),
+        gallery_images: mt.gallery_images?.length ? mt.gallery_images : (base?.gallery_images ?? []),
+      })
+    })
+
+    return Array.from(bySlug.values()).sort((a, b) => a.sort_order - b.sort_order)
+  }, [fallbackMachineTypes, machineTypes])
 
   const hasLocation = geo.latitude != null && geo.longitude != null
   const userLocation = useMemo(
@@ -391,12 +490,18 @@ export default function MachinesSection() {
 
         {activeTab === 'types' && (
           <div className="space-y-4 max-w-3xl mx-auto">
-            {machineTypes.map((mt, index) => {
+            {resolvedMachineTypes.map((mt, index) => {
               const fallback = MACHINE_TYPE_META[mt.slug as MachineType]
               const thumbSrc = mt.hero_image_url || fallback?.imageSrc
               const machineCount = machines.filter((m) => m.type === mt.slug).length
               const previewSpecs = (mt.specs || []).slice(0, 4)
-              const hasDetails = (mt.specs || []).length > 0 || (mt.advantages || []).length > 0
+              const detailsHref = MACHINE_DETAIL_ROUTES[mt.slug as MachineType]
+              const hasDetails =
+                Boolean(detailsHref) ||
+                (mt.specs || []).length > 0 ||
+                (mt.advantages || []).length > 0 ||
+                (mt.gallery_images || []).length > 0 ||
+                Boolean(mt.description)
 
               return (
                 <div key={mt.id} className="bg-white rounded-2xl border border-espresso/5 overflow-hidden">
@@ -456,13 +561,22 @@ export default function MachinesSection() {
                             ))}
                             {hasDetails && (
                               <div className="pt-2">
-                                <button
-                                  type="button"
-                                  onClick={() => setDetailType(mt)}
-                                  className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
-                                >
-                                  {t('types.viewDetails')}
-                                </button>
+                                {detailsHref ? (
+                                  <Link
+                                    href={`/${locale}${detailsHref}`}
+                                    className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
+                                  >
+                                    {t('types.viewDetails')}
+                                  </Link>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    onClick={() => setDetailType(mt)}
+                                    className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
+                                  >
+                                    {t('types.viewDetails')}
+                                  </button>
+                                )}
                               </div>
                             )}
                           </>

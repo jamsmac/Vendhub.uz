@@ -238,6 +238,7 @@ export default function AdminPromotionsPage() {
                         <button
                           type="button"
                           onClick={() => openEdit(promo)}
+                          aria-label="Edit"
                           className="p-2 text-espresso/40 hover:text-espresso transition-colors rounded-lg hover:bg-foam"
                         >
                           <Pencil size={15} />
@@ -245,6 +246,7 @@ export default function AdminPromotionsPage() {
                         <button
                           type="button"
                           onClick={() => setDeleteTarget({ id: promo.id, title: promo.title })}
+                          aria-label="Delete"
                           className="p-2 text-espresso/40 hover:text-red-500 transition-colors rounded-lg hover:bg-red-50"
                         >
                           <Trash2 size={15} />
@@ -283,7 +285,7 @@ export default function AdminPromotionsPage() {
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-espresso/10">
               <h2 className="text-lg font-bold text-espresso">
-                {editingId ? 'Редактировать акцию' : 'Новая акция'}
+                {editingId ? t('editTitle') : t('newTitle')}
               </h2>
               <button
                 type="button"
@@ -329,7 +331,7 @@ export default function AdminPromotionsPage() {
               {/* Description */}
               <div>
                 <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                  Описание
+                  {t('form.description')}
                 </label>
                 <textarea
                   value={form.description}
@@ -359,7 +361,7 @@ export default function AdminPromotionsPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                    Градиент (CSS)
+                    {t('form.gradient')}
                   </label>
                   <input
                     type="text"
@@ -390,7 +392,7 @@ export default function AdminPromotionsPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                    Порядок сортировки
+                    {t('form.sortOrder')}
                   </label>
                   <input
                     type="number"
@@ -422,7 +424,7 @@ export default function AdminPromotionsPage() {
               {/* Conditions */}
               <div>
                 <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                  Условия
+                  {t('form.conditions')}
                 </label>
                 <div className="flex gap-2 mb-2">
                   <input

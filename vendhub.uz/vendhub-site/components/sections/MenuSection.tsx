@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl'
 import { getProductPresentation } from '@/lib/productPresentation'
 import { useProductsData } from '@/lib/useProductsData'
 import { useModal } from '@/lib/modal-context'
+import { CATEGORY_EMOJI, CATEGORY_GRADIENT } from '@/lib/categoryStyles'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
@@ -17,24 +18,11 @@ import Button from '@/components/ui/Button'
 type CategoryFilter = 'all' | 'coffee' | 'tea' | 'other' | 'snack'
 type TempFilter = 'all' | 'hot' | 'cold'
 
-const CATEGORY_EMOJI: Record<string, string> = {
-  coffee: '\u2615',
-  tea: '\uD83C\uDF75',
-  snack: '\uD83E\uDD50',
-  other: '\uD83C\uDF6B',
-}
-
-const CATEGORY_GRADIENT: Record<string, string> = {
-  coffee: 'from-amber-100 to-orange-50',
-  tea: 'from-green-100 to-emerald-50',
-  snack: 'from-emerald-100 to-green-50',
-  other: 'from-purple-100 to-violet-50',
-}
-
 export default function MenuSection() {
   const { openProductModal } = useModal()
   const { products } = useProductsData()
   const t = useTranslations('menu')
+  const tc = useTranslations('common')
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all')
   const [tempFilter, setTempFilter] = useState<TempFilter>('all')
 
@@ -174,7 +162,7 @@ export default function MenuSection() {
                 '\u2615'
               const caloriesText =
                 presentation.caloriesKcal !== null
-                  ? `${presentation.caloriesKcal} ккал`
+                  ? `${presentation.caloriesKcal} ${tc('kcal')}`
                   : null
               const cardSubtitle =
                 product.description && caloriesText

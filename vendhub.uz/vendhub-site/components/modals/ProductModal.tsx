@@ -10,21 +10,8 @@ import PriceTag from '@/components/ui/PriceTag'
 import Button from '@/components/ui/Button'
 import { getProductPresentation } from '@/lib/productPresentation'
 import { formatPrice } from '@/lib/utils'
+import { CATEGORY_EMOJI, CATEGORY_GRADIENT } from '@/lib/categoryStyles'
 import type { Product, ProductOption } from '@/lib/types'
-
-const CATEGORY_GRADIENT: Record<string, string> = {
-  coffee: 'from-amber-100 to-orange-50',
-  tea: 'from-green-100 to-emerald-50',
-  snack: 'from-emerald-100 to-green-50',
-  other: 'from-purple-100 to-violet-50',
-}
-
-const CATEGORY_EMOJI: Record<string, string> = {
-  coffee: '\u2615',
-  tea: '\uD83C\uDF75',
-  snack: '\uD83E\uDD50',
-  other: '\uD83E\uDD64',
-}
 
 interface ProductModalProps {
   product: Product
@@ -33,6 +20,7 @@ interface ProductModalProps {
 
 export default function ProductModal({ product, onClose }: ProductModalProps) {
   const t = useTranslations('productModal')
+  const tc = useTranslations('common')
 
   const hotOptions = useMemo(
     () => product.options.filter((o) => o.temperature === 'hot'),
@@ -62,7 +50,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     '\u2615'
   const caloriesText =
     presentation.caloriesKcal !== null
-      ? `${presentation.caloriesKcal} ккал`
+      ? `${presentation.caloriesKcal} ${tc('kcal')}`
       : null
   const descriptionText =
     product.description && caloriesText

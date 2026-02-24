@@ -87,6 +87,7 @@ export default function HeroSection() {
               width={320}
               height={480}
               sizes="(min-width: 1024px) 320px"
+              priority
               className="h-80 w-auto object-contain drop-shadow-2xl"
             />
           </div>

@@ -23,7 +23,12 @@ export async function uploadImage(
   file: File,
   folder: string
 ): Promise<string> {
-  const ext = file.name.split('.').pop() ?? 'jpg'
+  const MIME_TO_EXT: Record<string, string> = {
+    'image/jpeg': 'jpg',
+    'image/png': 'png',
+    'image/webp': 'webp',
+  }
+  const ext = MIME_TO_EXT[file.type] ?? 'jpg'
   const path = `${folder}/${crypto.randomUUID()}.${ext}`
 
   const { error } = await supabase.storage

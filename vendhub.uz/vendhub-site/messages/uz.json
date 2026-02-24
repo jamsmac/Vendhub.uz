@@ -18,7 +18,9 @@
     "errorOccurred": "Xatolik yuz berdi",
     "comingSoon": "Tez kunda",
     "retry": "Qayta urinish",
-    "currency": "UZS"
+    "currency": "UZS",
+    "deleting": "O'chirilmoqda...",
+    "kcal": "kkal"
   },
 
   "nav": {
@@ -63,11 +65,6 @@
     "catalogDesc": "Barcha ichimliklar va gazaklar",
     "machines": "Avtomatlar",
     "machinesDesc": "Yaqindagini topish"
-  },
-
-  "promoBanner": {
-    "badge": "Aksiya",
-    "more": "Batafsil"
   },
 
   "popularProducts": {
@@ -710,7 +707,15 @@
       "deleted": "Aksiya o'chirildi",
       "updated": "Aksiya yangilandi",
       "created": "Aksiya qo'shildi",
-      "saveError": "Saqlashda xatolik"
+      "saveError": "Saqlashda xatolik",
+      "editTitle": "Aksiyani tahrirlash",
+      "newTitle": "Yangi aksiya",
+      "form": {
+        "description": "Tavsif",
+        "gradient": "Gradient (CSS)",
+        "sortOrder": "Saralash tartibi",
+        "conditions": "Shartlar"
+      }
     },
     "cooperation": {
       "title": "Hamkorlik arizalari",

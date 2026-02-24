@@ -37,6 +37,13 @@ export function middleware(request: NextRequest) {
     return intlMiddleware(request)
   }
 
+  // Unknown hosts — block admin paths by default
+  if (pathname.startsWith('/admin') || pathname.match(/^\/(ru|uz)\/admin/)) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/'
+    return NextResponse.redirect(url)
+  }
+
   return intlMiddleware(request)
 }
 

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Plus, Search, Pencil, Trash2, Eye, EyeOff } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
@@ -138,7 +139,7 @@ export default function AdminMachineTypesPage() {
                       <div className="flex items-center gap-3">
                         {mt.hero_image_url && (
                           <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-foam shrink-0">
-                            <img src={mt.hero_image_url} alt="" className="w-full h-full object-cover" />
+                            <Image src={mt.hero_image_url} alt="" fill sizes="32px" className="object-cover" />
                           </div>
                         )}
                         <div>
@@ -177,6 +178,7 @@ export default function AdminMachineTypesPage() {
                         <button
                           type="button"
                           onClick={() => openEdit(mt)}
+                          aria-label="Edit"
                           className="p-2 text-espresso/40 hover:text-espresso transition-colors rounded-lg hover:bg-foam"
                         >
                           <Pencil size={15} />
@@ -184,6 +186,7 @@ export default function AdminMachineTypesPage() {
                         <button
                           type="button"
                           onClick={() => setDeleteTarget({ id: mt.id, name: mt.name })}
+                          aria-label="Delete"
                           className="p-2 text-espresso/40 hover:text-red-500 transition-colors rounded-lg hover:bg-red-50"
                         >
                           <Trash2 size={15} />

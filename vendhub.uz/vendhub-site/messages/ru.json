@@ -18,7 +18,9 @@
     "errorOccurred": "Произошла ошибка",
     "comingSoon": "Скоро",
     "retry": "Попробовать снова",
-    "currency": "UZS"
+    "currency": "UZS",
+    "deleting": "Удаление...",
+    "kcal": "ккал"
   },
 
   "nav": {
@@ -63,11 +65,6 @@
     "catalogDesc": "Все напитки и снэки",
     "machines": "Автоматы",
     "machinesDesc": "Найти рядом"
-  },
-
-  "promoBanner": {
-    "badge": "Акция",
-    "more": "Подробнее"
   },
 
   "popularProducts": {
@@ -710,7 +707,15 @@
       "deleted": "Акция удалена",
       "updated": "Акция обновлена",
       "created": "Акция добавлена",
-      "saveError": "Ошибка сохранения"
+      "saveError": "Ошибка сохранения",
+      "editTitle": "Редактировать акцию",
+      "newTitle": "Новая акция",
+      "form": {
+        "description": "Описание",
+        "gradient": "Градиент (CSS)",
+        "sortOrder": "Порядок сортировки",
+        "conditions": "Условия"
+      }
     },
     "cooperation": {
       "title": "Заявки на сотрудничество",

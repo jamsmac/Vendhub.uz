@@ -35,8 +35,7 @@ const supabase = createClient(
    - [Authentication](#authentication)
    - [CRUD Operations](#admin-crud-operations)
 3. [Row Level Security (RLS)](#row-level-security-rls-policies)
-4. [Future VHM24 Integration](#future-vhm24-integration)
-5. [TypeScript Type Definitions](#typescript-type-definitions)
+4. [TypeScript Type Definitions](#typescript-type-definitions)
 
 ---
 
@@ -642,28 +641,6 @@ All tables have RLS enabled. Public access uses the `anon` key; admin access use
 - `cooperation_requests` -- public users can only insert; reading and updating requires admin auth; deletion is not allowed
 - **Admin** = Supabase `service_role` key (used server-side only, never exposed to the browser)
 - **Public** = Supabase `anon` key (used in browser, subject to RLS restrictions)
-
----
-
-## Future VHM24 Integration
-
-The existing VHM24 backend system has REST API endpoints that will be integrated with VendHub.uz in the future. These will replace or augment the current Supabase-based data.
-
-### Planned endpoints
-
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| `GET` | `/client/public/locations` | Real-time machine data (status, stock levels) | No |
-| `GET` | `/client/public/menu` | Menu per machine (products vary by location) | No |
-| `GET` | `/client/public/cities` | Available cities with machine counts | No |
-| `POST` | `/client/public/cooperation` | Partnership application form | No |
-| `POST` | `/client/promo-codes/validate` | Validate a promo code for a specific order | Yes |
-
-### Integration strategy
-
-1. **Phase 1 (current):** All data served from Supabase. Admin manages content through the admin panel.
-2. **Phase 2:** VHM24 endpoints for real-time machine status and menu data. Supabase retains CMS content, promotions, and loyalty tiers.
-3. **Phase 3:** Full integration with VHM24 for ordering, promo code validation, and user accounts.
 
 ---
 

@@ -6,26 +6,14 @@ import { useTranslations } from 'next-intl'
 import { getProductPresentation } from '@/lib/productPresentation'
 import { useProductsData } from '@/lib/useProductsData'
 import { useModal } from '@/lib/modal-context'
+import { CATEGORY_EMOJI, CATEGORY_GRADIENT } from '@/lib/categoryStyles'
 import Card from '@/components/ui/Card'
 import PriceTag from '@/components/ui/PriceTag'
 import SectionHeader from '@/components/ui/SectionHeader'
 
-const CATEGORY_EMOJI: Record<string, string> = {
-  coffee: '\u2615',
-  tea: '\uD83C\uDF75',
-  other: '\uD83E\uDD64',
-  snack: '\uD83C\uDF5E',
-}
-
-const CATEGORY_GRADIENT: Record<string, string> = {
-  coffee: 'from-amber-100 to-orange-50',
-  tea: 'from-green-100 to-emerald-50',
-  other: 'from-purple-100 to-violet-50',
-  snack: 'from-emerald-100 to-green-50',
-}
-
 export default function PopularProducts() {
   const t = useTranslations('popularProducts')
+  const tc = useTranslations('common')
   const { products } = useProductsData()
   const { openProductModal } = useModal()
   const popularProducts = useMemo(
@@ -47,7 +35,7 @@ export default function PopularProducts() {
               '\u2615'
             const caloriesText =
               presentation.caloriesKcal !== null
-                ? `${presentation.caloriesKcal} ккал`
+                ? `${presentation.caloriesKcal} ${tc('kcal')}`
                 : null
 
             return (

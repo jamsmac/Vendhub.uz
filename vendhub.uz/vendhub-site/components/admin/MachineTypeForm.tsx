@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { X, Plus, Trash2, GripVertical } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
@@ -318,7 +319,7 @@ export default function MachineTypeForm({
                 <div key={i} className="flex items-center gap-2">
                   <div className="flex-1 bg-foam rounded-xl p-2 flex items-center gap-3">
                     <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-white shrink-0">
-                      <img src={url} alt="" className="w-full h-full object-cover" />
+                      <Image src={url} alt="" fill sizes="64px" className="object-cover" />
                     </div>
                     <span className="text-xs text-espresso/40 truncate flex-1">{url}</span>
                   </div>

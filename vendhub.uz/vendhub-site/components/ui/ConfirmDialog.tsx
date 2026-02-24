@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { AlertTriangle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Modal from './Modal'
 
 interface ConfirmDialogProps {
@@ -18,11 +19,12 @@ export default function ConfirmDialog({
   isOpen,
   title,
   message,
-  confirmLabel = 'Удалить',
-  cancelLabel = 'Отмена',
+  confirmLabel,
+  cancelLabel,
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
+  const t = useTranslations('common')
   const [loading, setLoading] = useState(false)
 
   const handleConfirm = async () => {
@@ -53,7 +55,7 @@ export default function ConfirmDialog({
             disabled={loading}
             className="px-4 py-2 text-sm font-medium text-chocolate/70 bg-foam rounded-xl hover:bg-espresso/10 transition-colors disabled:opacity-50"
           >
-            {cancelLabel}
+            {cancelLabel ?? t('cancel')}
           </button>
           <button
             type="button"
@@ -61,7 +63,7 @@ export default function ConfirmDialog({
             disabled={loading}
             className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-xl hover:bg-red-600 transition-colors disabled:opacity-50"
           >
-            {loading ? 'Удаление...' : confirmLabel}
+            {loading ? t('deleting') : (confirmLabel ?? t('delete'))}
           </button>
         </div>
       </div>
