@@ -1,6 +1,4 @@
-'use client'
-
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import Card from '@/components/ui/Card'
 
 const STATS = [
@@ -10,8 +8,8 @@ const STATS = [
   { emoji: '\u2B50', valueKey: 'ratingValue', labelKey: 'rating', accent: 'bg-yellow-50' },
 ] as const
 
-export default function StatsSection() {
-  const t = useTranslations('stats')
+export default async function StatsSection() {
+  const t = await getTranslations('stats')
 
   return (
     <div className="relative -mt-8 z-10">

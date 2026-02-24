@@ -9,6 +9,7 @@ import WhyVendHub from '@/components/sections/WhyVendHub'
 import MachinesSection from '@/components/sections/MachinesSection'
 import MenuSection from '@/components/sections/MenuSection'
 import BenefitsSection from '@/components/sections/BenefitsSection'
+import LoyaltyTab from '@/components/benefits/LoyaltyTab'
 import PartnerSection from '@/components/sections/PartnerSection'
 import AboutSection from '@/components/sections/AboutSection'
 
@@ -27,7 +28,7 @@ export default function Home() {
         <MachinesSection />
         <MenuSection />
 
-        <BenefitsSection />
+        <BenefitsSection loyaltyTab={<LoyaltyTab />} />
         <PartnerSection />
         <AboutSection />
       </main>

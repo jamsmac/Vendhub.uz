@@ -1,5 +1,3 @@
-'use client'
-
 import {
   Coffee,
   CalendarCheck,
@@ -17,7 +15,7 @@ import {
   X,
   Send,
 } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import { loyaltyTiers } from '@/lib/data'
@@ -54,8 +52,8 @@ const SPEND_KEYS = [
 
 const sortedTiers = [...loyaltyTiers].sort((a, b) => a.sort_order - b.sort_order)
 
-export default function LoyaltyTab() {
-  const t = useTranslations('loyalty')
+export default async function LoyaltyTab() {
+  const t = await getTranslations('loyalty')
 
   return (
     <div>

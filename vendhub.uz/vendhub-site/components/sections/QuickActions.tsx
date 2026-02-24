@@ -1,7 +1,5 @@
-'use client'
-
 import { Coffee, MapPin, ChevronRight } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import Card from '@/components/ui/Card'
 
 const ACTIONS = [
@@ -23,8 +21,8 @@ const ACTIONS = [
   },
 ] as const
 
-export default function QuickActions() {
-  const t = useTranslations('quickActions')
+export default async function QuickActions() {
+  const t = await getTranslations('quickActions')
 
   return (
     <div className="max-w-3xl mx-auto mt-12 px-4">

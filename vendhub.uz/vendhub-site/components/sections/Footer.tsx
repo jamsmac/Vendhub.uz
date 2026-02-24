@@ -1,8 +1,6 @@
-'use client'
-
 import Image from 'next/image'
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
 const NAV_KEYS = [
   { key: 'home' as const, href: '#home' },
@@ -57,9 +55,9 @@ const SOCIALS = [
   },
 ]
 
-export default function Footer() {
-  const t = useTranslations('footer')
-  const nav = useTranslations('nav')
+export default async function Footer() {
+  const t = await getTranslations('footer')
+  const nav = await getTranslations('nav')
 
   return (
     <footer className="bg-espresso-dark text-white/60 pt-16 pb-8">

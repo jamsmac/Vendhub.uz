@@ -1,12 +1,10 @@
-'use client'
-
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import { promotions } from '@/lib/data'
 
 const promo = promotions[0]
 
-export default function PromoBanner() {
-  const t = useTranslations('promoBanner')
+export default async function PromoBanner() {
+  const t = await getTranslations('promoBanner')
 
   return (
     <div className="mt-12 px-4">

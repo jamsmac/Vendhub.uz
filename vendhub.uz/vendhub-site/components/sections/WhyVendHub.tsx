@@ -1,6 +1,4 @@
-'use client'
-
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import Card from '@/components/ui/Card'
 import SectionHeader from '@/components/ui/SectionHeader'
 
@@ -11,8 +9,8 @@ const REASONS = [
   { emoji: '\u26A1', titleKey: 'order', descKey: 'orderDesc', accent: 'bg-yellow-100' },
 ] as const
 
-export default function WhyVendHub() {
-  const t = useTranslations('whyVendHub')
+export default async function WhyVendHub() {
+  const t = await getTranslations('whyVendHub')
 
   return (
     <section className="mt-16 pb-16 px-4">

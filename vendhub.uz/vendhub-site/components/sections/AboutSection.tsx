@@ -1,7 +1,5 @@
-'use client'
-
 import { Phone, Mail, MessageCircle, MapPin, Clock } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
 import { siteContent } from '@/lib/data'
@@ -13,8 +11,8 @@ function getContent(key: string): string {
   return item?.value ?? ''
 }
 
-export default function AboutSection() {
-  const t = useTranslations('about')
+export default async function AboutSection() {
+  const t = await getTranslations('about')
   const description = getContent('description')
 
   const CONTACTS = [

@@ -1,15 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Pill from '@/components/ui/Pill'
 import PromotionsTab from '@/components/benefits/PromotionsTab'
-import LoyaltyTab from '@/components/benefits/LoyaltyTab'
 
 type Tab = 'promos' | 'loyalty'
 
-export default function BenefitsSection() {
+export default function BenefitsSection({ loyaltyTab }: { loyaltyTab: ReactNode }) {
   const t = useTranslations('benefits')
   const [activeTab, setActiveTab] = useState<Tab>('promos')
 
@@ -35,7 +34,7 @@ export default function BenefitsSection() {
           />
         </div>
 
-        {activeTab === 'promos' ? <PromotionsTab /> : <LoyaltyTab />}
+        {activeTab === 'promos' ? <PromotionsTab /> : loyaltyTab}
       </div>
     </section>
   )
