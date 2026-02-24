@@ -20,7 +20,8 @@
     "retry": "Qayta urinish",
     "currency": "UZS",
     "deleting": "O'chirilmoqda...",
-    "kcal": "kkal"
+    "kcal": "kkal",
+    "errorFallback": "Nimadir xato ketdi. Sahifani yangilashga urinib ko'ring."
   },
 
   "nav": {
