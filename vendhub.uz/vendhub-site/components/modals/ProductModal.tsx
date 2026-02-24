@@ -155,6 +155,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                   <button
                     key={`hot-${i}`}
                     type="button"
+                    aria-pressed={selectedOption === opt}
                     onClick={() => setSelectedOption(opt)}
                     className={[
                       'rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-200',
@@ -181,6 +182,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                   <button
                     key={`cold-${i}`}
                     type="button"
+                    aria-pressed={selectedOption === opt}
                     onClick={() => setSelectedOption(opt)}
                     className={[
                       'rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-200',

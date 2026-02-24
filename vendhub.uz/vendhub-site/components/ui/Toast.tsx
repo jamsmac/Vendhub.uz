@@ -54,6 +54,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
+            role="alert"
             className={[
               'animate-bounceIn flex items-center gap-3 rounded-xl px-4 py-3 shadow-lg min-w-[280px] max-w-sm',
               typeClasses[toast.type],

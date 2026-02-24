@@ -20,7 +20,7 @@ const CATEGORY_EMOJI: Record<string, string> = {
 const CATEGORY_GRADIENT: Record<string, string> = {
   coffee: 'from-amber-100 to-orange-50',
   tea: 'from-green-100 to-emerald-50',
-  other: 'from-blue-100 to-sky-50',
+  other: 'from-purple-100 to-violet-50',
   snack: 'from-emerald-100 to-green-50',
 }
 

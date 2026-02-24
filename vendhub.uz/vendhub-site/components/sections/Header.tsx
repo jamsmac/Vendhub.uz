@@ -179,6 +179,7 @@ export default function Header() {
               className="lg:hidden text-white/80 hover:text-white p-1.5 transition-colors"
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               aria-label={isMobileMenuOpen ? header('closeMenu') : header('openMenu')}
+              aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

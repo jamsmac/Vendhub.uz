@@ -78,6 +78,8 @@ export default function MachinesSection() {
   const onlineCount = machines.filter((m) => m.status === 'online').length
   const promoCount = machines.filter((m) => m.has_promotion).length
   const coffeeCount = machines.filter((m) => m.type === 'coffee').length
+  const snackCount = machines.filter((m) => m.type === 'snack').length
+  const coldCount = machines.filter((m) => m.type === 'cold').length
 
   const filteredMachines: MachineWithDistance[] = useMemo(() => {
     const result = machines.filter((m) => {
@@ -244,24 +246,28 @@ export default function MachinesSection() {
                   setTypeFilter(typeFilter === 'coffee' ? 'all' : 'coffee')
                 }
               />
-              <Pill
-                icon={'\uD83C\uDF6A'}
-                label={t('filters.snack')}
-                count={0}
-                active={typeFilter === 'snack'}
-                onClick={() =>
-                  setTypeFilter(typeFilter === 'snack' ? 'all' : 'snack')
-                }
-              />
-              <Pill
-                icon={'\uD83E\uDDCA'}
-                label={t('filters.cold')}
-                count={0}
-                active={typeFilter === 'cold'}
-                onClick={() =>
-                  setTypeFilter(typeFilter === 'cold' ? 'all' : 'cold')
-                }
-              />
+              {snackCount > 0 && (
+                <Pill
+                  icon={'\uD83C\uDF6A'}
+                  label={t('filters.snack')}
+                  count={snackCount}
+                  active={typeFilter === 'snack'}
+                  onClick={() =>
+                    setTypeFilter(typeFilter === 'snack' ? 'all' : 'snack')
+                  }
+                />
+              )}
+              {coldCount > 0 && (
+                <Pill
+                  icon={'\uD83E\uDDCA'}
+                  label={t('filters.cold')}
+                  count={coldCount}
+                  active={typeFilter === 'cold'}
+                  onClick={() =>
+                    setTypeFilter(typeFilter === 'cold' ? 'all' : 'cold')
+                  }
+                />
+              )}
             </div>
 
             {/* Map */}
