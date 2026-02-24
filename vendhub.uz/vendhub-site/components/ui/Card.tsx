@@ -4,6 +4,7 @@ interface CardProps {
   className?: string
   hover?: boolean
   onClick?: () => void
+  ariaLabel?: string
   children: ReactNode
 }
 
@@ -11,6 +12,7 @@ export default function Card({
   className = '',
   hover = false,
   onClick,
+  ariaLabel,
   children,
 }: CardProps) {
   const isInteractive = typeof onClick === 'function'
@@ -28,6 +30,7 @@ export default function Card({
       onClick={onClick}
       role={isInteractive ? 'button' : undefined}
       tabIndex={isInteractive ? 0 : undefined}
+      aria-label={isInteractive ? ariaLabel : undefined}
       onKeyDown={
         isInteractive
           ? (event) => {

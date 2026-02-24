@@ -7,6 +7,7 @@ interface ModalProps {
   onClose: () => void
   children: ReactNode
   className?: string
+  ariaLabel?: string
 }
 
 export default function Modal({
@@ -14,6 +15,7 @@ export default function Modal({
   onClose,
   children,
   className = '',
+  ariaLabel,
 }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null)
   const previousFocusRef = useRef<HTMLElement | null>(null)
@@ -84,6 +86,7 @@ export default function Modal({
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
+        aria-label={ariaLabel}
         tabIndex={-1}
         onKeyDown={handleKeyDown}
         className={[

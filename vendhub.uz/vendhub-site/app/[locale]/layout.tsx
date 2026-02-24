@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 import { ToastProvider } from '@/components/ui/Toast'
 import { ModalProvider } from '@/lib/modal-context'
+import { ProductsProvider } from '@/lib/useProductsData'
 import ModalRoot from '@/components/modals/ModalRoot'
 import '../globals.css'
 
@@ -128,8 +129,10 @@ export default async function LocaleLayout({ children, params }: Props) {
         <NextIntlClientProvider messages={messages}>
           <ToastProvider>
             <ModalProvider>
-              {children}
-              <ModalRoot />
+              <ProductsProvider>
+                {children}
+                <ModalRoot />
+              </ProductsProvider>
             </ModalProvider>
           </ToastProvider>
         </NextIntlClientProvider>

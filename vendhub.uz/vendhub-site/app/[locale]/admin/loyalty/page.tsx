@@ -22,45 +22,35 @@ export default function AdminLoyaltyPage() {
   >({})
 
   const fetchTiers = async () => {
-    const { data, error } = await supabase
-      .from('loyalty_tiers')
-      .select('*')
-      .order('sort_order', { ascending: true })
+    try {
+      const { data, error } = await supabase
+        .from('loyalty_tiers')
+        .select('*')
+        .order('sort_order', { ascending: true })
 
-    if (error) {
-      showToast(t('loadError'), 'error')
-    } else {
-      const tierData = data as LoyaltyTier[]
-      setTiers(tierData)
-      const privEdits: Record<string, string> = {}
-      for (const tier of tierData) {
-        privEdits[tier.id] = JSON.stringify(tier.privileges, null, 2)
+      if (error) {
+        showToast(t('loadError'), 'error')
+      } else {
+        const tierData = data as LoyaltyTier[]
+        setTiers(tierData)
+        const privEdits: Record<string, string> = {}
+        for (const tier of tierData) {
+          privEdits[tier.id] = JSON.stringify(tier.privileges, null, 2)
+        }
+        setPrivilegeEdits(privEdits)
       }
-      setPrivilegeEdits(privEdits)
+    } catch (err) {
+      console.error('Loyalty tiers fetch failed:', err)
+      showToast(t('loadError'), 'error')
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   useEffect(() => {
-    supabase
-      .from('loyalty_tiers')
-      .select('*')
-      .order('sort_order', { ascending: true })
-      .then(({ data, error }) => {
-        if (error) {
-          showToast(t('loadError'), 'error')
-        } else {
-          const tierData = data as LoyaltyTier[]
-          setTiers(tierData)
-          const privEdits: Record<string, string> = {}
-          for (const tier of tierData) {
-            privEdits[tier.id] = JSON.stringify(tier.privileges, null, 2)
-          }
-          setPrivilegeEdits(privEdits)
-        }
-        setLoading(false)
-      })
-  }, [showToast, t])
+    fetchTiers()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const getEdit = (tier: LoyaltyTier, field: keyof LoyaltyTier) => {
     return edits[tier.id]?.[field] ?? tier[field]

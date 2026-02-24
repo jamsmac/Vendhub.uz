@@ -30,7 +30,7 @@ export default function MachineModal({ machine, onClose, distance }: MachineModa
   const hasCoords = machine.latitude != null && machine.longitude != null
 
   return (
-    <Modal isOpen onClose={onClose} className="max-w-md overflow-hidden">
+    <Modal isOpen onClose={onClose} className="max-w-md overflow-hidden" ariaLabel={machine.name}>
       {/* Machine image */}
       {machine.image_url && (
         <div className="relative h-48 bg-foam">

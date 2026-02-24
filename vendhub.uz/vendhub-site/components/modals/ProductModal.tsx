@@ -58,7 +58,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
       : product.description ?? caloriesText
 
   return (
-    <Modal isOpen onClose={onClose} className="max-w-md overflow-hidden">
+    <Modal isOpen onClose={onClose} className="max-w-md overflow-hidden" ariaLabel={product.name}>
       {/* Image area */}
       <div
         className={`relative aspect-[4/3] bg-gradient-to-b ${gradient} flex items-center justify-center rounded-t-2xl`}

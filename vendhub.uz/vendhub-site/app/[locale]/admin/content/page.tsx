@@ -27,11 +27,13 @@ export default function AdminContentPage() {
   const [savingId, setSavingId] = useState<string | null>(null)
 
   useEffect(() => {
-    supabase
-      .from('site_content')
-      .select('*')
-      .order('section', { ascending: true })
-      .then(({ data, error }) => {
+    async function fetchContent() {
+      try {
+        const { data, error } = await supabase
+          .from('site_content')
+          .select('*')
+          .order('section', { ascending: true })
+
         if (error) {
           showToast(t('loadError'), 'error')
         } else {
@@ -43,8 +45,15 @@ export default function AdminContentPage() {
           }
           setEdits(newEdits)
         }
+      } catch (err) {
+        console.error('Content fetch failed:', err)
+        showToast(t('loadError'), 'error')
+      } finally {
         setLoading(false)
-      })
+      }
+    }
+
+    fetchContent()
   }, [showToast, t])
 
   const handleSave = async (item: SiteContent) => {

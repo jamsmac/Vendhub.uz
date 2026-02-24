@@ -24,30 +24,29 @@ export default function AdminMachinesPage() {
   const pageSize = 10
 
   const fetchMachines = async () => {
-    const { data, error } = await supabase
-      .from('machines')
-      .select('*')
-      .order('name', { ascending: true })
+    try {
+      const { data, error } = await supabase
+        .from('machines')
+        .select('*')
+        .order('name', { ascending: true })
 
-    if (error) {
+      if (error) {
+        showToast(t('loadError'), 'error')
+      } else {
+        setMachines(data as Machine[])
+      }
+    } catch (err) {
+      console.error('Machines fetch failed:', err)
       showToast(t('loadError'), 'error')
-    } else {
-      setMachines(data as Machine[])
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   useEffect(() => {
-    supabase
-      .from('machines')
-      .select('*')
-      .order('name', { ascending: true })
-      .then(({ data, error }) => {
-        if (error) showToast(t('loadError'), 'error')
-        else setMachines(data as Machine[])
-        setLoading(false)
-      })
-  }, [showToast, t])
+    fetchMachines()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleConfirmDelete = async () => {
     if (!deleteTarget) return

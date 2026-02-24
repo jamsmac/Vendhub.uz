@@ -35,51 +35,55 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     async function fetchStats() {
-      const [
-        productsRes,
-        productsAvailableRes,
-        machinesRes,
-        machinesOnlineRes,
-        requestsRes,
-        promotionsRes,
-        partnersRes,
-      ] = await Promise.all([
-        supabase
-          .from('products')
-          .select('id', { count: 'exact', head: true }),
-        supabase
-          .from('products')
-          .select('id', { count: 'exact', head: true })
-          .eq('available', true),
-        supabase
-          .from('machines')
-          .select('id', { count: 'exact', head: true }),
-        supabase
-          .from('machines')
-          .select('id', { count: 'exact', head: true })
-          .eq('status', 'online'),
-        supabase
-          .from('cooperation_requests')
-          .select('id', { count: 'exact', head: true })
-          .eq('status', 'new'),
-        supabase
-          .from('promotions')
-          .select('id', { count: 'exact', head: true })
-          .eq('is_active', true),
-        supabase
-          .from('partners')
-          .select('id', { count: 'exact', head: true }),
-      ])
+      try {
+        const [
+          productsRes,
+          productsAvailableRes,
+          machinesRes,
+          machinesOnlineRes,
+          requestsRes,
+          promotionsRes,
+          partnersRes,
+        ] = await Promise.all([
+          supabase
+            .from('products')
+            .select('id', { count: 'exact', head: true }),
+          supabase
+            .from('products')
+            .select('id', { count: 'exact', head: true })
+            .eq('available', true),
+          supabase
+            .from('machines')
+            .select('id', { count: 'exact', head: true }),
+          supabase
+            .from('machines')
+            .select('id', { count: 'exact', head: true })
+            .eq('status', 'online'),
+          supabase
+            .from('cooperation_requests')
+            .select('id', { count: 'exact', head: true })
+            .eq('status', 'new'),
+          supabase
+            .from('promotions')
+            .select('id', { count: 'exact', head: true })
+            .eq('is_active', true),
+          supabase
+            .from('partners')
+            .select('id', { count: 'exact', head: true }),
+        ])
 
-      setStats({
-        products: productsRes.count ?? 0,
-        productsAvailable: productsAvailableRes.count ?? 0,
-        machines: machinesRes.count ?? 0,
-        machinesOnline: machinesOnlineRes.count ?? 0,
-        newRequests: requestsRes.count ?? 0,
-        activePromotions: promotionsRes.count ?? 0,
-        partners: partnersRes.count ?? 0,
-      })
+        setStats({
+          products: productsRes.error ? null : (productsRes.count ?? 0),
+          productsAvailable: productsAvailableRes.error ? null : (productsAvailableRes.count ?? 0),
+          machines: machinesRes.error ? null : (machinesRes.count ?? 0),
+          machinesOnline: machinesOnlineRes.error ? null : (machinesOnlineRes.count ?? 0),
+          newRequests: requestsRes.error ? null : (requestsRes.count ?? 0),
+          activePromotions: promotionsRes.error ? null : (promotionsRes.count ?? 0),
+          partners: partnersRes.error ? null : (partnersRes.count ?? 0),
+        })
+      } catch (err) {
+        console.error('Dashboard stats fetch failed:', err)
+      }
     }
 
     fetchStats()
