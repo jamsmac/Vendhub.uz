@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+*.md
+docs
+.claude
+.cline
+.agent
+.agents
+.vscode
+.playwright-mcp
