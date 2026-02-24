@@ -6,15 +6,7 @@ import { Menu, X, ChevronRight } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useToast } from '@/components/ui/Toast'
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher'
-
-const NAV_KEYS = [
-  { key: 'home' as const, href: '#home' },
-  { key: 'machines' as const, href: '#map' },
-  { key: 'menu' as const, href: '#menu' },
-  { key: 'benefits' as const, href: '#benefits' },
-  { key: 'partner' as const, href: '#partner' },
-  { key: 'about' as const, href: '#about' },
-]
+import { NAV_KEYS } from '@/lib/navigation'
 
 export default function Header() {
   const nav = useTranslations('nav')
