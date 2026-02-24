@@ -144,6 +144,7 @@
       "types": "Avtomat turlari"
     },
     "searchPlaceholder": "Nomi yoki manzili bo'yicha qidirish...",
+    "clearSearch": "Qidiruvni tozalash",
     "filters": {
       "all": "Barchasi",
       "online": "Ishlaydi",
@@ -406,6 +407,7 @@
   "machineModel": {
     "back": "Avtomatlarga qaytish",
     "badge": "Kofe avtomati",
+    "imageAlt": "JQ-002-A kofe avtomati",
     "subtitle": "Yangi avlod kofe avtomati — 43\" sensorli ekran, o'rnatilgan muz generatori va 36+ turdagi ichimliklar",
     "quickStats": {
       "beverages": "36+ ichimlik",
@@ -460,6 +462,7 @@
   "machineModelSlushy": {
     "back": "Avtomatlarga qaytish",
     "badge": "Slushy Ice Drink",
+    "imageAlt": "JS-001-A01 slushy avtomati",
     "subtitle": "Slushy va sovutilgan ichimliklar uchun professional avtomat: o'rnatilgan muzlatish tizimi va 55\" 4K sensorli ekran",
     "quickStats": {
       "tempRange": "-10°C...0°C",
@@ -520,6 +523,7 @@
   "machineModelSnack": {
     "back": "Avtomatlarga qaytish",
     "badge": "Gazak avtomati",
+    "imageAlt": "TCN CSC-8C(V49) gazak avtomati",
     "subtitle": "49\" sensorli reklama ekrani, sovutish tizimi va zamonaviy to'lovlarni qo'llab-quvvatlaydigan aqlli vending avtomati.",
     "descriptionTitle": "Model tavsifi",
     "descriptionShort": "TCN CSC-8C(V49) — odam ko'p bo'ladigan joylarda odamsiz savdo uchun mo'ljallangan yangi avlod vending avtomati. 49 dyuymli sensorli ekran mahsulot vitrinasi va reklama displeyi sifatida bir vaqtda ishlaydi.",

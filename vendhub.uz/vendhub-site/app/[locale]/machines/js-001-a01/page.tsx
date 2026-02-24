@@ -106,7 +106,7 @@ function JS001A01Content() {
             <div className="relative aspect-[3/4] max-w-sm mx-auto md:mx-0 bg-gradient-to-b from-foam to-cream rounded-3xl overflow-hidden">
               <Image
                 src="/images/machines/js-001-a01-hero.jpg"
-                alt="JS-001-A01 Slushy vending machine"
+                alt={t('imageAlt')}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain p-3"

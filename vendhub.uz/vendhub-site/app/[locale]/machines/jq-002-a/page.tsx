@@ -98,7 +98,7 @@ function JQ002AContent() {
             <div className="relative aspect-[3/4] max-w-sm mx-auto md:mx-0 bg-gradient-to-b from-foam to-cream rounded-3xl overflow-hidden">
               <Image
                 src="/images/machines/jq-002-a-hero.png"
-                alt="JQ-002-A Coffee Vending Machine"
+                alt={t('imageAlt')}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain p-4"

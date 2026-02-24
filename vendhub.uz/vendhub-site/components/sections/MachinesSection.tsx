@@ -222,6 +222,7 @@ export default function MachinesSection({ initialMachines, initialMachineTypes }
                   <button
                     type="button"
                     onClick={() => setSearchQuery('')}
+                    aria-label={t('clearSearch')}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-espresso/30 hover:text-espresso/60 transition-colors"
                   >
                     <X size={18} />

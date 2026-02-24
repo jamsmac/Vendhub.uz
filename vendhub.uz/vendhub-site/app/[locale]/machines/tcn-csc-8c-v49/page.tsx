@@ -137,7 +137,7 @@ function TCNCSC8CV49Content({ locale }: { locale: string }) {
             <div className="relative aspect-square max-w-md mx-auto md:mx-0 bg-white rounded-3xl border border-espresso/5 overflow-hidden">
               <Image
                 src="/images/machines/tcn-csc-8c-v49-hero.jpg"
-                alt="TCN CSC-8C(V49) vending machine"
+                alt={t('imageAlt')}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain p-4"
