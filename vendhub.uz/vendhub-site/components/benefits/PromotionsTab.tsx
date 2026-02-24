@@ -41,11 +41,10 @@ export default function PromotionsTab({ promotions }: { promotions: Promotion[] 
 
   function formatDate(dateStr: string) {
     const d = new Date(dateStr)
-    return d.toLocaleDateString(locale === 'uz' ? 'uz-UZ' : 'ru-RU', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    })
+    const dd = String(d.getUTCDate()).padStart(2, '0')
+    const mm = String(d.getUTCMonth() + 1).padStart(2, '0')
+    const yyyy = d.getUTCFullYear()
+    return `${dd}.${mm}.${yyyy}`
   }
 
   return (
