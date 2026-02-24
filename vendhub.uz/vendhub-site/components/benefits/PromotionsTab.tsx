@@ -23,8 +23,8 @@ export default function PromotionsTab() {
       .select('*')
       .eq('is_active', true)
       .order('sort_order')
-      .then(({ data }) => {
-        if (data?.length) setPromotions(data as Promotion[])
+      .then(({ data, error }) => {
+        if (!error && data?.length) setPromotions(data as Promotion[])
       })
   }, [])
 
@@ -43,7 +43,7 @@ export default function PromotionsTab() {
 
   function formatDate(dateStr: string) {
     const d = new Date(dateStr)
-    return d.toLocaleDateString('ru-RU', {
+    return d.toLocaleDateString(locale === 'uz' ? 'uz-UZ' : 'ru-RU', {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',

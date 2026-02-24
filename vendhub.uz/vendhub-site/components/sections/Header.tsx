@@ -133,7 +133,7 @@ export default function Header() {
                 VendHub
               </span>
               <span className="text-cream/60 text-xs block leading-tight">
-                Coffee & Snacks
+                {header('brandTagline')}
               </span>
             </div>
           </a>
@@ -148,6 +148,7 @@ export default function Header() {
                   e.preventDefault()
                   handleNavClick(item.href)
                 }}
+                aria-current={activeSection === item.href ? 'true' : undefined}
                 className={[
                   'px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200',
                   activeSection === item.href
@@ -200,6 +201,7 @@ export default function Header() {
                   e.preventDefault()
                   handleNavClick(item.href)
                 }}
+                aria-current={activeSection === item.href ? 'true' : undefined}
                 className={[
                   'px-4 py-2.5 rounded-lg text-sm font-medium transition-all',
                   activeSection === item.href

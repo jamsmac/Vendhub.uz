@@ -34,6 +34,7 @@
   },
 
   "header": {
+    "brandTagline": "Kofe va gazaklar",
     "mobileAppSoon": "Tez kunda! Mobil ilova ishlab chiqilmoqda",
     "closeMenu": "Menyuni yopish",
     "openMenu": "Menyuni ochish"
@@ -497,6 +498,9 @@
     "back": "Avtomatlarga qaytish",
     "badge": "Gazak avtomati",
     "subtitle": "49\" sensorli reklama ekrani, sovutish tizimi va zamonaviy to'lovlarni qo'llab-quvvatlaydigan aqlli vending avtomati.",
+    "descriptionTitle": "Model tavsifi",
+    "descriptionShort": "TCN CSC-8C(V49) — odam ko'p bo'ladigan joylarda odamsiz savdo uchun mo'ljallangan yangi avlod vending avtomati. 49 dyuymli sensorli ekran mahsulot vitrinasi va reklama displeyi sifatida bir vaqtda ishlaydi.",
+    "descriptionLong": "Avtomat 6 ta javonda 48 ta hujayrada 240 tagacha mahsulot joylashtiradi, +4°C...+25°C diapazonida haroratni sozlaydi va MDB/DEX bilan mos ishlaydi. Naqd pul, kartalar va mobil to'lovlar qo'llab-quvvatlanadi, bepul bulutli boshqaruv esa qoldiq, narx va savdoni masofadan nazorat qilish imkonini beradi.",
     "quickStats": {
       "screen": "49\" Touch Screen",
       "capacity": "240 tagacha mahsulot",

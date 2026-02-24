@@ -42,8 +42,8 @@ export default function MachineForm({
       .select('slug, name')
       .eq('is_active', true)
       .order('sort_order')
-      .then(({ data }) => {
-        if (data) setMachineTypes(data)
+      .then(({ data, error }) => {
+        if (!error && data) setMachineTypes(data)
       })
   }, [])
 

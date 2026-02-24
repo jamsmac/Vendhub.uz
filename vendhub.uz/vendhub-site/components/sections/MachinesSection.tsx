@@ -44,16 +44,16 @@ export default function MachinesSection() {
       .from('machines')
       .select('*')
       .order('name')
-      .then(({ data }) => {
-        if (data?.length) setMachines(data as Machine[])
+      .then(({ data, error }) => {
+        if (!error && data?.length) setMachines(data as Machine[])
       })
     supabase
       .from('machine_types')
       .select('*')
       .eq('is_active', true)
       .order('sort_order')
-      .then(({ data }) => {
-        if (data) setMachineTypes(data as MachineTypeDetail[])
+      .then(({ data, error }) => {
+        if (!error && data) setMachineTypes(data as MachineTypeDetail[])
       })
   }, [])
 

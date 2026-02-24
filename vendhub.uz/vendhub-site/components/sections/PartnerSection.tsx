@@ -42,13 +42,12 @@ export default function PartnerSection() {
   const [partnerList, setPartnerList] = useState<Partner[]>(fallbackPartners)
 
   useEffect(() => {
-    // Fetch CMS data for partnership models
     supabase
       .from('site_content')
       .select('key, value')
       .eq('section', 'partnership')
-      .then(({ data }) => {
-        if (data) {
+      .then(({ data, error }) => {
+        if (!error && data) {
           const map: Record<string, string> = {}
           for (const item of data) {
             map[item.key] = item.value
@@ -57,13 +56,12 @@ export default function PartnerSection() {
         }
       })
 
-    // Fetch partners from Supabase
     supabase
       .from('partners')
       .select('*')
       .order('sort_order', { ascending: true })
-      .then(({ data }) => {
-        if (data && data.length > 0) {
+      .then(({ data, error }) => {
+        if (!error && data && data.length > 0) {
           setPartnerList(data as Partner[])
         }
       })

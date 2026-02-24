@@ -173,6 +173,20 @@ function TCNCSC8CV49Content({ locale }: { locale: string }) {
 
         <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
           <h2 className="font-display text-2xl font-bold text-espresso-dark mb-6">
+            {t('descriptionTitle')}
+          </h2>
+          <div className="bg-white rounded-2xl border border-espresso/5 p-5 sm:p-6 space-y-4">
+            <p className="text-sm sm:text-base text-chocolate/75 leading-relaxed">
+              {t('descriptionShort')}
+            </p>
+            <p className="text-sm sm:text-base text-chocolate/70 leading-relaxed">
+              {t('descriptionLong')}
+            </p>
+          </div>
+        </section>
+
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+          <h2 className="font-display text-2xl font-bold text-espresso-dark mb-6">
             {t('specsTitle')}
           </h2>
           <div className="bg-white rounded-2xl border border-espresso/5 overflow-hidden">
