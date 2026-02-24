@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Plus, Search, Pencil, Trash2, Eye, EyeOff } from 'lucide-react'
@@ -24,7 +24,7 @@ export default function AdminMachineTypesPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const pageSize = 10
 
-  const fetchTypes = async () => {
+  const fetchTypes = useCallback(async () => {
     const { data, error } = await supabase
       .from('machine_types')
       .select('*')
@@ -36,12 +36,11 @@ export default function AdminMachineTypesPage() {
       setTypes(data as MachineTypeDetail[])
     }
     setLoading(false)
-  }
+  }, [showToast, t])
 
   useEffect(() => {
     fetchTypes()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [fetchTypes])
 
   const handleToggleActive = async (item: MachineTypeDetail) => {
     const { error } = await supabase

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { Save } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
@@ -21,7 +21,7 @@ export default function AdminLoyaltyPage() {
     Record<string, string>
   >({})
 
-  const fetchTiers = async () => {
+  const fetchTiers = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('loyalty_tiers')
@@ -45,12 +45,11 @@ export default function AdminLoyaltyPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [showToast, t])
 
   useEffect(() => {
     fetchTiers()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [fetchTiers])
 
   const getEdit = (tier: LoyaltyTier, field: keyof LoyaltyTier) => {
     return edits[tier.id]?.[field] ?? tier[field]

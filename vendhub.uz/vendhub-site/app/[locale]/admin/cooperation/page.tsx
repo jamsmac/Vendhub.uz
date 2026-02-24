@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { X } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
@@ -46,7 +46,7 @@ export default function AdminCooperationPage() {
     { value: 'processed', label: t('statusFilters.processed') },
   ]
 
-  const fetchRequests = async () => {
+  const fetchRequests = useCallback(async () => {
     const { data, error } = await supabase
       .from('cooperation_requests')
       .select('*')
@@ -58,12 +58,11 @@ export default function AdminCooperationPage() {
       setRequests(data as CooperationRequest[])
     }
     setLoading(false)
-  }
+  }, [showToast, t])
 
   useEffect(() => {
     fetchRequests()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [fetchRequests])
 
   const handleStatusChange = async (
     id: string,

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { Pencil, Trash2 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
@@ -24,7 +24,7 @@ export default function AdminMachinesPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const pageSize = 10
 
-  const fetchMachines = async () => {
+  const fetchMachines = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('machines')
@@ -42,12 +42,11 @@ export default function AdminMachinesPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [showToast, t])
 
   useEffect(() => {
     fetchMachines()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [fetchMachines])
 
   const handleConfirmDelete = async () => {
     if (!deleteTarget) return

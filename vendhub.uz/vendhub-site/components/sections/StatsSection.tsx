@@ -1,15 +1,28 @@
 import { getTranslations } from 'next-intl/server'
+import { supabase } from '@/lib/supabase'
 import Card from '@/components/ui/Card'
 
 const STATS = [
-  { emoji: '\u2615', valueKey: 'machinesValue', labelKey: 'machines', accent: 'bg-orange-50' },
-  { emoji: '\uD83E\uDD64', valueKey: 'drinksValue', labelKey: 'drinks', accent: 'bg-amber-50' },
-  { emoji: '\uD83D\uDCCA', valueKey: 'ordersValue', labelKey: 'orders', accent: 'bg-emerald-50' },
-  { emoji: '\u2B50', valueKey: 'ratingValue', labelKey: 'rating', accent: 'bg-yellow-50' },
+  { emoji: '\u2615', dbKey: 'machines_count', valueKey: 'machinesValue', labelKey: 'machines', accent: 'bg-orange-50' },
+  { emoji: '\uD83E\uDD64', dbKey: 'drinks_count', valueKey: 'drinksValue', labelKey: 'drinks', accent: 'bg-amber-50' },
+  { emoji: '\uD83D\uDCCA', dbKey: 'orders_count', valueKey: 'ordersValue', labelKey: 'orders', accent: 'bg-emerald-50' },
+  { emoji: '\u2B50', dbKey: 'rating', valueKey: 'ratingValue', labelKey: 'rating', accent: 'bg-yellow-50' },
 ] as const
 
 export default async function StatsSection() {
   const t = await getTranslations('stats')
+
+  const { data } = await supabase
+    .from('site_content')
+    .select('key, value')
+    .eq('section', 'stats')
+
+  const dbValues: Record<string, string> = {}
+  if (data) {
+    for (const row of data) {
+      dbValues[row.key] = row.value
+    }
+  }
 
   return (
     <section aria-label="Statistics" className="relative -mt-8 z-10">
@@ -23,7 +36,7 @@ export default async function StatsSection() {
                 {stat.emoji}
               </div>
               <div className="text-3xl font-bold text-espresso-dark mt-3">
-                {t(stat.valueKey)}
+                {dbValues[stat.dbKey] ?? t(stat.valueKey)}
               </div>
               <div className="text-sm text-chocolate/60 mt-1">{t(stat.labelKey)}</div>
             </Card>
