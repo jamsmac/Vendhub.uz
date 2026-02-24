@@ -20,12 +20,14 @@ export function calculateDistance(
   return EARTH_RADIUS_KM * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 }
 
-/** Format km → "350 м" / "2.1 км" */
-export function formatDistance(km: number): string {
+/** Format km → "350 м" / "2.1 км" (ru) or "350 m" / "2.1 km" (uz) */
+export function formatDistance(km: number, locale?: string): string {
+  const m = locale === 'uz' ? 'm' : 'м'
+  const kmUnit = locale === 'uz' ? 'km' : 'км'
   if (km < 1) {
-    return `${Math.round(km * 1000)} м`
+    return `${Math.round(km * 1000)} ${m}`
   }
-  return `${km.toFixed(1)} км`
+  return `${km.toFixed(1)} ${kmUnit}`
 }
 
 /** Return machines sorted by distance from user, with distance attached */

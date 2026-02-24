@@ -12,9 +12,9 @@ interface ProductsContextValue {
 
 const ProductsContext = createContext<ProductsContextValue | null>(null)
 
-export function ProductsProvider({ children }: { children: ReactNode }) {
-  const [products, setProducts] = useState<Product[]>(fallbackProducts)
-  const [loading, setLoading] = useState(true)
+export function ProductsProvider({ children, initialProducts }: { children: ReactNode; initialProducts?: Product[] }) {
+  const [products, setProducts] = useState<Product[]>(initialProducts ?? fallbackProducts)
+  const [loading, setLoading] = useState(!initialProducts?.length)
 
   useEffect(() => {
     let active = true
@@ -29,7 +29,6 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
 
       if (error || !data) {
         console.error('Products fetch failed:', error?.message)
-        setProducts(fallbackProducts)
       } else {
         setProducts(data as Product[])
       }
@@ -37,8 +36,12 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
       setLoading(false)
     }
 
-    fetchProducts()
+    // Skip initial fetch if server-provided data exists
+    if (!initialProducts?.length) {
+      fetchProducts()
+    }
 
+    // Realtime subscription for live admin updates
     const channel = supabase
       .channel('products-global')
       .on(
@@ -54,7 +57,7 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
       active = false
       channel.unsubscribe()
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <ProductsContext.Provider value={{ products, loading }}>

@@ -148,7 +148,7 @@ export default function Header() {
                   e.preventDefault()
                   handleNavClick(item.href)
                 }}
-                aria-current={activeSection === item.href ? 'true' : undefined}
+                aria-current={activeSection === item.href ? 'page' : undefined}
                 className={[
                   'px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200',
                   activeSection === item.href
@@ -201,7 +201,7 @@ export default function Header() {
                   e.preventDefault()
                   handleNavClick(item.href)
                 }}
-                aria-current={activeSection === item.href ? 'true' : undefined}
+                aria-current={activeSection === item.href ? 'page' : undefined}
                 className={[
                   'px-4 py-2.5 rounded-lg text-sm font-medium transition-all',
                   activeSection === item.href

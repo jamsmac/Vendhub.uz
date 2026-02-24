@@ -8,6 +8,9 @@ import { ToastProvider } from '@/components/ui/Toast'
 import { ModalProvider } from '@/lib/modal-context'
 import { ProductsProvider } from '@/lib/useProductsData'
 import ModalRoot from '@/components/modals/ModalRoot'
+import { supabase } from '@/lib/supabase'
+import { products as fallbackProducts } from '@/lib/data'
+import type { Product } from '@/lib/types'
 import '../globals.css'
 
 const playfair = Playfair_Display({
@@ -86,10 +89,13 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale)
 
-  const [messages, seo] = await Promise.all([
+  const [messages, seo, productsResult] = await Promise.all([
     getMessages(),
     getTranslations('seo'),
+    supabase.from('products').select('*').order('sort_order', { ascending: true }),
   ])
+
+  const initialProducts = (productsResult.data?.length ? productsResult.data : fallbackProducts) as Product[]
 
   // JSON-LD structured data — locale-aware, built from trusted translation strings
   const jsonLd = JSON.stringify({
@@ -143,7 +149,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <NextIntlClientProvider messages={messages}>
           <ToastProvider>
             <ModalProvider>
-              <ProductsProvider>
+              <ProductsProvider initialProducts={initialProducts}>
                 {children}
                 <ModalRoot />
               </ProductsProvider>

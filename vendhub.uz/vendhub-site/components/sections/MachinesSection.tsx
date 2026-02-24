@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { Search, X, LocateFixed, Loader2 } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useModal } from '@/lib/modal-context'
 import type { Machine } from '@/lib/types'
 import { useGeolocation } from '@/lib/useGeolocation'
@@ -33,6 +33,7 @@ interface MachinesSectionProps {
 export default function MachinesSection({ initialMachines, initialMachineTypes }: MachinesSectionProps) {
   const { openMachineModal } = useModal()
   const t = useTranslations('machines')
+  const locale = useLocale()
   const geo = useGeolocation()
   const [activeTab, setActiveTab] = useState<Tab>('map')
   const [searchQuery, setSearchQuery] = useState('')
@@ -329,7 +330,7 @@ export default function MachinesSection({ initialMachines, initialMachineTypes }
               machines={filteredMachines}
               onMachineClick={(machine) => {
                 const m = machine as MachineWithDistance
-                const dist = m.distance != null ? formatDistance(m.distance) : null
+                const dist = m.distance != null ? formatDistance(m.distance, locale) : null
                 openMachineModal(machine, dist)
               }}
               userLocation={userLocation}
@@ -339,7 +340,7 @@ export default function MachinesSection({ initialMachines, initialMachineTypes }
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredMachines.map((machine) => {
                 const dist = (machine as MachineWithDistance).distance
-                const distFormatted = dist != null ? formatDistance(dist) : null
+                const distFormatted = dist != null ? formatDistance(dist, locale) : null
 
                 return (
                   <MachineCard
