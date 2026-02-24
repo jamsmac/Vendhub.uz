@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import { X } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import Modal from '@/components/ui/Modal'
 import Badge from '@/components/ui/Badge'
 import PriceTag from '@/components/ui/PriceTag'
@@ -11,6 +11,7 @@ import Button from '@/components/ui/Button'
 import { getProductPresentation } from '@/lib/productPresentation'
 import { formatPrice } from '@/lib/utils'
 import { CATEGORY_EMOJI, CATEGORY_GRADIENT } from '@/lib/categoryStyles'
+import { localized } from '@/lib/localize'
 import type { Product, ProductOption } from '@/lib/types'
 
 interface ProductModalProps {
@@ -21,6 +22,9 @@ interface ProductModalProps {
 export default function ProductModal({ product, onClose }: ProductModalProps) {
   const t = useTranslations('productModal')
   const tc = useTranslations('common')
+  const locale = useLocale()
+  const productName = localized(product, 'name', locale)
+  const productDesc = localized(product, 'description', locale)
 
   const hotOptions = useMemo(
     () => product.options.filter((o) => o.temperature === 'hot'),
@@ -53,12 +57,12 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
       ? `${presentation.caloriesKcal} ${tc('kcal')}`
       : null
   const descriptionText =
-    product.description && caloriesText
-      ? `${product.description} · ${caloriesText}`
-      : product.description ?? caloriesText
+    productDesc && caloriesText
+      ? `${productDesc} · ${caloriesText}`
+      : productDesc || caloriesText
 
   return (
-    <Modal isOpen onClose={onClose} className="max-w-md overflow-hidden" ariaLabel={product.name}>
+    <Modal isOpen onClose={onClose} className="max-w-md overflow-hidden" ariaLabel={productName}>
       {/* Image area */}
       <div
         className={`relative aspect-[4/3] bg-gradient-to-b ${gradient} flex items-center justify-center rounded-t-2xl`}
@@ -66,7 +70,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
         {presentation.imageSrc ? (
           <Image
             src={presentation.imageSrc}
-            alt={product.name}
+            alt={productName}
             fill
             sizes="(min-width: 768px) 448px, 100vw"
             className="object-cover"
@@ -103,7 +107,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
       {/* Info section */}
       <div className="p-5">
         <h3 className="font-display text-xl uppercase font-bold text-espresso-dark">
-          {product.name}
+          {productName}
         </h3>
         {descriptionText && (
           <p className="text-sm text-chocolate/60 mt-1">

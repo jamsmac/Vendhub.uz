@@ -2,7 +2,8 @@
 
 import { useMemo } from 'react'
 import Image from 'next/image'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { localized } from '@/lib/localize'
 import { getProductPresentation } from '@/lib/productPresentation'
 import { useProductsData } from '@/lib/useProductsData'
 import { useModal } from '@/lib/modal-context'
@@ -14,6 +15,7 @@ import SectionHeader from '@/components/ui/SectionHeader'
 export default function PopularProducts() {
   const t = useTranslations('popularProducts')
   const tc = useTranslations('common')
+  const locale = useLocale()
   const { products } = useProductsData()
   const { openProductModal } = useModal()
   const popularProducts = useMemo(
@@ -38,6 +40,8 @@ export default function PopularProducts() {
                 ? `${presentation.caloriesKcal} ${tc('kcal')}`
                 : null
 
+            const productName = localized(product, 'name', locale)
+
             return (
               <Card
                 key={product.id}
@@ -52,7 +56,7 @@ export default function PopularProducts() {
                   {presentation.imageSrc ? (
                     <Image
                       src={presentation.imageSrc}
-                      alt={product.name}
+                      alt={productName}
                       fill
                       sizes="(min-width: 640px) 25vw, 50vw"
                       className="object-cover"
@@ -70,7 +74,7 @@ export default function PopularProducts() {
                 {/* Info */}
                 <div className="p-3">
                   <div className="font-medium text-chocolate truncate">
-                    {product.name}
+                    {productName}
                   </div>
                   {caloriesText && (
                     <div className="text-xs text-chocolate/50 mt-0.5">

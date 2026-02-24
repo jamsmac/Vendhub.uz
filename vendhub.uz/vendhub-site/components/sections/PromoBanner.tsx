@@ -1,4 +1,5 @@
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getLocale } from 'next-intl/server'
+import { localized } from '@/lib/localize'
 import type { Promotion } from '@/lib/types'
 
 interface PromoBannerProps {
@@ -9,6 +10,7 @@ export default async function PromoBanner({ promo }: PromoBannerProps) {
   if (!promo) return null
 
   const t = await getTranslations('promoBanner')
+  const locale = await getLocale()
 
   return (
     <section aria-label={t('ariaLabel')} className="mt-12 px-4">
@@ -20,11 +22,11 @@ export default async function PromoBanner({ promo }: PromoBannerProps) {
           </span>
 
           <h3 className="font-display text-2xl sm:text-3xl font-bold">
-            {promo.title}
+            {localized(promo, 'title', locale)}
           </h3>
 
           <p className="text-white/80 mt-2 max-w-md">
-            {promo.description ?? ''}
+            {localized(promo, 'description', locale)}
           </p>
 
           <a

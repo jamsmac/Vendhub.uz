@@ -314,11 +314,16 @@
   "about": {
     "title": "О компании",
     "subtitle": "VendHub — сеть вендинговых автоматов в Ташкенте",
+    "description": "VendHub — оператор сети современных кофейных и снэк-автоматов в Ташкенте. Автоматы в больницах, университетах, госучреждениях и жилых комплексах. Круглосуточный доступ к качественным горячим и холодным напиткам.",
     "contacts": {
       "phone": "Телефон",
+      "phoneValue": "+998 71 200 39 99",
       "email": "Email",
+      "emailValue": "info@vendhub.uz",
       "telegram": "Telegram",
+      "telegramValue": "@vendhub_support",
       "address": "Адрес",
+      "addressValue": "Ташкент, Узбекистан",
       "support": "Поддержка",
       "supportHours": "24/7 поддержка"
     }
@@ -570,8 +575,7 @@
       "machines": "Автоматы",
       "machineTypes": "Типы автоматов",
       "promotions": "Акции",
-      "cooperation": "Заявки",
-      "partners": "Партнёры",
+      "partnership": "Партнёрство",
       "loyalty": "Лояльность",
       "content": "Контент",
       "bonusActions": "Бонусные действия",
@@ -893,6 +897,63 @@
         "website": "Сайт (URL)",
         "description": "Описание",
         "sortOrder": "Порядок сортировки"
+      }
+    },
+    "partnership": {
+      "tabs": {
+        "models": "Модели",
+        "requests": "Заявки",
+        "partners": "Партнёры"
+      },
+      "models": {
+        "title": "Модели партнёрства",
+        "add": "Добавить модель",
+        "count": "{count} моделей",
+        "table": {
+          "icon": "Иконка",
+          "title": "Название",
+          "color": "Цвет",
+          "benefits": "Бенефиты",
+          "active": "Активна",
+          "sort": "Порядок",
+          "actions": "Действия"
+        },
+        "empty": "Модели не найдены",
+        "loadError": "Ошибка загрузки моделей",
+        "created": "Модель создана",
+        "updated": "Модель обновлена",
+        "deleted": "Модель удалена",
+        "deleteError": "Ошибка удаления",
+        "saveError": "Ошибка сохранения",
+        "deleteTitle": "Удалить модель?",
+        "deleteMessage": "Модель «{name}» будет удалена безвозвратно.",
+        "activeYes": "Активна",
+        "activeNo": "Неактивна",
+        "newTitle": "Новая модель",
+        "editTitle": "Редактировать модель",
+        "form": {
+          "key": "Ключ (slug)",
+          "keyPlaceholder": "например: custom-type",
+          "title": "Название (RU) *",
+          "titleUz": "Название (UZ)",
+          "description": "Описание (RU)",
+          "descriptionUz": "Описание (UZ)",
+          "icon": "Иконка",
+          "colorScheme": "Цветовая схема",
+          "benefits": "Бенефиты (RU)",
+          "benefitsUz": "Бенефиты (UZ)",
+          "addBenefit": "Добавить бенефит",
+          "benefitPlaceholder": "Введите текст бенефита",
+          "sortOrder": "Порядок сортировки",
+          "isActive": "Активна"
+        }
+      },
+      "requests": {
+        "delete": "Удалить",
+        "deleteTitle": "Удалить заявку?",
+        "deleteMessage": "Заявка от «{name}» будет удалена безвозвратно.",
+        "deleted": "Заявка удалена",
+        "deleteError": "Ошибка удаления заявки"
       }
     },
     "loyalty": {

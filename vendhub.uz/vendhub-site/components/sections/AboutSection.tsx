@@ -3,47 +3,44 @@ import { getTranslations } from 'next-intl/server'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
 
-interface AboutSectionProps {
-  cmsData: Record<string, string>
-}
-
-export default async function AboutSection({ cmsData }: AboutSectionProps) {
+export default async function AboutSection() {
   const t = await getTranslations('about')
-  const getContent = (key: string) => cmsData[key] ?? ''
-  const description = getContent('description')
+
+  const phoneValue = t('contacts.phoneValue')
+  const emailValue = t('contacts.emailValue')
+  const telegramValue = t('contacts.telegramValue')
+  const addressValue = t('contacts.addressValue')
 
   const CONTACTS = [
     {
       icon: Phone,
       label: t('contacts.phone'),
-      value: getContent('phone'),
-      href: `tel:${getContent('phone').replace(/[^\d+]/g, '')}`,
+      value: phoneValue,
+      href: `tel:${phoneValue.replace(/[^\d+]/g, '')}`,
       accent: 'bg-mint/10',
       accentText: 'text-mint',
     },
     {
       icon: Mail,
       label: t('contacts.email'),
-      value: getContent('email'),
-      href: `mailto:${getContent('email')}`,
+      value: emailValue,
+      href: `mailto:${emailValue}`,
       accent: 'bg-caramel/10',
       accentText: 'text-caramel',
     },
     {
       icon: MessageCircle,
       label: t('contacts.telegram'),
-      value: getContent('telegram'),
-      href: `https://t.me/${getContent('telegram').replace('@', '')}`,
+      value: telegramValue,
+      href: `https://t.me/${telegramValue.replace('@', '')}`,
       accent: 'bg-blue-100',
       accentText: 'text-blue-500',
     },
     {
       icon: MapPin,
       label: t('contacts.address'),
-      value: getContent('address'),
-      href: getContent('address')
-        ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(getContent('address'))}`
-        : null,
+      value: addressValue,
+      href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressValue)}`,
       accent: 'bg-purple-100',
       accentText: 'text-purple-500',
     },
@@ -66,15 +63,13 @@ export default async function AboutSection({ cmsData }: AboutSectionProps) {
         />
 
         {/* Company description */}
-        {description && (
-          <div className="max-w-3xl mx-auto mb-12">
-            <Card className="p-6 sm:p-8">
-              <p className="text-chocolate/70 leading-relaxed text-center">
-                {description}
-              </p>
-            </Card>
-          </div>
-        )}
+        <div className="max-w-3xl mx-auto mb-12">
+          <Card className="p-6 sm:p-8">
+            <p className="text-chocolate/70 leading-relaxed text-center">
+              {t('description')}
+            </p>
+          </Card>
+        </div>
 
         {/* Contacts grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">

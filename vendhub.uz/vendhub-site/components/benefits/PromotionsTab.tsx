@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Copy, ChevronDown, ChevronUp, Zap, Tag, Gift } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
+import { localized, localizedArray } from '@/lib/localize'
 import type { Promotion } from '@/lib/types'
 import Badge from '@/components/ui/Badge'
 import Card from '@/components/ui/Card'
@@ -50,14 +51,21 @@ export default function PromotionsTab({ promotions }: { promotions: Promotion[] 
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {activePromos.map((promo) => (
+        {activePromos.map((promo) => {
+          const promoTitle = localized(promo, 'title', locale)
+          const promoBadge = localized(promo, 'badge', locale)
+          const promoDesc = localized(promo, 'description', locale)
+          const promoConditions = localizedArray(promo, 'conditions', locale)
+          const promoInstruction = localized(promo, 'action_instruction', locale)
+
+          return (
           <Card key={promo.id} className="overflow-hidden">
             {/* Gradient top strip */}
             <div className={`h-2 bg-gradient-to-r ${promo.gradient}`} />
 
             <div className="p-6">
               <div className="flex items-start justify-between gap-3 mb-3">
-                <Badge variant="promo">{promo.badge}</Badge>
+                <Badge variant="promo">{promoBadge}</Badge>
                 {promo.valid_until && (
                   <span className="text-xs text-chocolate/40">
                     {t('validUntil', { date: formatDate(promo.valid_until) })}
@@ -66,18 +74,18 @@ export default function PromotionsTab({ promotions }: { promotions: Promotion[] 
               </div>
 
               <h3 className="font-display text-xl font-bold text-espresso-dark mb-2">
-                {promo.title}
+                {promoTitle}
               </h3>
 
               <p className="text-sm text-chocolate/60 mb-4">
-                {promo.description}
+                {promoDesc}
               </p>
 
               {promo.visibility_type === 'action_required' ? (
                 <div className="flex items-center gap-3 bg-amber-50 border border-amber-200/50 rounded-xl px-4 py-3 mb-4">
                   <Zap size={18} className="text-amber-500 shrink-0" />
                   <span className="text-sm text-amber-700">
-                    {promo.action_instruction}
+                    {promoInstruction}
                   </span>
                 </div>
               ) : promo.promo_code ? (
@@ -112,7 +120,7 @@ export default function PromotionsTab({ promotions }: { promotions: Promotion[] 
 
               {expandedId === promo.id && (
                 <ul className="mt-3 space-y-1.5 animate-fadeIn">
-                  {promo.conditions.map((cond, i) => (
+                  {promoConditions.map((cond, i) => (
                     <li
                       key={i}
                       className="flex items-center gap-2 text-sm text-chocolate/60"
@@ -125,7 +133,8 @@ export default function PromotionsTab({ promotions }: { promotions: Promotion[] 
               )}
             </div>
           </Card>
-        ))}
+          )
+        })}
       </div>
 
       {/* How promo codes work */}

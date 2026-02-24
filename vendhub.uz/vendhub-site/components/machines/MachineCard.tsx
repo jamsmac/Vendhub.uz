@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { localized } from '@/lib/localize'
 import Card from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
 import type { Machine } from '@/lib/types'
@@ -13,7 +14,9 @@ interface MachineCardProps {
 
 export default function MachineCard({ machine, distFormatted, onClick }: MachineCardProps) {
   const t = useTranslations('machines')
+  const locale = useLocale()
   const typeMeta = MACHINE_TYPE_META[machine.type as MachineType]
+  const machineAddress = localized(machine, 'address', locale)
 
   return (
     <Card hover onClick={onClick}>
@@ -69,7 +72,7 @@ export default function MachineCard({ machine, distFormatted, onClick }: Machine
         )}
 
         <p className="text-sm text-chocolate/60 mb-3">
-          {machine.address}
+          {machineAddress}
         </p>
 
         {/* Stats row */}

@@ -10,6 +10,7 @@ export interface ProductOption {
 export interface Product {
   id: string
   name: string
+  name_uz?: string | null
   price: number
   category: 'coffee' | 'tea' | 'other' | 'snack'
   temperature: 'hot' | 'cold' | 'both' | 'none'
@@ -17,6 +18,7 @@ export interface Product {
   available: boolean
   image_url: string | null
   description: string | null
+  description_uz?: string | null
   rating: number
   options: ProductOption[]
   is_new: boolean
@@ -57,6 +59,7 @@ export interface Machine {
   id: string
   name: string
   address: string
+  address_uz?: string | null
   type: string
   status: 'online' | 'offline'
   latitude: number | null
@@ -76,17 +79,22 @@ export interface Machine {
 export interface Promotion {
   id: string
   title: string
+  title_uz?: string | null
   badge: string
+  badge_uz?: string | null
   description: string
+  description_uz?: string | null
   promo_code: string | null
   gradient: string
   conditions: string[]
+  conditions_uz?: string[] | null
   valid_until: string | null
   is_active: boolean
   sort_order: number
   created_at: string
   visibility_type: 'visible' | 'action_required'
   action_instruction: string
+  action_instruction_uz?: string | null
   discount_type: 'percent' | 'fixed' | 'special' | null
   discount_value: string | null
   updated_at: string
@@ -133,18 +141,37 @@ export interface SiteContent {
   section: string
   key: string
   value: string
+  value_uz?: string | null
+  updated_at: string
+}
+
+export interface PartnershipModel {
+  id: string
+  key: string
+  title: string
+  title_uz: string | null
+  description: string
+  description_uz: string | null
+  icon: string
+  color_scheme: string
+  benefits: string[]
+  benefits_uz: string[] | null
+  is_active: boolean
+  sort_order: number
+  created_at: string
   updated_at: string
 }
 
 export interface CooperationRequest {
   id: string
-  model: 'locations' | 'suppliers' | 'investors' | 'franchise'
+  model: string
   name: string
   phone: string
   comment: string | null
   status: 'new' | 'read' | 'processed'
   admin_notes: string | null
   created_at: string
+  updated_at?: string
 }
 
 export interface Partner {

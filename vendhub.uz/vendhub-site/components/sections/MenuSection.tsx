@@ -3,7 +3,8 @@
 import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import { Search } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { localized } from '@/lib/localize'
 import { getProductPresentation } from '@/lib/productPresentation'
 import { useProductsData } from '@/lib/useProductsData'
 import { useModal } from '@/lib/modal-context'
@@ -23,6 +24,7 @@ export default function MenuSection() {
   const { products } = useProductsData()
   const t = useTranslations('menu')
   const tc = useTranslations('common')
+  const locale = useLocale()
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all')
   const [tempFilter, setTempFilter] = useState<TempFilter>('all')
 
@@ -160,14 +162,16 @@ export default function MenuSection() {
                 presentation.fallbackEmoji ??
                 CATEGORY_EMOJI[product.category] ??
                 '\u2615'
+              const productName = localized(product, 'name', locale)
+              const productDesc = localized(product, 'description', locale)
               const caloriesText =
                 presentation.caloriesKcal !== null
                   ? `${presentation.caloriesKcal} ${tc('kcal')}`
                   : null
               const cardSubtitle =
-                product.description && caloriesText
-                  ? `${product.description} · ${caloriesText}`
-                  : product.description ?? caloriesText
+                productDesc && caloriesText
+                  ? `${productDesc} · ${caloriesText}`
+                  : productDesc || caloriesText
 
               return (
                 <Card
@@ -184,7 +188,7 @@ export default function MenuSection() {
                     {presentation.imageSrc ? (
                       <Image
                         src={presentation.imageSrc}
-                        alt={product.name}
+                        alt={productName}
                         fill
                         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                         className="object-cover"
@@ -233,7 +237,7 @@ export default function MenuSection() {
                   {/* Info area */}
                   <div className="p-3">
                     <div className="font-medium text-chocolate text-sm line-clamp-1">
-                      {product.name}
+                      {productName}
                     </div>
                     {cardSubtitle && (
                       <p className="text-xs text-chocolate/50 line-clamp-1 mt-0.5">

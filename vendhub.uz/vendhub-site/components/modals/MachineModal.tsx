@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Navigation } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import Modal from '@/components/ui/Modal'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
@@ -13,6 +13,7 @@ import { getProductPresentation } from '@/lib/productPresentation'
 import { useProductsData } from '@/lib/useProductsData'
 import { useModal } from '@/lib/modal-context'
 import { CATEGORY_EMOJI } from '@/lib/categoryStyles'
+import { localized } from '@/lib/localize'
 import type { Machine } from '@/lib/types'
 
 interface MachineModalProps {
@@ -23,10 +24,12 @@ interface MachineModalProps {
 
 export default function MachineModal({ machine, onClose, distance }: MachineModalProps) {
   const t = useTranslations('machineModal')
+  const locale = useLocale()
   const { products } = useProductsData()
   const { openProductModal } = useModal()
   const [showNavSelector, setShowNavSelector] = useState(false)
   const sampleProducts = products.filter((p) => p.available).slice(0, 6)
+  const machineAddress = localized(machine, 'address', locale)
   const hasCoords = machine.latitude != null && machine.longitude != null
 
   return (
@@ -49,7 +52,7 @@ export default function MachineModal({ machine, onClose, distance }: MachineModa
         <h3 className="font-display text-xl font-bold text-espresso-dark">
           {machine.name}
         </h3>
-        <p className="text-sm text-chocolate/60 mt-1">{machine.address}</p>
+        <p className="text-sm text-chocolate/60 mt-1">{machineAddress}</p>
         {machine.floor && (
           <p className="text-sm text-chocolate/60">
             {t('floor', { floor: machine.floor })}
@@ -78,6 +81,7 @@ export default function MachineModal({ machine, onClose, distance }: MachineModa
         <div className="grid grid-cols-2 gap-3">
           {sampleProducts.map((product) => {
             const presentation = getProductPresentation(product)
+            const productName = localized(product, 'name', locale)
 
             return (
             <button
@@ -90,7 +94,7 @@ export default function MachineModal({ machine, onClose, distance }: MachineModa
                 {presentation.imageSrc ? (
                   <Image
                     src={presentation.imageSrc}
-                    alt={product.name}
+                    alt={productName}
                     fill
                     sizes="40px"
                     className="object-cover"
@@ -103,7 +107,7 @@ export default function MachineModal({ machine, onClose, distance }: MachineModa
               </div>
               <div className="min-w-0">
                 <div className="text-sm font-medium text-chocolate truncate">
-                  {product.name}
+                  {productName}
                 </div>
                 <PriceTag price={product.price} className="text-xs" />
               </div>

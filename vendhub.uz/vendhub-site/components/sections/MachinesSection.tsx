@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import { Search, X, LocateFixed, Loader2 } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
+import { localized } from '@/lib/localize'
 import { useModal } from '@/lib/modal-context'
 import type { Machine } from '@/lib/types'
 import { useGeolocation } from '@/lib/useGeolocation'
@@ -146,9 +147,10 @@ export default function MachinesSection({ initialMachines, initialMachineTypes }
     const result = machines.filter((m) => {
       if (searchQuery) {
         const q = searchQuery.toLowerCase()
+        const addr = localized(m, 'address', locale)
         if (
           !m.name.toLowerCase().includes(q) &&
-          !m.address.toLowerCase().includes(q)
+          !addr.toLowerCase().includes(q)
         ) {
           return false
         }
@@ -164,7 +166,7 @@ export default function MachinesSection({ initialMachines, initialMachineTypes }
     }
 
     return result as MachineWithDistance[]
-  }, [machines, searchQuery, statusFilter, typeFilter, userLocation, sortNearest])
+  }, [machines, searchQuery, statusFilter, typeFilter, userLocation, sortNearest, locale])
 
   return (
     <section id="map" className="section-padding">

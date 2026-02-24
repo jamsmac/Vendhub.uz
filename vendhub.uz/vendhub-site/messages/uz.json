@@ -314,11 +314,16 @@
   "about": {
     "title": "Kompaniya haqida",
     "subtitle": "VendHub — Toshkentdagi vending avtomatlari tarmog'i",
+    "description": "VendHub — Toshkentdagi zamonaviy kofe va gazak avtomatlari tarmog'i operatori. Avtomatlar kasalxonalar, universitetlar, davlat muassasalari va turar-joy majmualarida joylashgan. Sifatli issiq va sovuq ichimliklarga kunduzi-kechasi kirish imkoniyati.",
     "contacts": {
       "phone": "Telefon",
+      "phoneValue": "+998 71 200 39 99",
       "email": "Email",
+      "emailValue": "info@vendhub.uz",
       "telegram": "Telegram",
+      "telegramValue": "@vendhub_support",
       "address": "Manzil",
+      "addressValue": "Toshkent, O'zbekiston",
       "support": "Qo'llab-quvvatlash",
       "supportHours": "24/7 qo'llab-quvvatlash"
     }
@@ -570,8 +575,7 @@
       "machines": "Avtomatlar",
       "machineTypes": "Avtomat turlari",
       "promotions": "Aksiyalar",
-      "cooperation": "Arizalar",
-      "partners": "Hamkorlar",
+      "partnership": "Hamkorlik",
       "loyalty": "Sodiqlik",
       "content": "Kontent",
       "bonusActions": "Bonus amallar",
@@ -893,6 +897,63 @@
         "website": "Veb-sayt (URL)",
         "description": "Tavsif",
         "sortOrder": "Saralash tartibi"
+      }
+    },
+    "partnership": {
+      "tabs": {
+        "models": "Modellar",
+        "requests": "Arizalar",
+        "partners": "Hamkorlar"
+      },
+      "models": {
+        "title": "Hamkorlik modellari",
+        "add": "Model qo'shish",
+        "count": "{count} ta model",
+        "table": {
+          "icon": "Belgi",
+          "title": "Nomi",
+          "color": "Rang",
+          "benefits": "Afzalliklar",
+          "active": "Faol",
+          "sort": "Tartib",
+          "actions": "Amallar"
+        },
+        "empty": "Modellar topilmadi",
+        "loadError": "Modellarni yuklashda xatolik",
+        "created": "Model yaratildi",
+        "updated": "Model yangilandi",
+        "deleted": "Model o'chirildi",
+        "deleteError": "O'chirishda xatolik",
+        "saveError": "Saqlashda xatolik",
+        "deleteTitle": "Modelni o'chirish?",
+        "deleteMessage": "«{name}» modeli butunlay o'chiriladi.",
+        "activeYes": "Faol",
+        "activeNo": "Nofaol",
+        "newTitle": "Yangi model",
+        "editTitle": "Modelni tahrirlash",
+        "form": {
+          "key": "Kalit (slug)",
+          "keyPlaceholder": "masalan: custom-type",
+          "title": "Nomi (RU) *",
+          "titleUz": "Nomi (UZ)",
+          "description": "Tavsif (RU)",
+          "descriptionUz": "Tavsif (UZ)",
+          "icon": "Belgi",
+          "colorScheme": "Rang sxemasi",
+          "benefits": "Afzalliklar (RU)",
+          "benefitsUz": "Afzalliklar (UZ)",
+          "addBenefit": "Afzallik qo'shish",
+          "benefitPlaceholder": "Afzallik matnini kiriting",
+          "sortOrder": "Saralash tartibi",
+          "isActive": "Faol"
+        }
+      },
+      "requests": {
+        "delete": "O'chirish",
+        "deleteTitle": "Arizani o'chirish?",
+        "deleteMessage": "«{name}» arizasi butunlay o'chiriladi.",
+        "deleted": "Ariza o'chirildi",
+        "deleteError": "Arizani o'chirishda xatolik"
       }
     },
     "loyalty": {

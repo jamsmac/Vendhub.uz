@@ -38,7 +38,6 @@ export default async function Home() {
     allCms[item.section][item.key] = item.value
   }
   const statsCmsData = allCms['stats'] ?? {}
-  const aboutCmsData = allCms['about'] ?? {}
   const partnerList = (partnersResult.data?.length ? partnersResult.data : fallbackPartners) as Partner[]
   const machineList = (machinesResult.data?.length ? machinesResult.data : fallbackMachines) as Machine[]
   const machineTypeList = (machineTypesResult.data ?? []) as MachineTypeDetail[]
@@ -60,7 +59,7 @@ export default async function Home() {
 
         <BenefitsSection loyaltyTab={<LoyaltyTab />} promotions={promoList} />
         <PartnerSection partners={partnerList} />
-        <AboutSection cmsData={aboutCmsData} />
+        <AboutSection />
       </main>
       <Footer />
     </>
