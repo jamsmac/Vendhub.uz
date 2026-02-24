@@ -70,7 +70,13 @@ export default function MachineTypeDetailModal({
   const gallery = machineType.gallery_images || []
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col" onClick={onClose}>
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="machine-type-detail-title"
+      className="fixed inset-0 z-50 flex flex-col"
+      onClick={onClose}
+    >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-espresso-dark/60 backdrop-blur-md" />
 
@@ -83,6 +89,7 @@ export default function MachineTypeDetailModal({
         <button
           type="button"
           onClick={onClose}
+          aria-label={t('close')}
           className="fixed top-4 right-4 z-[60] w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-full shadow-lg text-espresso/60 hover:text-espresso hover:bg-white transition-all"
         >
           <X size={20} />
@@ -103,7 +110,7 @@ export default function MachineTypeDetailModal({
             </div>
             {/* Title overlay at bottom */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-espresso-dark/90 via-espresso-dark/60 to-transparent px-5 sm:px-8 pt-16 pb-5 sm:pb-6">
-              <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-white drop-shadow-lg">
+              <h2 id="machine-type-detail-title" className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-white drop-shadow-lg">
                 {machineType.name}
               </h2>
               {machineType.model_name && (

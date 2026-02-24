@@ -48,7 +48,7 @@ export default async function Home() {
         <StatsSection />
         <QuickActions />
         <PopularProducts />
-        <PromoBanner />
+        <PromoBanner promo={promoList[0] ?? null} />
         <WhyVendHub />
 
         <MachinesSection initialMachines={machineList} initialMachineTypes={machineTypeList} />

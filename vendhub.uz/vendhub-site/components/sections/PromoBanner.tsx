@@ -1,18 +1,14 @@
 import { getTranslations } from 'next-intl/server'
-import { supabase } from '@/lib/supabase'
-import { promotions as fallbackPromotions } from '@/lib/data'
+import type { Promotion } from '@/lib/types'
 
-export default async function PromoBanner() {
+interface PromoBannerProps {
+  promo: Promotion | null
+}
+
+export default async function PromoBanner({ promo }: PromoBannerProps) {
+  if (!promo) return null
+
   const t = await getTranslations('promoBanner')
-
-  const { data } = await supabase
-    .from('promotions')
-    .select('*')
-    .eq('is_active', true)
-    .order('sort_order')
-    .limit(1)
-
-  const promo = data?.[0] ?? fallbackPromotions[0]
 
   return (
     <section aria-label={t('ariaLabel')} className="mt-12 px-4">

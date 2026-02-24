@@ -107,8 +107,14 @@ export default async function AboutSection() {
             )
 
             if (contact.href) {
+              const isExternal = contact.href.startsWith('http')
               return (
-                <a key={contact.label} href={contact.href} className="block">
+                <a
+                  key={contact.label}
+                  href={contact.href}
+                  className="block"
+                  {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
+                >
                   <Card hover className="p-5">
                     {inner}
                   </Card>
