@@ -15,6 +15,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 CREATE TABLE IF NOT EXISTS products (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name          TEXT NOT NULL,
+  name_uz       TEXT,
   price         INTEGER NOT NULL CHECK (price >= 0),
   category      TEXT NOT NULL CHECK (category IN ('coffee', 'tea', 'other', 'snack')),
   temperature   TEXT NOT NULL CHECK (temperature IN ('hot', 'cold', 'both', 'none')),
@@ -22,6 +23,10 @@ CREATE TABLE IF NOT EXISTS products (
   available     BOOLEAN NOT NULL DEFAULT true,
   image_url     TEXT,
   description   TEXT,
+  description_uz TEXT,
+  detail_description TEXT,
+  detail_description_uz TEXT,
+  calories      INTEGER CHECK (calories IS NULL OR calories >= 0),
   rating        NUMERIC(2,1) NOT NULL DEFAULT 4.5 CHECK (rating >= 0 AND rating <= 5),
   options       JSONB NOT NULL DEFAULT '[]'::jsonb,
   is_new        BOOLEAN NOT NULL DEFAULT false,

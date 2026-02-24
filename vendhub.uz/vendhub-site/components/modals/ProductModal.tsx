@@ -37,13 +37,16 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
 
   const fallbackOption: ProductOption = {
     name: productName,
-    price: product.price,
+    price: 0,
     temperature: product.temperature === 'cold' ? 'cold' : 'hot',
   }
 
   const [selectedOption, setSelectedOption] = useState<ProductOption>(
     product.options[0] ?? fallbackOption
   )
+
+  const finalPrice = product.price + selectedOption.price
+  const detailDesc = localized(product, 'detail_description', locale)
 
   const gradient =
     CATEGORY_GRADIENT[product.category] ?? 'from-gray-100 to-gray-50'
@@ -114,8 +117,13 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             {descriptionText}
           </p>
         )}
+        {detailDesc && (
+          <p className="text-sm text-chocolate/40 mt-2 leading-relaxed">
+            {detailDesc}
+          </p>
+        )}
         <div className="mt-2">
-          <PriceTag price={selectedOption.price} className="text-lg" />
+          <PriceTag price={finalPrice} className="text-lg" />
         </div>
       </div>
 
@@ -158,6 +166,9 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                     ].join(' ')}
                   >
                     {opt.name}
+                    {opt.price > 0 && (
+                      <span className="ml-1 opacity-70">{t('surcharge', { price: formatPrice(opt.price) })}</span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -185,6 +196,9 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                     ].join(' ')}
                   >
                     {opt.name}
+                    {opt.price > 0 && (
+                      <span className="ml-1 opacity-70">{t('surcharge', { price: formatPrice(opt.price) })}</span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -197,7 +211,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
       <div className="border-t border-espresso/10 p-5">
         <p className="text-sm text-chocolate/60 mb-3">{selectedOption.name}</p>
         <Button variant="caramel" className="w-full">
-          {t('cta', { price: formatPrice(selectedOption.price) })}
+          {t('cta', { price: formatPrice(finalPrice) })}
         </Button>
       </div>
     </Modal>

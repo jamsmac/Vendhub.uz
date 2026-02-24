@@ -347,7 +347,9 @@
     "tempCold": "Холодный",
     "tempBoth": "Горячий/Холодный",
     "tempNone": "Нейтральный",
-    "cta": "Подробнее в приложении · {price} UZS"
+    "cta": "Подробнее в приложении · {price} UZS",
+    "detailTitle": "Подробнее",
+    "surcharge": "+{price} UZS"
   },
 
   "machineModal": {
@@ -641,6 +643,12 @@
         "temperature": "Температура",
         "image": "Изображение",
         "description": "Описание",
+        "nameUz": "Название (UZ)",
+        "descriptionUz": "Описание (UZ)",
+        "detailDescription": "Детальное описание",
+        "detailDescriptionUz": "Детальное описание (UZ)",
+        "detailDescriptionHint": "Состав, ингредиенты, способ приготовления...",
+        "calories": "Калорийность (ккал)",
         "rating": "Рейтинг (0-5)",
         "discount": "Скидка (%)",
         "sortOrder": "Порядок сортировки",
@@ -650,7 +658,8 @@
         "options": "Опции",
         "addOption": "Добавить",
         "optionName": "Название",
-        "optionPrice": "Цена",
+        "optionSurcharge": "Наценка",
+        "optionSurchargeHint": "+0 = базовая цена",
         "optionHot": "Горячий",
         "optionCold": "Холодный",
         "updated": "Продукт обновлён",

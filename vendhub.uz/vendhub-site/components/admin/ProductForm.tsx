@@ -29,6 +29,7 @@ export default function ProductForm({
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   const [name, setName] = useState(product?.name ?? '')
+  const [nameUz, setNameUz] = useState(product?.name_uz ?? '')
   const [price, setPrice] = useState(product?.price ?? 0)
   const [category, setCategory] = useState(product?.category ?? 'coffee')
   const [temperature, setTemperature] = useState(product?.temperature ?? 'hot')
@@ -36,6 +37,10 @@ export default function ProductForm({
   const [available, setAvailable] = useState(product?.available ?? true)
   const [imageUrl, setImageUrl] = useState(product?.image_url ?? '')
   const [description, setDescription] = useState(product?.description ?? '')
+  const [descriptionUz, setDescriptionUz] = useState(product?.description_uz ?? '')
+  const [detailDescription, setDetailDescription] = useState(product?.detail_description ?? '')
+  const [detailDescriptionUz, setDetailDescriptionUz] = useState(product?.detail_description_uz ?? '')
+  const [calories, setCalories] = useState<number | ''>(product?.calories ?? '')
   const [rating, setRating] = useState(product?.rating ?? 4.5)
   const [isNew, setIsNew] = useState(product?.is_new ?? false)
   const [discountPercent, setDiscountPercent] = useState(
@@ -90,8 +95,8 @@ export default function ProductForm({
         errs[`option_${i}`] = `${t('optionName')} ${i + 1}`
         break
       }
-      if (options[i].price <= 0) {
-        errs[`option_${i}`] = `${t('optionPrice')} ${i + 1}`
+      if (options[i].price < 0) {
+        errs[`option_${i}`] = `${t('optionSurcharge')} ${i + 1}`
         break
       }
     }
@@ -110,6 +115,7 @@ export default function ProductForm({
 
     const payload = {
       name,
+      name_uz: nameUz || null,
       price,
       category,
       temperature,
@@ -117,6 +123,10 @@ export default function ProductForm({
       available,
       image_url: imageUrl || null,
       description: description || null,
+      description_uz: descriptionUz || null,
+      detail_description: detailDescription || null,
+      detail_description_uz: detailDescriptionUz || null,
+      calories: calories === '' ? null : calories,
       rating,
       is_new: isNew,
       discount_percent: discountPercent || null,
@@ -170,8 +180,8 @@ export default function ProductForm({
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
-          {/* Name + Price */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Name + Name UZ + Price */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <AdminFormField label={t('name')} required error={errors.name}>
               <input
                 type="text"
@@ -179,6 +189,14 @@ export default function ProductForm({
                 onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: '' })) }}
                 required
                 className={`admin-input ${errors.name ? '!border-red-400' : ''}`}
+              />
+            </AdminFormField>
+            <AdminFormField label={t('nameUz')}>
+              <input
+                type="text"
+                value={nameUz}
+                onChange={(e) => setNameUz(e.target.value)}
+                className="admin-input"
               />
             </AdminFormField>
             <AdminFormField label={t('price')} required error={errors.price}>
@@ -234,13 +252,56 @@ export default function ProductForm({
             />
           </AdminFormField>
 
-          {/* Description */}
-          <AdminFormField label={t('description')}>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={3}
-              className="admin-input resize-y"
+          {/* Description + Description UZ */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <AdminFormField label={t('description')}>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={2}
+                className="admin-input resize-y"
+              />
+            </AdminFormField>
+            <AdminFormField label={t('descriptionUz')}>
+              <textarea
+                value={descriptionUz}
+                onChange={(e) => setDescriptionUz(e.target.value)}
+                rows={2}
+                className="admin-input resize-y"
+              />
+            </AdminFormField>
+          </div>
+
+          {/* Detail Description + Detail Description UZ */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <AdminFormField label={t('detailDescription')}>
+              <textarea
+                value={detailDescription}
+                onChange={(e) => setDetailDescription(e.target.value)}
+                rows={3}
+                placeholder={t('detailDescriptionHint')}
+                className="admin-input resize-y"
+              />
+            </AdminFormField>
+            <AdminFormField label={t('detailDescriptionUz')}>
+              <textarea
+                value={detailDescriptionUz}
+                onChange={(e) => setDetailDescriptionUz(e.target.value)}
+                rows={3}
+                placeholder={t('detailDescriptionHint')}
+                className="admin-input resize-y"
+              />
+            </AdminFormField>
+          </div>
+
+          {/* Calories */}
+          <AdminFormField label={t('calories')}>
+            <input
+              type="number"
+              value={calories}
+              onChange={(e) => setCalories(e.target.value === '' ? '' : Number(e.target.value))}
+              min={0}
+              className="admin-input w-40"
             />
           </AdminFormField>
 
@@ -335,13 +396,17 @@ export default function ProductForm({
                         placeholder={t('optionName')}
                         className={`admin-input flex-1 !py-1.5 text-sm ${errors[`option_${idx}`] ? '!border-red-400' : ''}`}
                       />
-                      <input
-                        type="number"
-                        value={opt.price}
-                        onChange={(e) => { updateOption(idx, 'price', Number(e.target.value)); setErrors((p) => ({ ...p, [`option_${idx}`]: '' })) }}
-                        placeholder={t('optionPrice')}
-                        className={`admin-input w-24 !py-1.5 text-sm ${errors[`option_${idx}`] ? '!border-red-400' : ''}`}
-                      />
+                      <div className="flex items-center gap-1">
+                        <span className="text-sm text-espresso/50 font-medium">+</span>
+                        <input
+                          type="number"
+                          value={opt.price}
+                          onChange={(e) => { updateOption(idx, 'price', Number(e.target.value)); setErrors((p) => ({ ...p, [`option_${idx}`]: '' })) }}
+                          placeholder="0"
+                          min={0}
+                          className={`admin-input w-24 !py-1.5 text-sm ${errors[`option_${idx}`] ? '!border-red-400' : ''}`}
+                        />
+                      </div>
                       <select
                         value={opt.temperature}
                         onChange={(e) =>
@@ -360,7 +425,12 @@ export default function ProductForm({
                         <Trash2 size={16} />
                       </button>
                     </div>
-                    {errors[`option_${idx}`] && <p className="text-xs text-red-500 mt-1 ml-3">{errors[`option_${idx}`]}</p>}
+                    <div className="flex items-center gap-3 mt-1 ml-3">
+                      {errors[`option_${idx}`] && <p className="text-xs text-red-500">{errors[`option_${idx}`]}</p>}
+                      <p className="text-xs text-espresso/40">
+                        {t('optionSurchargeHint')} · {t('optionSurcharge')}: {(price + opt.price).toLocaleString()} UZS
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>

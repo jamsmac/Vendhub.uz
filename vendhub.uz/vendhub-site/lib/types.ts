@@ -3,6 +3,7 @@
 
 export interface ProductOption {
   name: string
+  /** Price delta (surcharge) relative to product.price. 0 = same as base price. */
   price: number
   temperature: 'hot' | 'cold'
 }
@@ -19,6 +20,9 @@ export interface Product {
   image_url: string | null
   description: string | null
   description_uz?: string | null
+  detail_description?: string | null
+  detail_description_uz?: string | null
+  calories?: number | null
   rating: number
   options: ProductOption[]
   is_new: boolean

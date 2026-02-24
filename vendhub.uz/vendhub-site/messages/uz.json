@@ -347,7 +347,9 @@
     "tempCold": "Sovuq",
     "tempBoth": "Issiq/Sovuq",
     "tempNone": "Neytral",
-    "cta": "Ilovada batafsil · {price} UZS"
+    "cta": "Ilovada batafsil · {price} UZS",
+    "detailTitle": "Batafsil",
+    "surcharge": "+{price} UZS"
   },
 
   "machineModal": {
@@ -636,11 +638,17 @@
         "createTitle": "Yangi mahsulot",
         "editTitle": "Mahsulotni tahrirlash",
         "name": "Nomi *",
+        "nameUz": "Nomi (UZ)",
         "price": "Narx (UZS) *",
         "category": "Kategoriya",
         "temperature": "Harorat",
         "image": "Rasm",
         "description": "Tavsif",
+        "descriptionUz": "Tavsif (UZ)",
+        "detailDescription": "Batafsil tavsif",
+        "detailDescriptionUz": "Batafsil tavsif (UZ)",
+        "detailDescriptionHint": "Tarkibi, ingredientlar, tayyorlash usuli...",
+        "calories": "Kaloriya (kkal)",
         "rating": "Reyting (0-5)",
         "discount": "Chegirma (%)",
         "sortOrder": "Saralash tartibi",
@@ -650,7 +658,8 @@
         "options": "Variantlar",
         "addOption": "Qo'shish",
         "optionName": "Nomi",
-        "optionPrice": "Narx",
+        "optionSurcharge": "Ustama",
+        "optionSurchargeHint": "+0 = asosiy narx",
         "optionHot": "Issiq",
         "optionCold": "Sovuq",
         "updated": "Mahsulot yangilandi",
