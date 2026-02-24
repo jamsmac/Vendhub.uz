@@ -20,6 +20,13 @@ interface RequestsTabProps {
   partnershipModels: PartnershipModel[]
 }
 
+function loadRequests() {
+  return supabase
+    .from('cooperation_requests')
+    .select('*')
+    .order('created_at', { ascending: false })
+}
+
 export default function RequestsTab({ partnershipModels }: RequestsTabProps) {
   const { showToast } = useToast()
   const t = useTranslations('admin.cooperation')
@@ -57,11 +64,7 @@ export default function RequestsTab({ partnershipModels }: RequestsTabProps) {
   }
 
   const fetchRequests = useCallback(async () => {
-    const { data, error } = await supabase
-      .from('cooperation_requests')
-      .select('*')
-      .order('created_at', { ascending: false })
-
+    const { data, error } = await loadRequests()
     if (error) {
       showToast(t('loadError'), 'error')
     } else {
@@ -70,7 +73,16 @@ export default function RequestsTab({ partnershipModels }: RequestsTabProps) {
     setLoading(false)
   }, [showToast, t])
 
-  useEffect(() => { fetchRequests() }, [fetchRequests])
+  useEffect(() => {
+    loadRequests().then(({ data, error }) => {
+      if (error) {
+        showToast(t('loadError'), 'error')
+      } else {
+        setRequests(data as CooperationRequest[])
+      }
+      setLoading(false)
+    })
+  }, [showToast, t])
 
   const handleStatusChange = async (id: string, newStatus: CooperationRequest['status']) => {
     const { error } = await supabase

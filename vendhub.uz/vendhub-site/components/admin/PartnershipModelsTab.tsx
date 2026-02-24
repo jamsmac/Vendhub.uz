@@ -68,7 +68,17 @@ export default function PartnershipModelsTab() {
     setLoading(false)
   }, [showToast, t])
 
-  useEffect(() => { fetchModels() }, [fetchModels])
+  useEffect(() => {
+    supabase
+      .from('partnership_models')
+      .select('*')
+      .order('sort_order', { ascending: true })
+      .then(({ data, error }) => {
+        if (error) showToast(t('loadError'), 'error')
+        else setModels(data as PartnershipModel[])
+        setLoading(false)
+      })
+  }, [showToast, t])
 
   const openCreate = () => {
     setEditingId(null)

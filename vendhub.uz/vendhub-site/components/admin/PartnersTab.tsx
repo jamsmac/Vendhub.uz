@@ -46,7 +46,17 @@ export default function PartnersTab() {
     setLoading(false)
   }, [showToast, t])
 
-  useEffect(() => { fetchPartners() }, [fetchPartners])
+  useEffect(() => {
+    supabase
+      .from('partners')
+      .select('*')
+      .order('sort_order', { ascending: true })
+      .then(({ data, error }) => {
+        if (error) showToast(t('loadError'), 'error')
+        else setPartners(data as Partner[])
+        setLoading(false)
+      })
+  }, [showToast, t])
 
   const openCreate = () => {
     setEditingId(null)
