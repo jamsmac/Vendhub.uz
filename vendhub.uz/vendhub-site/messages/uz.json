@@ -62,6 +62,7 @@
   },
 
   "stats": {
+    "ariaLabel": "Statistika",
     "machinesValue": "16",
     "machines": "avtomatlar",
     "drinksValue": "25+",

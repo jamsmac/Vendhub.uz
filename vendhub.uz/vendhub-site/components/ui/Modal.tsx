@@ -90,7 +90,7 @@ export default function Modal({
         tabIndex={-1}
         onKeyDown={handleKeyDown}
         className={[
-          'animate-slideUp max-w-md w-full mx-auto bg-white rounded-2xl shadow-2xl outline-none',
+          'animate-slideUp max-w-md w-full mx-auto max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl outline-none',
           className,
         ]
           .filter(Boolean)

@@ -25,7 +25,7 @@ export default async function StatsSection() {
   }
 
   return (
-    <section aria-label="Statistics" className="relative -mt-8 z-10">
+    <section aria-label={t('ariaLabel')} className="relative -mt-8 z-10">
       <div className="max-w-5xl mx-auto px-4">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {STATS.map((stat) => (

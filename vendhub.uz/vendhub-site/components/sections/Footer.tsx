@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
-import { getLocale } from 'next-intl/server'
 
 const NAV_KEYS = [
   { key: 'home' as const, href: '#home' },
@@ -60,8 +59,6 @@ export default async function Footer() {
   const t = await getTranslations('footer')
   const nav = await getTranslations('nav')
   const header = await getTranslations('header')
-  const locale = await getLocale()
-
   return (
     <footer className="bg-espresso-dark text-white/60 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -167,17 +164,8 @@ export default async function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+        <div className="border-t border-white/10 mt-12 pt-8 text-center text-sm">
           <p>{t('copyright', { year: new Date().getFullYear() })}</p>
-          <div className="flex items-center gap-4">
-            <a href={`/${locale === 'uz' ? 'uz/' : ''}privacy`} className="hover:text-white transition-colors">
-              {t('privacy')}
-            </a>
-            <span className="text-white/20">|</span>
-            <a href={`/${locale === 'uz' ? 'uz/' : ''}terms`} className="hover:text-white transition-colors">
-              {t('terms')}
-            </a>
-          </div>
         </div>
       </div>
     </footer>

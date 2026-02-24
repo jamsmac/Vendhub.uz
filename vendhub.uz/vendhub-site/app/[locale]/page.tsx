@@ -12,8 +12,23 @@ import BenefitsSection from '@/components/sections/BenefitsSection'
 import LoyaltyTab from '@/components/benefits/LoyaltyTab'
 import PartnerSection from '@/components/sections/PartnerSection'
 import AboutSection from '@/components/sections/AboutSection'
+import { supabase } from '@/lib/supabase'
+import { partners as fallbackPartners } from '@/lib/data'
+import type { Partner } from '@/lib/types'
 
-export default function Home() {
+export default async function Home() {
+  const [cmsResult, partnersResult] = await Promise.all([
+    supabase.from('site_content').select('key, value').eq('section', 'partnership'),
+    supabase.from('partners').select('*').order('sort_order', { ascending: true }),
+  ])
+
+  const partnerCmsData: Record<string, string> = {}
+  if (cmsResult.data) {
+    for (const item of cmsResult.data) {
+      partnerCmsData[item.key] = item.value
+    }
+  }
+  const partnerList = (partnersResult.data?.length ? partnersResult.data : fallbackPartners) as Partner[]
   return (
     <>
       <Header />
@@ -29,7 +44,7 @@ export default function Home() {
         <MenuSection />
 
         <BenefitsSection loyaltyTab={<LoyaltyTab />} />
-        <PartnerSection />
+        <PartnerSection partners={partnerList} cmsData={partnerCmsData} />
         <AboutSection />
       </main>
       <Footer />

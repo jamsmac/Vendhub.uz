@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import {
   MapPin,
@@ -14,8 +14,6 @@ import { useTranslations } from 'next-intl'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
 import PartnerForm from '@/components/partner/PartnerForm'
-import { partners as fallbackPartners } from '@/lib/data'
-import { supabase } from '@/lib/supabase'
 import type { Partner } from '@/lib/types'
 
 const MODEL_KEYS = ['locations', 'suppliers', 'investors', 'franchise'] as const
@@ -35,37 +33,14 @@ const MODEL_ACCENTS: Record<ModelKey, { bg: string; text: string }> = {
   franchise: { bg: 'bg-purple-100', text: 'text-purple-500' },
 }
 
-export default function PartnerSection() {
+interface PartnerSectionProps {
+  partners: Partner[]
+  cmsData: Record<string, string>
+}
+
+export default function PartnerSection({ partners, cmsData }: PartnerSectionProps) {
   const t = useTranslations('partner')
   const [expandedId, setExpandedId] = useState<string | null>(null)
-  const [cmsData, setCmsData] = useState<Record<string, string>>({})
-  const [partnerList, setPartnerList] = useState<Partner[]>(fallbackPartners)
-
-  useEffect(() => {
-    supabase
-      .from('site_content')
-      .select('key, value')
-      .eq('section', 'partnership')
-      .then(({ data, error }) => {
-        if (!error && data) {
-          const map: Record<string, string> = {}
-          for (const item of data) {
-            map[item.key] = item.value
-          }
-          setCmsData(map)
-        }
-      })
-
-    supabase
-      .from('partners')
-      .select('*')
-      .order('sort_order', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error && data && data.length > 0) {
-          setPartnerList(data as Partner[])
-        }
-      })
-  }, [])
 
   function toggleExpand(id: string) {
     setExpandedId((prev) => (prev === id ? null : id))
@@ -173,7 +148,7 @@ export default function PartnerSection() {
             {t('trustedBy')}
           </h3>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            {partnerList.map((partner) => {
+            {partners.map((partner) => {
                 const content = (
                   <Card className="px-6 py-4" hover={!!partner.website_url}>
                     {partner.logo_url ? (
