@@ -63,12 +63,12 @@ export default function AdminSidebar({ isOpen, onClose, cooperationNewCount }: A
       {/* Sidebar */}
       <aside
         className={[
-          'fixed top-0 left-0 z-50 h-full w-64 bg-espresso-dark text-white transition-transform duration-300 lg:translate-x-0 lg:static lg:z-auto',
+          'fixed top-0 left-0 z-50 h-full w-64 bg-espresso-dark text-white transition-transform duration-300 lg:translate-x-0 lg:static lg:z-auto flex flex-col',
           isOpen ? 'translate-x-0' : '-translate-x-full',
         ].join(' ')}
       >
         {/* Logo area */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0">
           <Link href="/admin" className="flex items-center gap-2">
             <Coffee size={24} className="text-caramel" />
             <span className="text-lg font-bold tracking-tight">VendHub</span>
@@ -86,7 +86,7 @@ export default function AdminSidebar({ isOpen, onClose, cooperationNewCount }: A
         </div>
 
         {/* Nav items */}
-        <nav className="px-3 py-4 space-y-1">
+        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -111,7 +111,7 @@ export default function AdminSidebar({ isOpen, onClose, cooperationNewCount }: A
         </nav>
 
         {/* Footer */}
-        <div className="absolute bottom-0 left-0 right-0 px-6 py-4 border-t border-white/10">
+        <div className="shrink-0 px-6 py-4 border-t border-white/10">
           <a
             href={`https://${process.env.NEXT_PUBLIC_SITE_DOMAIN || 'vendhub.uz'}`}
             className="text-xs text-white/40 hover:text-white/60 transition-colors"
