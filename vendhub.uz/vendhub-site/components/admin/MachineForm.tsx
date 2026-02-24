@@ -15,13 +15,7 @@ interface MachineFormProps {
   onSaved: () => void
 }
 
-const locationTypeLabels: Record<string, string> = {
-  hospital: 'Больница',
-  university: 'Университет',
-  market: 'Рынок',
-  government: 'Гос. учреждение',
-  residential: 'Жилой район',
-}
+const LOCATION_TYPE_KEYS = ['hospital', 'university', 'market', 'government', 'residential'] as const
 
 export default function MachineForm({
   machine,
@@ -129,19 +123,20 @@ export default function MachineForm({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="machine-form-title">
       <div
         className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl my-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-espresso/10">
-          <h2 className="text-lg font-bold text-espresso">
+          <h2 id="machine-form-title" className="text-lg font-bold text-espresso">
             {machine ? t('editTitle') : t('createTitle')}
           </h2>
           <button
             type="button"
             onClick={onClose}
+            aria-label={tc('close')}
             className="text-espresso/40 hover:text-espresso transition-colors"
           >
             <X size={20} />
@@ -282,9 +277,9 @@ export default function MachineForm({
                 className="admin-input"
               >
                 <option value="">—</option>
-                {Object.entries(locationTypeLabels).map(([val, label]) => (
-                  <option key={val} value={val}>
-                    {label}
+                {LOCATION_TYPE_KEYS.map((key) => (
+                  <option key={key} value={key}>
+                    {t(`locationTypes.${key}`)}
                   </option>
                 ))}
               </select>

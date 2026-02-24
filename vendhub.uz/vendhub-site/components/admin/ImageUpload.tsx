@@ -84,7 +84,7 @@ export default function ImageUpload({ value, onChange, folder }: ImageUploadProp
         <div className="relative h-40 rounded-xl border border-espresso/10 overflow-hidden bg-foam/50">
           <Image
             src={value}
-            alt="Preview"
+            alt={t('preview')}
             fill
             className="object-contain"
             sizes="(max-width: 640px) 100vw, 400px"
@@ -93,6 +93,7 @@ export default function ImageUpload({ value, onChange, folder }: ImageUploadProp
         <button
           type="button"
           onClick={handleRemove}
+          aria-label={t('remove')}
           className="absolute top-2 right-2 p-1.5 bg-white/90 rounded-lg text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-50"
         >
           <Trash2 size={14} />

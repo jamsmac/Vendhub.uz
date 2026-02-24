@@ -609,6 +609,7 @@
       "content": "Контент",
       "bonusActions": "Бонусные действия",
       "backToSite": "Вернуться на сайт",
+      "closeSidebar": "Закрыть меню",
       "logout": "Выход"
     },
     "login": {
@@ -752,7 +753,14 @@
         "addressRequired": "Адрес обязателен",
         "latitudeRange": "Широта должна быть 37-46 (Узбекистан)",
         "longitudeRange": "Долгота должна быть 56-74 (Узбекистан)",
-        "ratingRange": "Рейтинг от 0 до 5"
+        "ratingRange": "Рейтинг от 0 до 5",
+        "locationTypes": {
+          "hospital": "Больница",
+          "university": "Университет",
+          "market": "Рынок",
+          "government": "Гос. учреждение",
+          "residential": "Жилой район"
+        }
       }
     },
     "machineTypes": {
@@ -1026,7 +1034,9 @@
       "uploading": "Загрузка...",
       "dragOrClick": "Перетащите или нажмите",
       "dropHere": "Отпустите файл",
-      "formats": "JPEG, PNG, WebP • до 5 МБ"
+      "formats": "JPEG, PNG, WebP • до 5 МБ",
+      "preview": "Превью изображения",
+      "remove": "Удалить изображение"
     },
     "pagination": {
       "of": "из",

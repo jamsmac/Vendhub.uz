@@ -81,6 +81,7 @@ export default function AdminSidebar({ isOpen, onClose, cooperationNewCount }: A
           <button
             type="button"
             onClick={onClose}
+            aria-label={t('closeSidebar')}
             className="lg:hidden text-white/60 hover:text-white transition-colors"
           >
             <X size={20} />

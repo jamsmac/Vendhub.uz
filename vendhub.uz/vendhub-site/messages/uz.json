@@ -609,6 +609,7 @@
       "content": "Kontent",
       "bonusActions": "Bonus amallar",
       "backToSite": "Saytga qaytish",
+      "closeSidebar": "Menyuni yopish",
       "logout": "Chiqish"
     },
     "login": {
@@ -752,7 +753,14 @@
         "addressRequired": "Manzil majburiy",
         "latitudeRange": "Kenglik 37-46 bo'lishi kerak (O'zbekiston)",
         "longitudeRange": "Uzunlik 56-74 bo'lishi kerak (O'zbekiston)",
-        "ratingRange": "Reyting 0 dan 5 gacha"
+        "ratingRange": "Reyting 0 dan 5 gacha",
+        "locationTypes": {
+          "hospital": "Kasalxona",
+          "university": "Universitet",
+          "market": "Bozor",
+          "government": "Davlat muassasasi",
+          "residential": "Turar joy"
+        }
       }
     },
     "machineTypes": {
@@ -1026,7 +1034,9 @@
       "uploading": "Yuklanmoqda...",
       "dragOrClick": "Sudrab tashlang yoki bosing",
       "dropHere": "Faylni shu yerga tashlang",
-      "formats": "JPEG, PNG, WebP • 5 MB gacha"
+      "formats": "JPEG, PNG, WebP • 5 MB gacha",
+      "preview": "Rasm ko'rinishi",
+      "remove": "Rasmni o'chirish"
     },
     "pagination": {
       "of": "dan",

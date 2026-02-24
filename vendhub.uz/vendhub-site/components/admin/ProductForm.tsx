@@ -148,19 +148,20 @@ export default function ProductForm({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="product-form-title">
       <div
         className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl my-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-espresso/10">
-          <h2 className="text-lg font-bold text-espresso">
+          <h2 id="product-form-title" className="text-lg font-bold text-espresso">
             {product ? t('editTitle') : t('createTitle')}
           </h2>
           <button
             type="button"
             onClick={onClose}
+            aria-label={tc('close')}
             className="text-espresso/40 hover:text-espresso transition-colors"
           >
             <X size={20} />
