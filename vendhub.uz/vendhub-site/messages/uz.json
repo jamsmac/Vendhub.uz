@@ -9,16 +9,11 @@
     "edit": "Tahrirlash",
     "delete": "O'chirish",
     "close": "Yopish",
-    "search": "Qidirish",
     "all": "Barchasi",
     "yes": "Ha",
     "no": "Yo'q",
-    "from": "dan",
-    "noData": "Ma'lumot yo'q",
     "errorOccurred": "Xatolik yuz berdi",
-    "comingSoon": "Tez kunda",
     "retry": "Qayta urinish",
-    "currency": "UZS",
     "duplicate": "Nusxalash",
     "deleting": "O'chirilmoqda...",
     "kcal": "kkal",
@@ -97,7 +92,7 @@
     "drinks": "25+ ichimlik",
     "drinksDesc": "Espresso, latte, cappuccino, matcha va sovuq ichimliklar",
     "machines": "16 ta avtomat",
-    "machinesDesc": "Kasalxonalar, universitetlar, davlat muassasalari, supermarketlar",
+    "machinesDesc": "Kasalxonalar, universitetlar, davlat muassasalari, supermarketlar, turar-joy majmualari",
     "loyalty": "Sodiqlik dasturi",
     "loyaltyDesc": "Ballar, 10% gacha chegirmalar va eksklyuziv bonuslar",
     "order": "Tezkor buyurtma",
@@ -161,7 +156,7 @@
       "online": "Ishlaydi",
       "offline": "Ishlamaydi",
       "promotion": "Aksiya",
-      "items": "ta pozitsiya",
+      "items": " ta pozitsiya",
       "openLocation": "Joylashuvni ochish",
       "distance": "{distance}"
     },
@@ -233,8 +228,6 @@
   "promoBanner": {
     "ariaLabel": "Aksiya",
     "badge": "Aksiya",
-    "title": "Ikkinchi kofe -50%",
-    "description": "Ikkita ichimlik buyurtma qiling va ikkinchisiga chegirma oling",
     "more": "Batafsil →"
   },
 
@@ -252,45 +245,13 @@
     },
     "privileges": {
       "title": "Darajalar bo'yicha imtiyozlar",
-      "header": "Imtiyoz",
-      "cashback": "Keshbek",
-      "orderDiscount": "Buyurtma chegirmasi",
-      "priorityPromos": "Ustuvor aksiyalar",
-      "specialCodes": "Maxsus promokodlar",
-      "birthdayBonus": "Tug'ilgan kun bonusi",
-      "earlyAccess": "Erta kirish imkoniyati",
-      "personalOffers": "Shaxsiy takliflar",
-      "freeDrink": "Bepul ichimlik/oy"
+      "header": "Imtiyoz"
     },
     "earn": {
-      "title": "Ballarni qanday to'plash mumkin",
-      "purchases": "Ichimlik sotib olish",
-      "purchasesDesc": "1 UZS = 1 ball",
-      "dailyLogin": "Kunlik kirish",
-      "dailyLoginDesc": "500 ball/kun",
-      "reviews": "Sharhlar",
-      "reviewsDesc": "1 000 ball",
-      "referral": "Do'stlarni taklif qilish",
-      "referralDesc": "5 000 ball",
-      "birthday": "Tug'ilgan kun",
-      "birthdayDesc": "x3 bonuslar",
-      "firstOrder": "Birinchi buyurtma",
-      "firstOrderDesc": "x2 bonuslar",
-      "streak": "Xaridlar seriyasi",
-      "streakDesc": "+500 har seriya uchun",
-      "achievements": "Yutuqlar",
-      "achievementsDesc": "10 000 ballgacha",
-      "social": "Ijtimoiy tarmoqlar",
-      "socialDesc": "2 000 ball"
+      "title": "Ballarni qanday to'plash mumkin"
     },
     "spend": {
-      "title": "Ballarni qanday sarflash mumkin",
-      "payments": "Buyurtmalarni to'lash",
-      "paymentsDesc": "Xarid qilganda ballarni sarflang",
-      "gifts": "Do'stlarga sovg'a",
-      "giftsDesc": "Do'stingizga ball yuboring",
-      "merch": "Eksklyuziv merch",
-      "merchDesc": "Firmaviy tovarlarga almashtiring"
+      "title": "Ballarni qanday sarflash mumkin"
     },
     "cta": {
       "title": "Telegram-botda ro'yxatdan o'ting",
@@ -370,9 +331,7 @@
     "location": "Toshkent, O'zbekiston",
     "supportHours": "24/7 qo'llab-quvvatlash",
     "tagline": "Vending avtomatlaridan kofe bir necha bosishda. Toshkent.",
-    "copyright": "© VendHub {year}. Barcha huquqlar himoyalangan.",
-    "privacy": "Maxfiylik siyosati",
-    "terms": "Foydalanish shartlari"
+    "copyright": "© VendHub {year}. Barcha huquqlar himoyalangan."
   },
 
   "productModal": {
@@ -390,7 +349,6 @@
     "menu": "Bu avtomatning menyusi",
     "online": "Ishlaydi",
     "offline": "Ishlamaydi",
-    "showOnMap": "Xaritada ko'rsatish",
     "buildRoute": "Yo'nalish qurish",
     "distance": "Sizdan {distance}",
     "orderInApp": "Ilovada buyurtma berish →",
@@ -421,7 +379,7 @@
     "specsTitle": "Texnik xususiyatlar",
     "specs": {
       "model": "Model",
-      "dimensions": "O'lchamlari (K×CH×B)",
+      "dimensions": "O'lchamlari (E×C×B)",
       "weight": "Og'irligi",
       "display": "Displey",
       "displayValue": "43\" sensorli promo-roliklari bilan",
@@ -481,7 +439,7 @@
     "specsTitle": "Texnik xususiyatlar",
     "specs": {
       "model": "Artikul",
-      "dimensions": "O'lchamlari (K×CH×B)",
+      "dimensions": "O'lchamlari (E×C×B)",
       "weight": "Sof og'irligi",
       "voltage": "Kuchlanish",
       "voltageValue": "220–240 V / 50 Hz; 220–230 V / 60 Hz; 110 V / 60 Hz (opsiya)",
@@ -530,7 +488,7 @@
     "imageAlt": "TCN CSC-8C(V49) gazak avtomati",
     "subtitle": "49\" sensorli reklama ekrani, sovutish tizimi va zamonaviy to'lovlarni qo'llab-quvvatlaydigan aqlli vending avtomati.",
     "descriptionTitle": "Model tavsifi",
-    "descriptionShort": "TCN CSC-8C(V49) — odam ko'p bo'ladigan joylarda odamsiz savdo uchun mo'ljallangan yangi avlod vending avtomati. 49 dyuymli sensorli ekran mahsulot vitrinasi va reklama displeyi sifatida bir vaqtda ishlaydi.",
+    "descriptionShort": "TCN CSC-8C(V49) — odam ko'p bo'ladigan joylarda avtomatik savdo uchun mo'ljallangan yangi avlod vending avtomati. 49 dyuymli sensorli ekran mahsulot vitrinasi va reklama displeyi sifatida bir vaqtda ishlaydi.",
     "descriptionLong": "Avtomat 6 ta javonda 48 ta hujayrada 240 tagacha mahsulot joylashtiradi, +4°C...+25°C diapazonida haroratni sozlaydi va MDB/DEX bilan mos ishlaydi. Naqd pul, kartalar va mobil to'lovlar qo'llab-quvvatlanadi, bepul bulutli boshqaruv esa qoldiq, narx va savdoni masofadan nazorat qilish imkonini beradi.",
     "quickStats": {
       "screen": "49\" Touch Screen",
@@ -544,7 +502,7 @@
       "typeValue": "Sensorli ekranli vending avtomat",
       "display": "Ekran",
       "displayValue": "49\" sensorli displey (Touch Screen)",
-      "dimensions": "O'lchamlari (B×E×C)",
+      "dimensions": "O'lchamlari (E×C×B)",
       "weight": "Og'irligi",
       "slots": "Hujayralar soni",
       "slotsValue": "48 (maks.)",
@@ -645,7 +603,6 @@
       "viewRequests": "Arizalarni ko'rish"
     },
     "products": {
-      "title": "Mahsulotlar",
       "add": "Mahsulot qo'shish",
       "searchPlaceholder": "Nomi bo'yicha qidirish...",
       "filters": {
@@ -655,7 +612,6 @@
         "other": "Boshqa",
         "snack": "Gazaklar"
       },
-      "count": "{count} ta mahsulot",
       "table": {
         "name": "Nomi",
         "category": "Kategoriya",
@@ -715,7 +671,6 @@
       }
     },
     "machines": {
-      "title": "Avtomatlar",
       "add": "Avtomat qo'shish",
       "searchPlaceholder": "Nomi yoki manzili bo'yicha qidirish...",
       "table": {
@@ -774,7 +729,6 @@
       }
     },
     "machineTypes": {
-      "title": "Avtomat turlari",
       "add": "Tur qo'shish",
       "searchPlaceholder": "Nom yoki model bo'yicha qidirish...",
       "table": {
@@ -788,7 +742,7 @@
       "active": "Faol",
       "inactive": "Nofaol",
       "activate": "Faollashtirish",
-      "deactivate": "O'chirish",
+      "deactivate": "Nofaol qilish",
       "empty": "Avtomat turlari topilmadi",
       "deleteTitle": "Avtomat turini o'chirish?",
       "deleteMessage": "«{name}» turi butunlay o'chiriladi.",
@@ -826,7 +780,6 @@
       }
     },
     "promotions": {
-      "title": "Aksiyalar",
       "add": "Aksiya qo'shish",
       "duplicate": "Nusxa olish",
       "duplicated": "Aksiya nusxalandi",
@@ -876,7 +829,6 @@
       }
     },
     "cooperation": {
-      "title": "Hamkorlik arizalari",
       "modelFilters": {
         "all": "Barcha modellar",
         "locations": "Joylashuvlar",
@@ -915,7 +867,6 @@
       "details": "Ariza tafsilotlari"
     },
     "partners": {
-      "title": "Hamkorlar",
       "add": "Hamkor qo'shish",
       "count": "{count} ta hamkor",
       "table": {
@@ -983,12 +934,10 @@
         "discount": "Chegirma %",
         "threshold": "Chegara (UZS)",
         "cashback": "Keshbek %",
-        "sortOrder": "Tartib",
-        "privileges": "Imtiyozlar"
+        "sortOrder": "Tartib"
       }
     },
     "bonusActions": {
-      "title": "Bonus amallar",
       "add": "Amal qo'shish",
       "tabs": {
         "all": "Barchasi",
@@ -1031,7 +980,6 @@
       }
     },
     "content": {
-      "title": "Kontentni boshqarish",
       "description": "Sayt matn kontentini tahrirlang. Har bir maydon alohida saqlanadi.",
       "sections": {
         "hero": "Asosiy ekran",
@@ -1040,10 +988,6 @@
         "footer": "Futer",
         "partnership": "Hamkorlik"
       },
-      "section": "Bo'lim",
-      "key": "Kalit",
-      "value": "Qiymat",
-      "actions": "Amallar",
       "empty": "Kontent topilmadi",
       "loadError": "Kontentni yuklashda xatolik",
       "updated": "Kontent yangilandi",
