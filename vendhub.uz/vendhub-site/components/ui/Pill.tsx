@@ -7,6 +7,8 @@ interface PillProps {
   count?: number
   label: string
   className?: string
+  role?: string
+  ariaSelected?: boolean
 }
 
 export default function Pill({
@@ -16,6 +18,8 @@ export default function Pill({
   count,
   label,
   className = '',
+  role,
+  ariaSelected,
 }: PillProps) {
   return (
     <button
@@ -28,6 +32,8 @@ export default function Pill({
         .filter(Boolean)
         .join(' ')}
       onClick={onClick}
+      role={role}
+      aria-selected={ariaSelected}
     >
       {icon && <span className="mr-1.5">{icon}</span>}
       {label}

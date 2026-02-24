@@ -15,7 +15,7 @@ export default async function PromoBanner() {
   const promo = data?.[0] ?? fallbackPromotions[0]
 
   return (
-    <section aria-label="Promotion" className="mt-12 px-4">
+    <section aria-label={t('ariaLabel')} className="mt-12 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="rounded-2xl overflow-hidden bg-gradient-to-r from-caramel to-caramel-dark p-8 sm:p-12 text-white">
           {/* Badge */}

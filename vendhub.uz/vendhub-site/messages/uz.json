@@ -73,6 +73,7 @@
   },
 
   "quickActions": {
+    "ariaLabel": "Tezkor harakatlar",
     "catalog": "Katalog",
     "catalogDesc": "Barcha ichimliklar va gazaklar",
     "machines": "Avtomatlar",
@@ -216,6 +217,7 @@
   },
 
   "promoBanner": {
+    "ariaLabel": "Aksiya",
     "badge": "Aksiya",
     "title": "Ikkinchi kofe -50%",
     "description": "Ikkita ichimlik buyurtma qiling va ikkinchisiga chegirma oling",
@@ -596,6 +598,7 @@
       "partners": "Hamkorlar",
       "loyalty": "Sodiqlik",
       "content": "Kontent",
+      "bonusActions": "Bonus amallar",
       "backToSite": "Saytga qaytish",
       "logout": "Chiqish"
     },
@@ -798,17 +801,22 @@
     "promotions": {
       "title": "Aksiyalar",
       "add": "Aksiya qo'shish",
+      "duplicate": "Nusxa olish",
+      "duplicated": "Aksiya nusxalandi",
       "table": {
         "title": "Nomi",
         "badge": "Belgi",
         "promoCode": "Promokod",
         "active": "Faol",
         "validUntil": "Amal qiladi",
+        "visibility": "Turi",
         "actions": "Amallar"
       },
       "activeYes": "Ha",
       "activeNo": "Yo'q",
       "noExpiry": "Muddatsiz",
+      "visibilityVisible": "Kod",
+      "visibilityAction": "Amal",
       "count": "{count} ta aksiya",
       "empty": "Aksiyalar topilmadi",
       "deleteTitle": "Aksiyani o'chirish?",
@@ -825,7 +833,19 @@
         "description": "Tavsif",
         "gradient": "Gradient (CSS)",
         "sortOrder": "Saralash tartibi",
-        "conditions": "Shartlar"
+        "conditions": "Shartlar",
+        "visibilityType": "Ko'rinish turi",
+        "visibilityVisible": "Kod darhol ko'rinadi",
+        "visibilityAction": "Amal talab qilinadi",
+        "actionInstruction": "Foydalanuvchi uchun ko'rsatma",
+        "actionInstructionPlaceholder": "Masalan: Telegram-botda ro'yxatdan o'ting",
+        "discountType": "Chegirma turi",
+        "discountTypeNone": "Ko'rsatilmagan",
+        "discountTypePercent": "Foiz",
+        "discountTypeFixed": "Belgilangan",
+        "discountTypeSpecial": "Maxsus",
+        "discountValue": "Chegirma qiymati",
+        "discountValuePlaceholder": "20 yoki 5 000 UZS"
       }
     },
     "cooperation": {
@@ -899,6 +919,7 @@
     },
     "loyalty": {
       "title": "Sodiqlik darajalari",
+      "addTier": "Daraja qo'shish",
       "table": {
         "level": "Daraja",
         "emoji": "Emoji",
@@ -910,7 +931,76 @@
       "empty": "Darajalar topilmadi",
       "loadError": "Darajalarni yuklashda xatolik",
       "updated": "Daraja yangilandi",
-      "saveError": "Saqlashda xatolik"
+      "created": "Daraja qo'shildi",
+      "deleted": "Daraja o'chirildi",
+      "saveError": "Saqlashda xatolik",
+      "deleteError": "O'chirishda xatolik",
+      "deleteTierTitle": "Darajani o'chirish?",
+      "deleteTierMessage": "«{name}» darajasi butunlay o'chiriladi.",
+      "editTierTitle": "Darajani tahrirlash",
+      "newTierTitle": "Yangi daraja",
+      "privilegeMatrix": "Darajalar bo'yicha imtiyozlar",
+      "managePrivileges": "Imtiyozlarni boshqarish",
+      "privilegeKey": "Kalit (slug)",
+      "privilegeLabel": "Ko'rsatiladigan nom",
+      "addPrivilege": "Imtiyoz qo'shish",
+      "privilegeCreated": "Imtiyoz qo'shildi",
+      "privilegeUpdated": "Imtiyoz yangilandi",
+      "privilegeDeleted": "Imtiyoz o'chirildi",
+      "privilegeDeleteTitle": "Imtiyozni o'chirish?",
+      "privilegeDeleteMessage": "«{name}» imtiyozi barcha darajalardan o'chiriladi.",
+      "form": {
+        "level": "Daraja nomi",
+        "emoji": "Emoji",
+        "discount": "Chegirma %",
+        "threshold": "Chegara (UZS)",
+        "cashback": "Keshbek %",
+        "sortOrder": "Tartib",
+        "privileges": "Imtiyozlar"
+      }
+    },
+    "bonusActions": {
+      "title": "Bonus amallar",
+      "add": "Amal qo'shish",
+      "tabs": {
+        "all": "Barchasi",
+        "earn": "Ishlash",
+        "spend": "Sarflash"
+      },
+      "count": "{count} ta amal",
+      "table": {
+        "title": "Nomi",
+        "icon": "Belgi",
+        "points": "Ballar",
+        "type": "Turi",
+        "active": "Faol",
+        "sort": "Tartib",
+        "actions": "Amallar"
+      },
+      "typeEarn": "Ishlash",
+      "typeSpend": "Sarflash",
+      "activeYes": "Ha",
+      "activeNo": "Yo'q",
+      "empty": "Amallar topilmadi",
+      "deleteTitle": "Amalni o'chirish?",
+      "deleteMessage": "«{name}» amali butunlay o'chiriladi.",
+      "loadError": "Amallarni yuklashda xatolik",
+      "deleteError": "O'chirishda xatolik",
+      "deleted": "Amal o'chirildi",
+      "updated": "Amal yangilandi",
+      "created": "Amal qo'shildi",
+      "saveError": "Saqlashda xatolik",
+      "editTitle": "Amalni tahrirlash",
+      "newTitle": "Yangi amal",
+      "form": {
+        "title": "Nomi",
+        "description": "Tavsif",
+        "icon": "Belgi (Lucide)",
+        "pointsAmount": "Ballar miqdori",
+        "pointsAmountPlaceholder": "20 000, 1%, x3...",
+        "type": "Turi",
+        "sortOrder": "Saralash tartibi"
+      }
     },
     "content": {
       "title": "Kontentni boshqarish",

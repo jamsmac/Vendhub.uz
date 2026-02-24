@@ -21,20 +21,26 @@ export default function BenefitsSection({ loyaltyTab }: { loyaltyTab: ReactNode 
         />
 
         {/* Tab switcher */}
-        <div className="flex items-center justify-center gap-3 mb-10">
+        <div role="tablist" className="flex items-center justify-center gap-3 mb-10">
           <Pill
             label={t('tabs.promotions')}
             active={activeTab === 'promos'}
             onClick={() => setActiveTab('promos')}
+            role="tab"
+            ariaSelected={activeTab === 'promos'}
           />
           <Pill
             label={t('tabs.bonuses')}
             active={activeTab === 'loyalty'}
             onClick={() => setActiveTab('loyalty')}
+            role="tab"
+            ariaSelected={activeTab === 'loyalty'}
           />
         </div>
 
-        {activeTab === 'promos' ? <PromotionsTab /> : loyaltyTab}
+        <div role="tabpanel">
+          {activeTab === 'promos' ? <PromotionsTab /> : loyaltyTab}
+        </div>
       </div>
     </section>
   )

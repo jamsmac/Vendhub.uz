@@ -73,6 +73,7 @@
   },
 
   "quickActions": {
+    "ariaLabel": "Быстрые действия",
     "catalog": "Каталог",
     "catalogDesc": "Все напитки и снэки",
     "machines": "Автоматы",
@@ -216,6 +217,7 @@
   },
 
   "promoBanner": {
+    "ariaLabel": "Акция",
     "badge": "Акция",
     "title": "Второй кофе -50%",
     "description": "Закажите два напитка и получите скидку на второй",
@@ -596,6 +598,7 @@
       "partners": "Партнёры",
       "loyalty": "Лояльность",
       "content": "Контент",
+      "bonusActions": "Бонусные действия",
       "backToSite": "Вернуться на сайт",
       "logout": "Выход"
     },

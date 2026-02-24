@@ -25,7 +25,7 @@ export default async function QuickActions() {
   const t = await getTranslations('quickActions')
 
   return (
-    <section aria-label="Quick actions" className="max-w-3xl mx-auto mt-12 px-4">
+    <section aria-label={t('ariaLabel')} className="max-w-3xl mx-auto mt-12 px-4">
       <div className="grid grid-cols-2 gap-4">
         {ACTIONS.map((action) => {
           const Icon = action.icon
