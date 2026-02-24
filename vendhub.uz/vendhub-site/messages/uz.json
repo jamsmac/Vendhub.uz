@@ -128,15 +128,20 @@
     "types": {
       "coffeeMachine": "Kofe avtomati",
       "coffeeModel": "JQ-002-A",
+      "coldModel": "JS-001-A01",
       "count": "{count} ta",
       "dimensions": "O'lchamlari:",
       "dimensionsValue": "730×730×1960 mm, ~240 kg",
+      "coldDimensionsValue": "1000×910×1960 mm, ~350 kg",
       "display": "Displey:",
       "displayValue": "43\" sensorli promo-roliklari bilan",
+      "coldDisplayValue": "55\" 4K sensorli ekran",
       "payment": "To'lov:",
       "paymentValue": "PAYME, CLICK, UZUM, naqd pul",
+      "coldPaymentValue": "naqd pul, karta, QR (opsiya), VIP-karta (opsiya)",
       "features": "Xususiyatlari:",
       "featuresValue": "muz generatori, yopiq qopqoq, o'z stakani, UV-sterilizatsiya, savat",
+      "coldFeaturesValue": "o'rnatilgan muzlatish -10°C...0°C, 5×8 spiral, 4G/Wi-Fi/LAN",
       "viewDetails": "Model haqida batafsil →",
       "snackMachine": "Gazak avtomati",
       "snackModel": "TCN-CSC-8C",
@@ -395,6 +400,66 @@
     "cta": {
       "title": "Toshkent bo'ylab 16 ta JQ-002-A avtomati",
       "subtitle": "Eng yaqin avtomatni toping va sevimli ichimligingizni buyurtma bering",
+      "button": "Xaritada avtomatlarni ko'rish"
+    }
+  },
+
+  "machineModelSlushy": {
+    "back": "Avtomatlarga qaytish",
+    "badge": "Slushy Ice Drink",
+    "subtitle": "Slushy va sovutilgan ichimliklar uchun professional avtomat: o'rnatilgan muzlatish tizimi va 55\" 4K sensorli ekran",
+    "quickStats": {
+      "tempRange": "-10°C...0°C",
+      "display": "55\" 4K sensor",
+      "capacity": "5 javon × 8 seksiya"
+    },
+    "galleryTitle": "Model fotosuratlari",
+    "gallery": {
+      "sizeAlt": "JS-001-A01 o'lchamlari",
+      "featuresAlt": "JS-001-A01 afzalliklari"
+    },
+    "specsTitle": "Texnik xususiyatlar",
+    "specs": {
+      "model": "Artikul",
+      "dimensions": "O'lchamlari (K×CH×B)",
+      "weight": "Sof og'irligi",
+      "voltage": "Kuchlanish",
+      "voltageValue": "220–240 V / 50 Hz; 220–230 V / 60 Hz; 110 V / 60 Hz (opsiya)",
+      "power": "Quvvat",
+      "tempRange": "Ishchi harorat diapazoni",
+      "capacity": "Standart sig'im",
+      "capacityValue": "5 javon × 8 spiral seksiya (spiral qadami sozlanadi)",
+      "display": "Reklama ekrani",
+      "displayValue": "55\" 4K, sensorli",
+      "connectivity": "Ulanish",
+      "connectivityValue": "4G SIM-karta, LAN-kabel, Wi-Fi",
+      "payment": "To'lov usullari",
+      "paymentValue": "Kupyura, tanga, bank kartasi, QR-kod (opsiya), VIP-karta (opsiya)",
+      "assortment": "Assortiment",
+      "assortmentValue": "Slushy, gazli va konserva ichimliklar, pivo va boshqalar"
+    },
+    "featuresTitle": "Asosiy afzalliklar",
+    "features": {
+      "freeze": "O'rnatilgan muzlatish tizimi",
+      "freezeDesc": "To'g'ri slush-effekt uchun -10°C...0°C oralig'ini barqaror ushlab turadi.",
+      "display": "55\" 4K sensorli ekran",
+      "displayDesc": "Ichimlik tanlash va 24/7 reklama ko'rsatish uchun katta ekran.",
+      "payment": "Moslashuvchan to'lov",
+      "paymentDesc": "Naqd pul, bank kartasi, QR-kod va doimiy mijoz uchun VIP-karta.",
+      "capacity": "Moslashuvchan sig'im",
+      "capacityDesc": "5 javon, har birida 8 spiral; qadamni qadoq formatiga moslash mumkin.",
+      "connectivity": "4G, Wi-Fi va LAN",
+      "connectivityDesc": "Avtomat boshqaruv tizimi bilan doimiy aloqa.",
+      "remote": "Masofaviy monitoring",
+      "remoteDesc": "Qoldiq, inkassatsiya va reklama kontentini bitta paneldan boshqarish.",
+      "reliable": "Barqaror ishlash",
+      "reliableDesc": "Yuqori oqimli savdo nuqtalari uchun sanoat darajasidagi konfiguratsiya.",
+      "revenue": "24/7 reklama tashuvchisi",
+      "revenueDesc": "Ekran bir vaqtning o'zida ichimlik sotadi va brend kontentini namoyish etadi."
+    },
+    "cta": {
+      "title": "JS-001-A01 yuqori oqim nuqtalari uchun",
+      "subtitle": "Savdo markazlari, kinoteatrlar, parklar, fudkortlar va sport obyektlari",
       "button": "Xaritada avtomatlarni ko'rish"
     }
   },

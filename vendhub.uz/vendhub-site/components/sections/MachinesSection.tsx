@@ -37,6 +37,8 @@ const MACHINE_TYPE_META: Record<
   },
   cold: {
     emoji: '\uD83E\uDDCA',
+    imageSrc: '/images/machines/js-001-a01-hero.jpg',
+    imageAlt: 'Slushy vending machine',
   },
 }
 
@@ -494,15 +496,23 @@ export default function MachinesSection() {
                 className="w-full flex items-center justify-between p-5 text-left"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">{'\uD83E\uDDCA'}</span>
+                  <div className="relative w-12 h-12 rounded-xl bg-foam border border-espresso/10 overflow-hidden shrink-0">
+                    <Image
+                      src={MACHINE_TYPE_META.cold.imageSrc!}
+                      alt={MACHINE_TYPE_META.cold.imageAlt!}
+                      fill
+                      sizes="48px"
+                      className="object-contain p-1.5"
+                    />
+                  </div>
                   <div>
                     <h3 className="font-medium text-chocolate">
                       {t('types.coldDrinks')}
                     </h3>
+                    <p className="text-sm text-chocolate/50">
+                      {t('types.coldModel')} · {t('types.count', { count: 1 })}
+                    </p>
                   </div>
-                  <Badge variant="new" className="ml-2">
-                    {t('types.comingSoon')}
-                  </Badge>
                 </div>
                 <ChevronDown
                   size={20}
@@ -514,8 +524,39 @@ export default function MachinesSection() {
               </button>
               {expandedAccordion === 2 && (
                 <div className="px-5 pb-5 animate-expand overflow-hidden">
-                  <div className="border-t border-espresso/5 pt-4 text-sm text-chocolate/50">
-                    {t('types.infoSoon')}
+                  <div className="border-t border-espresso/5 pt-4 space-y-3 text-sm text-chocolate/70">
+                    <div>
+                      <span className="font-medium text-chocolate">
+                        {t('types.dimensions')}
+                      </span>{' '}
+                      {t('types.coldDimensionsValue')}
+                    </div>
+                    <div>
+                      <span className="font-medium text-chocolate">
+                        {t('types.display')}
+                      </span>{' '}
+                      {t('types.coldDisplayValue')}
+                    </div>
+                    <div>
+                      <span className="font-medium text-chocolate">
+                        {t('types.payment')}
+                      </span>{' '}
+                      {t('types.coldPaymentValue')}
+                    </div>
+                    <div>
+                      <span className="font-medium text-chocolate">
+                        {t('types.features')}
+                      </span>{' '}
+                      {t('types.coldFeaturesValue')}
+                    </div>
+                    <div className="pt-2">
+                      <Link
+                        href="/machines/js-001-a01"
+                        className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
+                      >
+                        {t('types.viewDetails')}
+                      </Link>
+                    </div>
                   </div>
                 </div>
               )}
