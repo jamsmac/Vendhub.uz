@@ -18,7 +18,9 @@ import {
 import { getTranslations } from 'next-intl/server'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
-import { loyaltyTiers } from '@/lib/data'
+import { supabase } from '@/lib/supabase'
+import { loyaltyTiers as fallbackTiers } from '@/lib/data'
+import type { LoyaltyTier } from '@/lib/types'
 import { formatPrice } from '@/lib/utils'
 
 const PRIVILEGE_KEYS = [
@@ -50,10 +52,16 @@ const SPEND_KEYS = [
   { icon: Star, labelKey: 'merch' as const, descKey: 'merchDesc' as const },
 ]
 
-const sortedTiers = [...loyaltyTiers].sort((a, b) => a.sort_order - b.sort_order)
-
 export default async function LoyaltyTab() {
   const t = await getTranslations('loyalty')
+
+  const { data } = await supabase
+    .from('loyalty_tiers')
+    .select('*')
+    .order('sort_order')
+
+  const sortedTiers = (data?.length ? data as LoyaltyTier[] : fallbackTiers)
+    .sort((a, b) => a.sort_order - b.sort_order)
 
   return (
     <div>

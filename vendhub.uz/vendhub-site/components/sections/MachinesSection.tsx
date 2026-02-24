@@ -4,8 +4,9 @@ import { useState, useMemo, useEffect } from 'react'
 import { Search, X, LocateFixed, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { supabase } from '@/lib/supabase'
-import { machines } from '@/lib/data'
+import { machines as fallbackMachines } from '@/lib/data'
 import { useModal } from '@/lib/modal-context'
+import type { Machine } from '@/lib/types'
 import { useGeolocation } from '@/lib/useGeolocation'
 import { sortByDistance, formatDistance } from '@/lib/geo'
 import type { MachineWithDistance } from '@/lib/geo'
@@ -35,9 +36,17 @@ export default function MachinesSection() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all')
   const [sortNearest, setSortNearest] = useState(false)
+  const [machines, setMachines] = useState<Machine[]>(fallbackMachines)
   const [machineTypes, setMachineTypes] = useState<MachineTypeDetail[]>([])
 
   useEffect(() => {
+    supabase
+      .from('machines')
+      .select('*')
+      .order('name')
+      .then(({ data }) => {
+        if (data?.length) setMachines(data as Machine[])
+      })
     supabase
       .from('machine_types')
       .select('*')
@@ -176,7 +185,7 @@ export default function MachinesSection() {
     }
 
     return result
-  }, [searchQuery, statusFilter, typeFilter, userLocation, sortNearest])
+  }, [machines, searchQuery, statusFilter, typeFilter, userLocation, sortNearest])
 
   return (
     <section id="map" className="section-padding">
@@ -378,7 +387,7 @@ export default function MachinesSection() {
         )}
 
         {activeTab === 'types' && (
-          <MachineTypesTab machineTypes={resolvedMachineTypes} />
+          <MachineTypesTab machineTypes={resolvedMachineTypes} machines={machines} />
         )}
       </div>
     </section>

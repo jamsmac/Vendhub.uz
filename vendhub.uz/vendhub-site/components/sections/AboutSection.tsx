@@ -2,17 +2,22 @@ import { Phone, Mail, MessageCircle, MapPin, Clock } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
-import { siteContent } from '@/lib/data'
-
-function getContent(key: string): string {
-  const item = siteContent.find(
-    (c) => c.section === 'about' && c.key === key
-  )
-  return item?.value ?? ''
-}
+import { supabase } from '@/lib/supabase'
+import { siteContent as fallbackContent } from '@/lib/data'
 
 export default async function AboutSection() {
   const t = await getTranslations('about')
+
+  const { data } = await supabase
+    .from('site_content')
+    .select('key, value')
+    .eq('section', 'about')
+
+  const contentMap = new Map<string, string>()
+  ;(data ?? fallbackContent.filter((c) => c.section === 'about'))
+    .forEach((item) => contentMap.set(item.key, item.value))
+
+  const getContent = (key: string) => contentMap.get(key) ?? ''
   const description = getContent('description')
 
   const CONTACTS = [

@@ -1,9 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Copy, ChevronDown, ChevronUp, Zap, Tag, Gift } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { promotions } from '@/lib/data'
+import { useTranslations, useLocale } from 'next-intl'
+import { supabase } from '@/lib/supabase'
+import { promotions as fallbackPromotions } from '@/lib/data'
+import type { Promotion } from '@/lib/types'
 import Badge from '@/components/ui/Badge'
 import Card from '@/components/ui/Card'
 import { useToast } from '@/components/ui/Toast'
@@ -11,7 +13,20 @@ import { useToast } from '@/components/ui/Toast'
 export default function PromotionsTab() {
   const { showToast } = useToast()
   const t = useTranslations('promotions')
+  const locale = useLocale()
   const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [promotions, setPromotions] = useState<Promotion[]>(fallbackPromotions)
+
+  useEffect(() => {
+    supabase
+      .from('promotions')
+      .select('*')
+      .eq('is_active', true)
+      .order('sort_order')
+      .then(({ data }) => {
+        if (data?.length) setPromotions(data as Promotion[])
+      })
+  }, [])
 
   const activePromos = promotions
     .filter((p) => p.is_active)

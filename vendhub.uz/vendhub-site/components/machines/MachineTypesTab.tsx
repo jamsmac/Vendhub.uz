@@ -5,8 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
-import { machines } from '@/lib/data'
 import Badge from '@/components/ui/Badge'
+import type { Machine } from '@/lib/types'
 import MachineTypeDetailModal from '@/components/modals/MachineTypeDetailModal'
 import type { MachineTypeDetail } from '@/lib/types'
 
@@ -41,9 +41,10 @@ const MACHINE_DETAIL_ROUTES: Partial<Record<MachineType, string>> = {
 
 interface MachineTypesTabProps {
   machineTypes: MachineTypeDetail[]
+  machines: Machine[]
 }
 
-export default function MachineTypesTab({ machineTypes }: MachineTypesTabProps) {
+export default function MachineTypesTab({ machineTypes, machines }: MachineTypesTabProps) {
   const t = useTranslations('machines')
   const locale = useLocale()
   const [expandedAccordion, setExpandedAccordion] = useState<number>(0)
