@@ -232,11 +232,11 @@ export default function AdminBonusActionsPage() {
                     <td className="px-4 py-3 text-center text-espresso/50 text-xs">{action.sort_order}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-end gap-1">
-                        <button type="button" onClick={() => openEdit(action)} aria-label="Edit"
+                        <button type="button" onClick={() => openEdit(action)} aria-label={tc('edit')}
                           className="p-2 text-espresso/40 hover:text-espresso transition-colors rounded-lg hover:bg-foam">
                           <Pencil size={15} />
                         </button>
-                        <button type="button" onClick={() => setDeleteTarget({ id: action.id, title: action.title })} aria-label="Delete"
+                        <button type="button" onClick={() => setDeleteTarget({ id: action.id, title: action.title })} aria-label={tc('delete')}
                           className="p-2 text-espresso/40 hover:text-red-500 transition-colors rounded-lg hover:bg-red-50">
                           <Trash2 size={15} />
                         </button>
@@ -262,13 +262,14 @@ export default function AdminBonusActionsPage() {
 
       {/* Form Modal */}
       {formOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="bonus-action-form-title">
           <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl my-8" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between px-6 py-4 border-b border-espresso/10">
-              <h2 className="text-lg font-bold text-espresso">
+              <h2 id="bonus-action-form-title" className="text-lg font-bold text-espresso">
                 {editingId ? t('editTitle') : t('newTitle')}
               </h2>
               <button type="button" onClick={() => setFormOpen(false)}
+                aria-label={tc('close')}
                 className="text-espresso/40 hover:text-espresso transition-colors">
                 <X size={20} />
               </button>

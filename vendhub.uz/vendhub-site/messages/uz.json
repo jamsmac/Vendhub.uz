@@ -958,6 +958,7 @@
       "deleteTierMessage": "«{name}» darajasi butunlay o'chiriladi.",
       "editTierTitle": "Darajani tahrirlash",
       "newTierTitle": "Yangi daraja",
+      "inactive": "Nofaol",
       "privilegeMatrix": "Darajalar bo'yicha imtiyozlar",
       "managePrivileges": "Imtiyozlarni boshqarish",
       "privilegeKey": "Kalit (slug)",
@@ -1023,6 +1024,14 @@
     },
     "content": {
       "title": "Kontentni boshqarish",
+      "description": "Sayt matn kontentini tahrirlang. Har bir maydon alohida saqlanadi.",
+      "sections": {
+        "hero": "Asosiy ekran",
+        "stats": "Statistika",
+        "about": "Biz haqimizda",
+        "footer": "Futer",
+        "partnership": "Hamkorlik"
+      },
       "section": "Bo'lim",
       "key": "Kalit",
       "value": "Qiymat",

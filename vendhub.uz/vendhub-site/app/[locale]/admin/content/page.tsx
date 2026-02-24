@@ -7,15 +7,7 @@ import { supabase } from '@/lib/supabase'
 import { useToast } from '@/components/ui/Toast'
 import type { SiteContent } from '@/lib/types'
 
-const sectionLabels: Record<string, string> = {
-  hero: 'Главный экран',
-  stats: 'Статистика',
-  about: 'О нас',
-  footer: 'Футер',
-  partnership: 'Партнёрство',
-}
-
-const sectionOrder = ['hero', 'stats', 'about', 'footer', 'partnership']
+const SECTION_KEYS = ['hero', 'stats', 'about', 'footer', 'partnership'] as const
 
 export default function AdminContentPage() {
   const { showToast } = useToast()
@@ -82,8 +74,8 @@ export default function AdminContentPage() {
 
   // Sort sections
   const sortedSections = Object.keys(grouped).sort((a, b) => {
-    const ai = sectionOrder.indexOf(a)
-    const bi = sectionOrder.indexOf(b)
+    const ai = SECTION_KEYS.indexOf(a as typeof SECTION_KEYS[number])
+    const bi = SECTION_KEYS.indexOf(b as typeof SECTION_KEYS[number])
     return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi)
   })
 
@@ -96,7 +88,7 @@ export default function AdminContentPage() {
   return (
     <div className="space-y-6">
       <p className="text-sm text-espresso/50">
-        Редактируйте текстовое содержимое сайта. Каждое поле сохраняется отдельно.
+        {t('description')}
       </p>
 
       {sortedSections.length === 0 ? (
@@ -107,7 +99,7 @@ export default function AdminContentPage() {
         sortedSections.map((section) => (
           <div key={section} className="space-y-3">
             <h2 className="text-sm font-bold text-espresso uppercase tracking-wider">
-              {sectionLabels[section] ?? section}
+              {t(`sections.${section}`, { defaultValue: section })}
             </h2>
             <div className="bg-white rounded-2xl border border-espresso/5 overflow-hidden divide-y divide-espresso/5">
               {grouped[section].map((item) => (
