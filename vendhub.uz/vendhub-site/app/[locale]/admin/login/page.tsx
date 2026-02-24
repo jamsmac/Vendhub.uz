@@ -35,9 +35,8 @@ export default function AdminLoginPage() {
       await signIn(email, password)
       router.push('/admin')
     } catch (err: unknown) {
-      const message =
-        err instanceof Error ? err.message : t('error')
-      setError(message)
+      console.error('[auth]', err)
+      setError(t('error'))
     } finally {
       setLoading(false)
     }

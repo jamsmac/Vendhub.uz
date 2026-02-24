@@ -35,7 +35,8 @@ export default function PartnerForm() {
       return
     }
 
-    if (!form.phone.trim() || !form.phone.startsWith('+998')) {
+    const cleanPhone = form.phone.trim().replace(/[\s\-()]/g, '')
+    if (!cleanPhone.match(/^\+998\d{9}$/)) {
       showToast(t('phoneInvalid'), 'error')
       return
     }
@@ -48,7 +49,7 @@ export default function PartnerForm() {
         .insert({
           model: form.model,
           name: form.name.trim(),
-          phone: form.phone.trim(),
+          phone: cleanPhone,
           comment: form.comment.trim() || null,
           status: 'new',
         })

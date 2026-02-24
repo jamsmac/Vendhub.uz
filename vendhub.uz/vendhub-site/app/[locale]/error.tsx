@@ -1,8 +1,11 @@
 'use client'
 
+import { useEffect } from 'react'
+import { Coffee, RotateCcw } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-export default function LocaleError({
+export default function GlobalError({
+  error,
   reset,
 }: {
   error: Error & { digest?: string }
@@ -10,20 +13,29 @@ export default function LocaleError({
 }) {
   const t = useTranslations('common')
 
+  useEffect(() => {
+    console.error('[page]', error)
+  }, [error])
+
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center px-4">
-      <div className="text-center">
-        <div className="text-6xl mb-6">{'\u2615'}</div>
-        <h1 className="text-2xl font-display font-bold text-espresso-dark mb-2">
-          {t('errorOccurred')}
-        </h1>
-        <button
-          onClick={reset}
-          className="btn-caramel mt-4 px-6 py-3"
-        >
-          {t('retry')}
-        </button>
+    <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 text-center">
+      <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-foam flex items-center justify-center">
+        <Coffee size={32} className="text-espresso/40" />
       </div>
+      <h2 className="font-display text-xl font-bold text-espresso mb-2">
+        {t('errorOccurred')}
+      </h2>
+      <p className="text-sm text-chocolate/50 mb-6 max-w-md">
+        {t('errorFallback')}
+      </p>
+      <button
+        type="button"
+        onClick={reset}
+        className="btn-espresso inline-flex items-center gap-2"
+      >
+        <RotateCcw size={16} />
+        {t('retry')}
+      </button>
     </div>
   )
 }
