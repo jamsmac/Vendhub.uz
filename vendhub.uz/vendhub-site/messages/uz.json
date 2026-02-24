@@ -30,6 +30,10 @@
     "description": "25+ xil ichimlik. Toshkentdagi kasalxonalar, universitetlar va jamoat joylarida 16 ta avtomat. Sodiqlik dasturi va chegirmalar.",
     "ogDescription": "25+ xil ichimlik. Toshkentda 16 ta avtomat.",
     "ogImageAlt": "VendHub — Toshkentda avtomat kofe",
+    "ogSubtitle": "Avtomatlardan kofe bir necha bosishda",
+    "ogStatBeverages": "25+ ichimlik",
+    "ogStatMachines": "16 ta avtomat",
+    "ogStatRating": "4.8 reyting",
     "jsonLdDescription": "Toshkentdagi vending avtomatlari tarmog'i — kofe, choy, gazaklar",
     "jsonLdArea": "Toshkent",
     "skipToContent": "Asosiy mazmunga o'tish"

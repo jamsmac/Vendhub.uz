@@ -1,10 +1,13 @@
 import { ImageResponse } from 'next/og'
+import { getTranslations } from 'next-intl/server'
 
-export const alt = 'VendHub — Кофе из автоматов в Ташкенте'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-export default function OgImage() {
+export default async function OgImage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'seo' })
+
   return new ImageResponse(
     (
       <div
@@ -56,7 +59,7 @@ export default function OgImage() {
             marginTop: 12,
           }}
         >
-          Кофе из автоматов в пару кликов
+          {t('ogSubtitle')}
         </div>
 
         {/* Stats line */}
@@ -70,9 +73,9 @@ export default function OgImage() {
             opacity: 0.8,
           }}
         >
-          <span>☕ 25+ напитков</span>
-          <span>📍 16 автоматов</span>
-          <span>⭐ 4.8 рейтинг</span>
+          <span>☕ {t('ogStatBeverages')}</span>
+          <span>📍 {t('ogStatMachines')}</span>
+          <span>⭐ {t('ogStatRating')}</span>
         </div>
 
         {/* Domain */}
