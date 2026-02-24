@@ -37,7 +37,6 @@ export default async function Home() {
     if (!allCms[item.section]) allCms[item.section] = {}
     allCms[item.section][item.key] = item.value
   }
-  const partnerCmsData = allCms['partnership'] ?? {}
   const statsCmsData = allCms['stats'] ?? {}
   const aboutCmsData = allCms['about'] ?? {}
   const partnerList = (partnersResult.data?.length ? partnersResult.data : fallbackPartners) as Partner[]
@@ -60,7 +59,7 @@ export default async function Home() {
         <MenuSection />
 
         <BenefitsSection loyaltyTab={<LoyaltyTab />} promotions={promoList} />
-        <PartnerSection partners={partnerList} cmsData={partnerCmsData} />
+        <PartnerSection partners={partnerList} />
         <AboutSection cmsData={aboutCmsData} />
       </main>
       <Footer />

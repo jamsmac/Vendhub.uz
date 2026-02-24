@@ -35,10 +35,9 @@ const MODEL_ACCENTS: Record<ModelKey, { bg: string; text: string }> = {
 
 interface PartnerSectionProps {
   partners: Partner[]
-  cmsData: Record<string, string>
 }
 
-export default function PartnerSection({ partners, cmsData }: PartnerSectionProps) {
+export default function PartnerSection({ partners }: PartnerSectionProps) {
   const t = useTranslations('partner')
   const [expandedId, setExpandedId] = useState<string | null>(null)
 
@@ -47,23 +46,14 @@ export default function PartnerSection({ partners, cmsData }: PartnerSectionProp
   }
 
   function getModelTitle(key: ModelKey): string {
-    return cmsData[`${key}_title`] || t(`models.${key}.title`)
+    return t(`models.${key}.title`)
   }
 
   function getModelDescription(key: ModelKey): string {
-    return cmsData[`${key}_description`] || t(`models.${key}.description`)
+    return t(`models.${key}.description`)
   }
 
   function getModelBenefits(key: ModelKey): string[] {
-    const raw = cmsData[`${key}_benefits`]
-    if (raw) {
-      try {
-        const parsed = JSON.parse(raw)
-        if (Array.isArray(parsed)) return parsed
-      } catch {
-        // fall through to i18n
-      }
-    }
     const i18nRaw = t.raw(`models.${key}.benefits`)
     return Array.isArray(i18nRaw) ? i18nRaw : []
   }
