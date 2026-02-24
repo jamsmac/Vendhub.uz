@@ -1,15 +1,17 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import { Search, X, ChevronDown, LocateFixed, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { supabase } from '@/lib/supabase'
 import { machines } from '@/lib/data'
 import { useModal } from '@/lib/modal-context'
 import { useGeolocation } from '@/lib/useGeolocation'
 import MachineTypeDetailModal from '@/components/modals/MachineTypeDetailModal'
 import { sortByDistance, formatDistance } from '@/lib/geo'
 import type { MachineWithDistance } from '@/lib/geo'
+import type { MachineTypeDetail } from '@/lib/types'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
@@ -52,7 +54,19 @@ export default function MachinesSection() {
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all')
   const [sortNearest, setSortNearest] = useState(false)
   const [expandedAccordion, setExpandedAccordion] = useState<number>(0)
-  const [detailType, setDetailType] = useState<'coffee' | 'cold' | null>(null)
+  const [detailType, setDetailType] = useState<MachineTypeDetail | null>(null)
+  const [machineTypes, setMachineTypes] = useState<MachineTypeDetail[]>([])
+
+  useEffect(() => {
+    supabase
+      .from('machine_types')
+      .select('*')
+      .eq('is_active', true)
+      .order('sort_order')
+      .then(({ data }) => {
+        if (data) setMachineTypes(data as MachineTypeDetail[])
+      })
+  }, [])
 
   const hasLocation = geo.latitude != null && geo.longitude != null
   const userLocation = useMemo(
@@ -264,7 +278,7 @@ export default function MachinesSection() {
             {/* Machine cards grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredMachines.map((machine) => {
-                const typeMeta = MACHINE_TYPE_META[machine.type]
+                const typeMeta = MACHINE_TYPE_META[machine.type as MachineType]
                 const dist = (machine as MachineWithDistance).distance
                 const distFormatted = dist != null ? formatDistance(dist) : null
 
@@ -287,17 +301,17 @@ export default function MachinesSection() {
                                 sizes="44px"
                                 className="object-cover"
                               />
-                            ) : typeMeta.imageSrc ? (
+                            ) : typeMeta?.imageSrc ? (
                               <Image
                                 src={typeMeta.imageSrc}
-                                alt={typeMeta.imageAlt ?? machine.name}
+                                alt={typeMeta?.imageAlt ?? machine.name}
                                 fill
                                 sizes="44px"
                                 className="object-contain p-1"
                               />
                             ) : (
                               <span className="w-full h-full flex items-center justify-center text-lg">
-                                {typeMeta.emoji}
+                                {typeMeta?.emoji ?? '\u2615'}
                               </span>
                             )}
                           </div>
@@ -371,206 +385,97 @@ export default function MachinesSection() {
 
         {activeTab === 'types' && (
           <div className="space-y-4 max-w-3xl mx-auto">
-            {/* Coffee Automat */}
-            <div className="bg-white rounded-2xl border border-espresso/5 overflow-hidden">
-              <button
-                type="button"
-                onClick={() => toggleAccordion(0)}
-                className="w-full flex items-center justify-between p-5 text-left"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="relative w-12 h-12 rounded-xl bg-foam border border-espresso/10 overflow-hidden shrink-0">
-                    <Image
-                      src={MACHINE_TYPE_META.coffee.imageSrc!}
-                      alt={MACHINE_TYPE_META.coffee.imageAlt!}
-                      fill
-                      sizes="48px"
-                      className="object-contain p-1.5"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-chocolate">
-                      {t('types.coffeeMachine')}
-                    </h3>
-                    <p className="text-sm text-chocolate/50">
-                      {t('types.coffeeModel')} · {t('types.count', { count: 16 })}
-                    </p>
-                  </div>
-                </div>
-                <ChevronDown
-                  size={20}
-                  className={[
-                    'text-chocolate/30 transition-transform duration-300',
-                    expandedAccordion === 0 ? 'rotate-180' : '',
-                  ].join(' ')}
-                />
-              </button>
-              {expandedAccordion === 0 && (
-                <div className="px-5 pb-5 animate-expand overflow-hidden">
-                  <div className="border-t border-espresso/5 pt-4 space-y-3 text-sm text-chocolate/70">
-                    <div>
-                      <span className="font-medium text-chocolate">
-                        {t('types.dimensions')}
-                      </span>{' '}
-                      {t('types.dimensionsValue')}
-                    </div>
-                    <div>
-                      <span className="font-medium text-chocolate">
-                        {t('types.display')}
-                      </span>{' '}
-                      {t('types.displayValue')}
-                    </div>
-                    <div>
-                      <span className="font-medium text-chocolate">
-                        {t('types.payment')}
-                      </span>{' '}
-                      {t('types.paymentValue')}
-                    </div>
-                    <div>
-                      <span className="font-medium text-chocolate">
-                        {t('types.features')}
-                      </span>{' '}
-                      {t('types.featuresValue')}
-                    </div>
-                    <div className="pt-2">
-                      <button
-                        type="button"
-                        onClick={() => setDetailType('coffee')}
-                        className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
-                      >
-                        {t('types.viewDetails')}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            {machineTypes.map((mt, index) => {
+              const fallback = MACHINE_TYPE_META[mt.slug as MachineType]
+              const thumbSrc = mt.hero_image_url || fallback?.imageSrc
+              const machineCount = machines.filter((m) => m.type === mt.slug).length
+              const previewSpecs = (mt.specs || []).slice(0, 4)
+              const hasDetails = (mt.specs || []).length > 0 || (mt.advantages || []).length > 0
 
-            {/* Snack Automat */}
-            <div className="bg-white rounded-2xl border border-espresso/5 overflow-hidden">
-              <button
-                type="button"
-                onClick={() => toggleAccordion(1)}
-                className="w-full flex items-center justify-between p-5 text-left"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="relative w-12 h-12 rounded-xl bg-foam border border-espresso/10 overflow-hidden shrink-0">
-                    <Image
-                      src={MACHINE_TYPE_META.snack.imageSrc!}
-                      alt={MACHINE_TYPE_META.snack.imageAlt!}
-                      fill
-                      sizes="48px"
-                      className="object-contain p-1"
+              return (
+                <div key={mt.id} className="bg-white rounded-2xl border border-espresso/5 overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => toggleAccordion(index)}
+                    className="w-full flex items-center justify-between p-5 text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-12 h-12 rounded-xl bg-foam border border-espresso/10 overflow-hidden shrink-0">
+                        {thumbSrc ? (
+                          <Image
+                            src={thumbSrc}
+                            alt={mt.name}
+                            fill
+                            sizes="48px"
+                            className="object-contain p-1.5"
+                          />
+                        ) : (
+                          <span className="w-full h-full flex items-center justify-center text-lg">
+                            {fallback?.emoji ?? '\u2615'}
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-chocolate">{mt.name}</h3>
+                        <p className="text-sm text-chocolate/50">
+                          {mt.model_name ?? ''}
+                          {mt.model_name && machineCount > 0 ? ' · ' : ''}
+                          {machineCount > 0 ? t('types.count', { count: machineCount }) : ''}
+                        </p>
+                      </div>
+                      {mt.badge && (
+                        <Badge variant="new" className="ml-2">
+                          {mt.badge}
+                        </Badge>
+                      )}
+                    </div>
+                    <ChevronDown
+                      size={20}
+                      className={[
+                        'text-chocolate/30 transition-transform duration-300',
+                        expandedAccordion === index ? 'rotate-180' : '',
+                      ].join(' ')}
                     />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-chocolate">
-                      {t('types.snackMachine')}
-                    </h3>
-                    <p className="text-sm text-chocolate/50">{t('types.snackModel')}</p>
-                  </div>
-                  <Badge variant="new" className="ml-2">
-                    {t('types.comingSoon')}
-                  </Badge>
+                  </button>
+                  {expandedAccordion === index && (
+                    <div className="px-5 pb-5 animate-expand overflow-hidden">
+                      <div className="border-t border-espresso/5 pt-4 space-y-3 text-sm text-chocolate/70">
+                        {previewSpecs.length > 0 ? (
+                          <>
+                            {previewSpecs.map((spec, si) => (
+                              <div key={si}>
+                                <span className="font-medium text-chocolate">{spec.label}</span>{' '}
+                                {spec.value}
+                              </div>
+                            ))}
+                            {hasDetails && (
+                              <div className="pt-2">
+                                <button
+                                  type="button"
+                                  onClick={() => setDetailType(mt)}
+                                  className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
+                                >
+                                  {t('types.viewDetails')}
+                                </button>
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-chocolate/50">{t('types.infoSoon')}</span>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <ChevronDown
-                  size={20}
-                  className={[
-                    'text-chocolate/30 transition-transform duration-300',
-                    expandedAccordion === 1 ? 'rotate-180' : '',
-                  ].join(' ')}
-                />
-              </button>
-              {expandedAccordion === 1 && (
-                <div className="px-5 pb-5 animate-expand overflow-hidden">
-                  <div className="border-t border-espresso/5 pt-4 text-sm text-chocolate/50">
-                    {t('types.infoSoon')}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Cold Drinks */}
-            <div className="bg-white rounded-2xl border border-espresso/5 overflow-hidden">
-              <button
-                type="button"
-                onClick={() => toggleAccordion(2)}
-                className="w-full flex items-center justify-between p-5 text-left"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="relative w-12 h-12 rounded-xl bg-foam border border-espresso/10 overflow-hidden shrink-0">
-                    <Image
-                      src={MACHINE_TYPE_META.cold.imageSrc!}
-                      alt={MACHINE_TYPE_META.cold.imageAlt!}
-                      fill
-                      sizes="48px"
-                      className="object-contain p-1.5"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-chocolate">
-                      {t('types.coldDrinks')}
-                    </h3>
-                    <p className="text-sm text-chocolate/50">
-                      {t('types.coldModel')} · {t('types.count', { count: 1 })}
-                    </p>
-                  </div>
-                </div>
-                <ChevronDown
-                  size={20}
-                  className={[
-                    'text-chocolate/30 transition-transform duration-300',
-                    expandedAccordion === 2 ? 'rotate-180' : '',
-                  ].join(' ')}
-                />
-              </button>
-              {expandedAccordion === 2 && (
-                <div className="px-5 pb-5 animate-expand overflow-hidden">
-                  <div className="border-t border-espresso/5 pt-4 space-y-3 text-sm text-chocolate/70">
-                    <div>
-                      <span className="font-medium text-chocolate">
-                        {t('types.dimensions')}
-                      </span>{' '}
-                      {t('types.coldDimensionsValue')}
-                    </div>
-                    <div>
-                      <span className="font-medium text-chocolate">
-                        {t('types.display')}
-                      </span>{' '}
-                      {t('types.coldDisplayValue')}
-                    </div>
-                    <div>
-                      <span className="font-medium text-chocolate">
-                        {t('types.payment')}
-                      </span>{' '}
-                      {t('types.coldPaymentValue')}
-                    </div>
-                    <div>
-                      <span className="font-medium text-chocolate">
-                        {t('types.features')}
-                      </span>{' '}
-                      {t('types.coldFeaturesValue')}
-                    </div>
-                    <div className="pt-2">
-                      <button
-                        type="button"
-                        onClick={() => setDetailType('cold')}
-                        className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
-                      >
-                        {t('types.viewDetails')}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+              )
+            })}
           </div>
         )}
       </div>
 
       {detailType && (
         <MachineTypeDetailModal
-          type={detailType}
+          machineType={detailType}
           onClose={() => setDetailType(null)}
         />
       )}

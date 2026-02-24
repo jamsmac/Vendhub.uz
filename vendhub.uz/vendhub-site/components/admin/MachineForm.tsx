@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import { useTranslations } from 'next-intl'
 import { X } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
@@ -33,6 +33,18 @@ export default function MachineForm({
   const tc = useTranslations('common')
   const [saving, setSaving] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [machineTypes, setMachineTypes] = useState<{ slug: string; name: string }[]>([])
+
+  useEffect(() => {
+    supabase
+      .from('machine_types')
+      .select('slug, name')
+      .eq('is_active', true)
+      .order('sort_order')
+      .then(({ data }) => {
+        if (data) setMachineTypes(data)
+      })
+  }, [])
 
   const [name, setName] = useState(machine?.name ?? '')
   const [address, setAddress] = useState(machine?.address ?? '')
@@ -52,12 +64,6 @@ export default function MachineForm({
     machine?.location_type ?? ''
   )
   const [imageUrl, setImageUrl] = useState(machine?.image_url ?? '')
-
-  const typeLabels: Record<string, string> = {
-    coffee: tm('typeLabels.coffee'),
-    snack: tm('typeLabels.snack'),
-    cold: tm('typeLabels.cold'),
-  }
 
   const validate = (): Record<string, string> => {
     const errs: Record<string, string> = {}
@@ -181,14 +187,12 @@ export default function MachineForm({
               </label>
               <select
                 value={type}
-                onChange={(e) =>
-                  setType(e.target.value as Machine['type'])
-                }
+                onChange={(e) => setType(e.target.value)}
                 className="admin-input"
               >
-                {Object.entries(typeLabels).map(([val, label]) => (
-                  <option key={val} value={val}>
-                    {label}
+                {machineTypes.map((mt) => (
+                  <option key={mt.slug} value={mt.slug}>
+                    {mt.name}
                   </option>
                 ))}
               </select>

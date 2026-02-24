@@ -12,6 +12,7 @@ const pageTitleKeys: Record<string, string> = {
   '/admin': 'dashboard',
   '/admin/products': 'products',
   '/admin/machines': 'machines',
+  '/admin/machine-types': 'machineTypes',
   '/admin/promotions': 'promotions',
   '/admin/loyalty': 'loyalty',
   '/admin/content': 'content',

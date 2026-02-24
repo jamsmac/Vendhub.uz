@@ -26,11 +26,38 @@ export interface Product {
   updated_at: string
 }
 
+export interface MachineTypeSpec {
+  label: string
+  value: string
+}
+
+export interface MachineTypeAdvantage {
+  title: string
+  desc: string
+}
+
+export interface MachineTypeDetail {
+  id: string
+  slug: string
+  name: string
+  model_name: string | null
+  description: string
+  hero_image_url: string | null
+  specs: MachineTypeSpec[]
+  advantages: MachineTypeAdvantage[]
+  gallery_images: string[]
+  is_active: boolean
+  badge: string | null
+  sort_order: number
+  created_at: string
+  updated_at: string
+}
+
 export interface Machine {
   id: string
   name: string
   address: string
-  type: 'coffee' | 'snack' | 'cold'
+  type: string
   status: 'online' | 'offline'
   latitude: number | null
   longitude: number | null
