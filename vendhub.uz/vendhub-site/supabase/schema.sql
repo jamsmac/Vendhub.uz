@@ -150,6 +150,27 @@ CREATE TABLE IF NOT EXISTS partners (
   sort_order    INTEGER NOT NULL DEFAULT 0
 );
 
+-- ────────────────────────────────────────────────────────────────────────────
+-- 8. PARTNERSHIP MODELS
+-- ────────────────────────────────────────────────────────────────────────────
+
+CREATE TABLE IF NOT EXISTS partnership_models (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  key             TEXT NOT NULL UNIQUE,
+  title           TEXT NOT NULL,
+  title_uz        TEXT,
+  description     TEXT NOT NULL DEFAULT '',
+  description_uz  TEXT,
+  icon            TEXT NOT NULL DEFAULT 'MapPin',
+  color_scheme    TEXT NOT NULL DEFAULT 'mint',
+  benefits        JSONB NOT NULL DEFAULT '[]'::jsonb,
+  benefits_uz     JSONB DEFAULT NULL,
+  is_active       BOOLEAN NOT NULL DEFAULT true,
+  sort_order      INTEGER NOT NULL DEFAULT 0,
+  created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
 -- ============================================================================
 -- UPDATED_AT TRIGGER
 -- ============================================================================
@@ -178,6 +199,10 @@ CREATE TRIGGER set_site_content_updated_at
   BEFORE UPDATE ON site_content
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+CREATE TRIGGER set_partnership_models_updated_at
+  BEFORE UPDATE ON partnership_models
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
 -- ============================================================================
 -- ROW LEVEL SECURITY (RLS)
 -- ============================================================================
@@ -190,6 +215,7 @@ ALTER TABLE loyalty_tiers         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_content          ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cooperation_requests  ENABLE ROW LEVEL SECURITY;
 ALTER TABLE partners              ENABLE ROW LEVEL SECURITY;
+ALTER TABLE partnership_models    ENABLE ROW LEVEL SECURITY;
 
 -- ── Public READ policies ───────────────────────────────────────────────────
 
@@ -226,6 +252,11 @@ CREATE POLICY "site_content_public_read"
 -- Anyone can read partners
 CREATE POLICY "partners_public_read"
   ON partners FOR SELECT
+  USING (true);
+
+-- Anyone can read active partnership models
+CREATE POLICY "partnership_models_public_read"
+  ON partnership_models FOR SELECT
   USING (true);
 
 -- ── Public INSERT policy for cooperation requests ──────────────────────────
@@ -277,6 +308,11 @@ CREATE POLICY "machine_types_auth_write"
   USING (auth.role() = 'authenticated')
   WITH CHECK (auth.role() = 'authenticated');
 
+CREATE POLICY "partnership_models_auth_write"
+  ON partnership_models FOR ALL
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
 -- ============================================================================
 -- INDEXES
 -- ============================================================================
@@ -298,3 +334,6 @@ CREATE INDEX IF NOT EXISTS idx_promotions_active    ON promotions (is_active) WH
 CREATE INDEX IF NOT EXISTS idx_site_content_section ON site_content (section, key);
 
 CREATE INDEX IF NOT EXISTS idx_cooperation_status   ON cooperation_requests (status);
+
+CREATE INDEX IF NOT EXISTS idx_partnership_models_active ON partnership_models (is_active) WHERE is_active = true;
+CREATE INDEX IF NOT EXISTS idx_partnership_models_sort   ON partnership_models (sort_order);

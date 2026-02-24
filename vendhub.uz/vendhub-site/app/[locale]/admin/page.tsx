@@ -116,7 +116,7 @@ export default function AdminDashboardPage() {
       label: t('newRequests'),
       icon: <Inbox size={24} />,
       count: stats.newRequests,
-      href: '/admin/cooperation',
+      href: '/admin/partnership',
       color: 'bg-caramel/10 text-caramel-dark',
     },
     {
@@ -196,7 +196,7 @@ export default function AdminDashboardPage() {
             {t('editContent')}
           </Link>
           <Link
-            href="/admin/cooperation"
+            href="/admin/partnership"
             className="flex items-center gap-3 px-4 py-3 rounded-xl bg-foam hover:bg-espresso/5 transition-colors text-sm font-medium text-espresso/70 hover:text-espresso"
           >
             <Inbox size={16} />
