@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Image from 'next/image'
-import { X } from 'lucide-react'
+import { X, Star, MapPin } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 import Modal from '@/components/ui/Modal'
 import Badge from '@/components/ui/Badge'
@@ -11,8 +11,96 @@ import Button from '@/components/ui/Button'
 import { getProductPresentation } from '@/lib/productPresentation'
 import { formatPrice } from '@/lib/utils'
 import { CATEGORY_EMOJI, CATEGORY_GRADIENT } from '@/lib/categoryStyles'
-import { localized } from '@/lib/localize'
+import { localized, localizedOptionName } from '@/lib/localize'
 import type { Product, ProductOption } from '@/lib/types'
+
+/* ── Rating CTA sub-component ─────────────────────────────────────────── */
+
+function RatingCTA({
+  price,
+  selectedOptionName,
+  onClose,
+}: {
+  price: number
+  selectedOptionName: string
+  onClose: () => void
+}) {
+  const t = useTranslations('productModal')
+  const [rating, setRating] = useState<number>(0)
+  const [hoveredStar, setHoveredStar] = useState<number>(0)
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleRate = (star: number) => {
+    setRating(star)
+    setSubmitted(true)
+  }
+
+  if (submitted) {
+    return (
+      <div className="border-t border-espresso/10 p-5 text-center space-y-3">
+        <div className="flex justify-center gap-1">
+          {[1, 2, 3, 4, 5].map((s) => (
+            <Star
+              key={s}
+              size={20}
+              className={s <= rating ? 'text-amber-400 fill-amber-400' : 'text-espresso/20'}
+            />
+          ))}
+        </div>
+        <p className="text-sm font-medium text-espresso-dark">
+          {t('ratingThanks')}
+        </p>
+        <a
+          href="#map"
+          onClick={onClose}
+          className="inline-flex items-center gap-2 bg-caramel-dark hover:bg-caramel text-white rounded-full px-5 py-2.5 text-sm font-medium transition-colors"
+        >
+          <MapPin size={16} />
+          {t('findNearest')}
+        </a>
+        <p className="text-xs text-chocolate/40">
+          {formatPrice(price)} UZS
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="border-t border-espresso/10 p-5">
+      <p className="text-sm text-chocolate/60 mb-3">{selectedOptionName}</p>
+      <p className="text-xs text-chocolate/40 mb-2">{t('ratePrompt')}</p>
+      <div className="flex items-center justify-center gap-2 mb-3">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <button
+            key={star}
+            type="button"
+            aria-label={`${star} ${star === 1 ? t('starSingular') : t('starPlural')}`}
+            onMouseEnter={() => setHoveredStar(star)}
+            onMouseLeave={() => setHoveredStar(0)}
+            onClick={() => handleRate(star)}
+            className="p-1 transition-transform hover:scale-125"
+          >
+            <Star
+              size={28}
+              className={
+                star <= (hoveredStar || rating)
+                  ? 'text-amber-400 fill-amber-400 transition-colors'
+                  : 'text-espresso/20 transition-colors'
+              }
+            />
+          </button>
+        ))}
+      </div>
+      <div className="text-center">
+        <span className="text-sm font-semibold text-espresso-dark">
+          {formatPrice(price)} UZS
+        </span>
+      </div>
+    </div>
+  )
+}
+
+/* ── Main modal ──────────────────────────────────────────────────────── */
 
 interface ProductModalProps {
   product: Product
@@ -165,7 +253,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                         : 'bg-foam text-espresso/50 hover:bg-espresso/10',
                     ].join(' ')}
                   >
-                    {opt.name}
+                    {localizedOptionName(opt.name, locale)}
                     {opt.price > 0 && (
                       <span className="ml-1 opacity-70">{t('surcharge', { price: formatPrice(opt.price) })}</span>
                     )}
@@ -195,7 +283,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                         : 'bg-foam text-espresso/50 hover:bg-espresso/10',
                     ].join(' ')}
                   >
-                    {opt.name}
+                    {localizedOptionName(opt.name, locale)}
                     {opt.price > 0 && (
                       <span className="ml-1 opacity-70">{t('surcharge', { price: formatPrice(opt.price) })}</span>
                     )}
@@ -207,13 +295,12 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
         </div>
       )}
 
-      {/* Bottom CTA */}
-      <div className="border-t border-espresso/10 p-5">
-        <p className="text-sm text-chocolate/60 mb-3">{selectedOption.name}</p>
-        <Button variant="caramel" className="w-full">
-          {t('cta', { price: formatPrice(finalPrice) })}
-        </Button>
-      </div>
+      {/* Bottom CTA — Rating + Find Machine */}
+      <RatingCTA
+        price={finalPrice}
+        selectedOptionName={localizedOptionName(selectedOption.name, locale)}
+        onClose={onClose}
+      />
     </Modal>
   )
 }

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { MapPin, Coffee } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -14,6 +15,11 @@ function getGreetingKey(): 'morning' | 'afternoon' | 'evening' {
 
 export default function HeroSection() {
   const t = useTranslations('hero')
+  const [greeting, setGreeting] = useState<'morning' | 'afternoon' | 'evening' | null>(null)
+
+  useEffect(() => {
+    setGreeting(getGreetingKey())
+  }, [])
 
   return (
     <section
@@ -48,8 +54,8 @@ export default function HeroSection() {
         <div className="flex items-center gap-12 lg:gap-16">
           {/* Left column: text */}
           <div className="flex-1 py-8 sm:py-12">
-            <p suppressHydrationWarning className="text-caramel-light text-lg font-medium mb-3 animate-fadeIn">
-              {t(getGreetingKey())}
+            <p className="text-caramel-light text-lg font-medium mb-3 animate-fadeIn min-h-[28px]">
+              {greeting ? t(greeting) : '\u00A0'}
             </p>
 
             <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl text-white font-bold leading-tight">

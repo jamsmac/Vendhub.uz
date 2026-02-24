@@ -12,6 +12,21 @@ export function localized(item: any, field: string, locale: string): string {
   return typeof value === 'string' ? value : ''
 }
 
+/** Uzbek translations for common product option names */
+const OPTION_NAME_UZ: Record<string, string> = {
+  'С сахаром': 'Shakarli',
+  'Без сахара': 'Shakarsiz',
+  'Ванильный': 'Vanilli',
+  'Карамельный': 'Karamelli',
+  'Кокосовый': 'Kokosli',
+}
+
+/** Returns localized option name (maps standard RU names to UZ) */
+export function localizedOptionName(name: string, locale: string): string {
+  if (locale === 'uz') return OPTION_NAME_UZ[name] ?? name
+  return name
+}
+
 /**
  * Returns the Uzbek version of a JSONB array field (e.g., conditions_uz).
  */

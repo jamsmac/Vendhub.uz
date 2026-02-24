@@ -347,9 +347,13 @@
     "tempCold": "Холодный",
     "tempBoth": "Горячий/Холодный",
     "tempNone": "Нейтральный",
-    "cta": "Подробнее в приложении · {price} UZS",
     "detailTitle": "Подробнее",
-    "surcharge": "+{price} UZS"
+    "surcharge": "+{price} UZS",
+    "ratePrompt": "Оцените этот напиток",
+    "ratingThanks": "Спасибо за оценку!",
+    "findNearest": "Найти ближайший автомат",
+    "starSingular": "звезда",
+    "starPlural": "звёзд"
   },
 
   "machineModal": {

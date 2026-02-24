@@ -347,9 +347,13 @@
     "tempCold": "Sovuq",
     "tempBoth": "Issiq/Sovuq",
     "tempNone": "Neytral",
-    "cta": "Ilovada batafsil · {price} UZS",
     "detailTitle": "Batafsil",
-    "surcharge": "+{price} UZS"
+    "surcharge": "+{price} UZS",
+    "ratePrompt": "Bu ichimlikni baholang",
+    "ratingThanks": "Bahoyingiz uchun rahmat!",
+    "findNearest": "Eng yaqin avtomatni topish",
+    "starSingular": "yulduz",
+    "starPlural": "yulduz"
   },
 
   "machineModal": {
