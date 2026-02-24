@@ -6,7 +6,7 @@ export const MACHINE_TYPE_META: Record<
 > = {
   coffee: {
     emoji: '\u2615',
-    imageSrc: '/images/machines/coffee-machine.png',
+    imageSrc: '/images/machines/coffee-machine.webp',
   },
   snack: {
     emoji: '\uD83C\uDF6A',

@@ -104,7 +104,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     name: 'VendHub',
     description: seo('jsonLdDescription'),
     url: BASE_URL,
-    logo: `${BASE_URL}/images/brand/hub-logo.png`,
+    logo: `${BASE_URL}/images/brand/hub-logo.webp`,
     telephone: '+998712003999',
     email: 'info@vendhub.uz',
     address: {

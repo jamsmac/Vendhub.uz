@@ -59,7 +59,7 @@ export default async function Footer() {
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               <Image
-                src="/images/brand/hub-logo.png"
+                src="/images/brand/hub-logo.webp"
                 alt="VendHub logo"
                 width={40}
                 height={40}

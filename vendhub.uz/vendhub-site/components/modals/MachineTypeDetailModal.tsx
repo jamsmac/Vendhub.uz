@@ -64,7 +64,7 @@ export default function MachineTypeDetailModal({
     }
   }, [handleEscape])
 
-  const heroSrc = machineType.hero_image_url || '/images/machines/coffee-machine.png'
+  const heroSrc = machineType.hero_image_url || '/images/machines/coffee-machine.webp'
   const specs = machineType.specs || []
   const advantages = machineType.advantages || []
   const gallery = machineType.gallery_images || []

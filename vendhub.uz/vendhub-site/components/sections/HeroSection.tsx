@@ -82,7 +82,7 @@ export default function HeroSection() {
           {/* Right column: machine photo (desktop only) */}
           <div className="hidden lg:flex items-end justify-center flex-shrink-0">
             <Image
-              src="/images/machines/coffee-machine-hero.png"
+              src="/images/machines/coffee-machine-hero.webp"
               alt={t('machineImageAlt')}
               width={320}
               height={480}

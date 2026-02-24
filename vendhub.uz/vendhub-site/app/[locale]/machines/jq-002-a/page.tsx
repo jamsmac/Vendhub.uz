@@ -97,7 +97,7 @@ function JQ002AContent() {
             {/* Image */}
             <div className="relative aspect-[3/4] max-w-sm mx-auto md:mx-0 bg-gradient-to-b from-foam to-cream rounded-3xl overflow-hidden">
               <Image
-                src="/images/machines/jq-002-a-hero.png"
+                src="/images/machines/jq-002-a-hero.webp"
                 alt={t('imageAlt')}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
