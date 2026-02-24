@@ -19,6 +19,7 @@
     "comingSoon": "Tez kunda",
     "retry": "Qayta urinish",
     "currency": "UZS",
+    "duplicate": "Nusxalash",
     "deleting": "O'chirilmoqda...",
     "kcal": "kkal",
     "errorFallback": "Nimadir xato ketdi. Sahifani yangilashga urinib ko'ring."
@@ -610,6 +611,7 @@
       "bonusActions": "Bonus amallar",
       "backToSite": "Saytga qaytish",
       "closeSidebar": "Menyuni yopish",
+      "adminPanel": "Admin panel",
       "logout": "Chiqish"
     },
     "login": {

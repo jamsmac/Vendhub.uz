@@ -345,7 +345,7 @@ export default function AdminProductsPage() {
                         <button
                           type="button"
                           onClick={() => openEdit(product)}
-                          aria-label="Edit"
+                          aria-label={tc('edit')}
                           className="p-2 text-espresso/40 hover:text-espresso transition-colors rounded-lg hover:bg-foam"
                         >
                           <Pencil size={15} />

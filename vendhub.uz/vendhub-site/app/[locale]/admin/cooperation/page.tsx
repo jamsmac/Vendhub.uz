@@ -271,6 +271,9 @@ export default function AdminCooperationPage() {
       {selectedRequest && (
         <div
           className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cooperation-detail-title"
           onClick={() => setSelectedRequest(null)}
         >
           <div
@@ -278,12 +281,13 @@ export default function AdminCooperationPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-espresso/10">
-              <h2 className="text-lg font-bold text-espresso">
+              <h2 id="cooperation-detail-title" className="text-lg font-bold text-espresso">
                 {t('details')}
               </h2>
               <button
                 type="button"
                 onClick={() => setSelectedRequest(null)}
+                aria-label={tc('close')}
                 className="text-espresso/40 hover:text-espresso transition-colors"
               >
                 <X size={20} />

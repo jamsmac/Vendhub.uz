@@ -105,7 +105,7 @@ export default function AdminLayout({
   // Strip locale prefix to match pageTitleKeys
   const strippedPath = pathname.replace(/^\/[a-z]{2}(?=\/admin)/, '')
   const titleKey = pageTitleKeys[strippedPath]
-  const pageTitle = titleKey ? t(titleKey) : 'Админ-панель'
+  const pageTitle = titleKey ? t(titleKey) : t('adminPanel')
 
   return (
     <ToastProvider>

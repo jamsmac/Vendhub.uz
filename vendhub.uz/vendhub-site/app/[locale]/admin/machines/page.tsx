@@ -15,6 +15,7 @@ import type { Machine } from '@/lib/types'
 export default function AdminMachinesPage() {
   const { showToast } = useToast()
   const t = useTranslations('admin.machines')
+  const tc = useTranslations('common')
   const [machines, setMachines] = useState<Machine[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -162,7 +163,7 @@ export default function AdminMachinesPage() {
                         <button
                           type="button"
                           onClick={() => openEdit(machine)}
-                          aria-label="Edit"
+                          aria-label={tc('edit')}
                           className="p-2 text-espresso/40 hover:text-espresso transition-colors rounded-lg hover:bg-foam"
                         >
                           <Pencil size={15} />
@@ -172,7 +173,7 @@ export default function AdminMachinesPage() {
                           onClick={() =>
                             setDeleteTarget({ id: machine.id, name: machine.name })
                           }
-                          aria-label="Delete"
+                          aria-label={tc('delete')}
                           className="p-2 text-espresso/40 hover:text-red-500 transition-colors rounded-lg hover:bg-red-50"
                         >
                           <Trash2 size={15} />

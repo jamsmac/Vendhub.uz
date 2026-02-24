@@ -220,7 +220,7 @@ export default function AdminPartnersPage() {
                         <button
                           type="button"
                           onClick={() => openEdit(partner)}
-                          aria-label="Edit"
+                          aria-label={tc('edit')}
                           className="p-2 text-espresso/40 hover:text-espresso transition-colors rounded-lg hover:bg-foam"
                         >
                           <Pencil size={15} />
@@ -230,7 +230,7 @@ export default function AdminPartnersPage() {
                           onClick={() =>
                             setDeleteTarget({ id: partner.id, name: partner.name })
                           }
-                          aria-label="Delete"
+                          aria-label={tc('delete')}
                           className="p-2 text-espresso/40 hover:text-red-500 transition-colors rounded-lg hover:bg-red-50"
                         >
                           <Trash2 size={15} />
@@ -262,18 +262,19 @@ export default function AdminPartnersPage() {
 
       {/* Form Modal */}
       {formOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="partner-form-title">
           <div
             className="w-full max-w-md bg-white rounded-2xl shadow-2xl my-8"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-espresso/10">
-              <h2 className="text-lg font-bold text-espresso">
+              <h2 id="partner-form-title" className="text-lg font-bold text-espresso">
                 {editingId ? t('form.editTitle') : t('form.createTitle')}
               </h2>
               <button
                 type="button"
                 onClick={() => setFormOpen(false)}
+                aria-label={tc('close')}
                 className="text-espresso/40 hover:text-espresso transition-colors"
               >
                 <X size={20} />

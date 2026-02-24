@@ -19,6 +19,7 @@
     "comingSoon": "Скоро",
     "retry": "Попробовать снова",
     "currency": "UZS",
+    "duplicate": "Дублировать",
     "deleting": "Удаление...",
     "kcal": "ккал",
     "errorFallback": "Что-то пошло не так. Попробуйте обновить страницу."
@@ -610,6 +611,7 @@
       "bonusActions": "Бонусные действия",
       "backToSite": "Вернуться на сайт",
       "closeSidebar": "Закрыть меню",
+      "adminPanel": "Админ-панель",
       "logout": "Выход"
     },
     "login": {
