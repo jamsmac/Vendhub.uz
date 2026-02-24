@@ -2,21 +2,28 @@
 
 import { useState, useCallback } from 'react'
 
+export type GeolocationErrorCode =
+  | 'permission_denied'
+  | 'unavailable'
+  | 'timeout'
+  | 'not_supported'
+  | 'unknown'
+
 interface GeolocationState {
   latitude: number | null
   longitude: number | null
   loading: boolean
-  error: string | null
+  error: GeolocationErrorCode | null
 }
 
 interface UseGeolocationReturn extends GeolocationState {
   requestLocation: () => void
 }
 
-const ERROR_MESSAGES: Record<number, string> = {
-  1: 'Доступ к геолокации запрещён. Разрешите в настройках браузера.',
-  2: 'Геолокация недоступна на этом устройстве.',
-  3: 'Не удалось определить местоположение. Попробуйте ещё раз.',
+const ERROR_CODE_MAP: Record<number, GeolocationErrorCode> = {
+  1: 'permission_denied',
+  2: 'unavailable',
+  3: 'timeout',
 }
 
 export function useGeolocation(): UseGeolocationReturn {
@@ -31,7 +38,7 @@ export function useGeolocation(): UseGeolocationReturn {
     if (!navigator.geolocation) {
       setState((prev) => ({
         ...prev,
-        error: 'Геолокация не поддерживается вашим браузером.',
+        error: 'not_supported',
         loading: false,
       }))
       return
@@ -52,7 +59,7 @@ export function useGeolocation(): UseGeolocationReturn {
         setState((prev) => ({
           ...prev,
           loading: false,
-          error: ERROR_MESSAGES[error.code] ?? 'Неизвестная ошибка геолокации.',
+          error: ERROR_CODE_MAP[error.code] ?? 'unknown',
         }))
       },
       {

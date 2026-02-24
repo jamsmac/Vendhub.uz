@@ -15,6 +15,7 @@ import type { MachineTypeDetail } from '@/lib/types'
 export default function AdminMachineTypesPage() {
   const { showToast } = useToast()
   const t = useTranslations('admin.machineTypes')
+  const tc = useTranslations('common')
   const [types, setTypes] = useState<MachineTypeDetail[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -170,6 +171,7 @@ export default function AdminMachineTypesPage() {
                           type="button"
                           onClick={() => handleToggleActive(mt)}
                           className="p-2 text-espresso/40 hover:text-espresso transition-colors rounded-lg hover:bg-foam"
+                          aria-label={mt.is_active ? t('deactivate') : t('activate')}
                           title={mt.is_active ? t('deactivate') : t('activate')}
                         >
                           {mt.is_active ? <Eye size={15} /> : <EyeOff size={15} />}
@@ -177,7 +179,7 @@ export default function AdminMachineTypesPage() {
                         <button
                           type="button"
                           onClick={() => openEdit(mt)}
-                          aria-label="Edit"
+                          aria-label={tc('edit')}
                           className="p-2 text-espresso/40 hover:text-espresso transition-colors rounded-lg hover:bg-foam"
                         >
                           <Pencil size={15} />
@@ -185,7 +187,7 @@ export default function AdminMachineTypesPage() {
                         <button
                           type="button"
                           onClick={() => setDeleteTarget({ id: mt.id, name: mt.name })}
-                          aria-label="Delete"
+                          aria-label={tc('delete')}
                           className="p-2 text-espresso/40 hover:text-red-500 transition-colors rounded-lg hover:bg-red-50"
                         >
                           <Trash2 size={15} />

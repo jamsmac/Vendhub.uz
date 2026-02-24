@@ -128,17 +128,17 @@ export default function MachineTypeForm({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="machine-type-form-title">
       <div
         className="w-full max-w-3xl bg-white rounded-2xl shadow-2xl my-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-espresso/10">
-          <h2 className="text-lg font-bold text-espresso">
+          <h2 id="machine-type-form-title" className="text-lg font-bold text-espresso">
             {machineType ? t('editTitle') : t('createTitle')}
           </h2>
-          <button type="button" onClick={onClose} className="text-espresso/40 hover:text-espresso transition-colors">
+          <button type="button" onClick={onClose} aria-label={tc('close')} className="text-espresso/40 hover:text-espresso transition-colors">
             <X size={20} />
           </button>
         </div>
@@ -248,6 +248,7 @@ export default function MachineTypeForm({
                   <button
                     type="button"
                     onClick={() => removeSpec(i)}
+                    aria-label={tc('delete')}
                     className="p-1.5 text-espresso/30 hover:text-red-500 transition-colors shrink-0"
                   >
                     <Trash2 size={14} />
@@ -297,6 +298,7 @@ export default function MachineTypeForm({
                   <button
                     type="button"
                     onClick={() => removeAdvantage(i)}
+                    aria-label={tc('delete')}
                     className="p-1.5 text-espresso/30 hover:text-red-500 transition-colors shrink-0 mt-1.5"
                   >
                     <Trash2 size={14} />
@@ -326,6 +328,7 @@ export default function MachineTypeForm({
                   <button
                     type="button"
                     onClick={() => removeGalleryImage(i)}
+                    aria-label={tc('delete')}
                     className="p-1.5 text-espresso/30 hover:text-red-500 transition-colors shrink-0"
                   >
                     <Trash2 size={14} />
