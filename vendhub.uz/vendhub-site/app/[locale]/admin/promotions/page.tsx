@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, FormEvent } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Pencil, Trash2, X } from 'lucide-react'
+import { Plus, Pencil, Trash2, X, Copy } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useToast } from '@/components/ui/Toast'
 import ConfirmDialog from '@/components/ui/ConfirmDialog'
@@ -21,6 +21,10 @@ const emptyPromotion = {
   valid_until: '',
   is_active: true,
   sort_order: 0,
+  visibility_type: 'visible' as 'visible' | 'action_required',
+  action_instruction: '',
+  discount_type: '' as string,
+  discount_value: '',
 }
 
 export default function AdminPromotionsPage() {
@@ -78,9 +82,35 @@ export default function AdminPromotionsPage() {
       valid_until: promo.valid_until ?? '',
       is_active: promo.is_active,
       sort_order: promo.sort_order,
+      visibility_type: promo.visibility_type ?? 'visible',
+      action_instruction: promo.action_instruction ?? '',
+      discount_type: promo.discount_type ?? '',
+      discount_value: promo.discount_value ?? '',
     })
     setConditionInput('')
     setFormOpen(true)
+  }
+
+  const openDuplicate = (promo: Promotion) => {
+    setEditingId(null)
+    setForm({
+      title: promo.title + ' (copy)',
+      badge: promo.badge,
+      description: promo.description,
+      promo_code: '',
+      gradient: promo.gradient,
+      conditions: promo.conditions ?? [],
+      valid_until: promo.valid_until ?? '',
+      is_active: false,
+      sort_order: promo.sort_order + 1,
+      visibility_type: promo.visibility_type ?? 'visible',
+      action_instruction: promo.action_instruction ?? '',
+      discount_type: promo.discount_type ?? '',
+      discount_value: promo.discount_value ?? '',
+    })
+    setConditionInput('')
+    setFormOpen(true)
+    showToast(t('duplicated'), 'success')
   }
 
   const handleConfirmDelete = async () => {
@@ -123,6 +153,10 @@ export default function AdminPromotionsPage() {
       valid_until: form.valid_until || null,
       is_active: form.is_active,
       sort_order: form.sort_order,
+      visibility_type: form.visibility_type,
+      action_instruction: form.action_instruction,
+      discount_type: form.discount_type || null,
+      discount_value: form.discount_value || null,
     }
 
     try {
@@ -187,6 +221,9 @@ export default function AdminPromotionsPage() {
                 <th className="text-center px-4 py-3 font-medium text-espresso/50">
                   {t('table.active')}
                 </th>
+                <th className="text-center px-4 py-3 font-medium text-espresso/50">
+                  {t('table.visibility')}
+                </th>
                 <th className="text-left px-4 py-3 font-medium text-espresso/50">
                   {t('table.validUntil')}
                 </th>
@@ -197,10 +234,10 @@ export default function AdminPromotionsPage() {
             </thead>
             <tbody>
               {loading ? (
-                <TableSkeleton rows={4} columns={6} />
+                <TableSkeleton rows={4} columns={7} />
               ) : promotions.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-12 text-espresso/40">
+                  <td colSpan={7} className="text-center py-12 text-espresso/40">
                     {t('empty')}
                   </td>
                 </tr>
@@ -231,11 +268,34 @@ export default function AdminPromotionsPage() {
                         {promo.is_active ? t('activeYes') : t('activeNo')}
                       </span>
                     </td>
+                    <td className="px-4 py-3 text-center">
+                      <span
+                        className={[
+                          'inline-block px-2.5 py-0.5 rounded-full text-xs font-medium',
+                          promo.visibility_type === 'action_required'
+                            ? 'bg-amber-50 text-amber-600'
+                            : 'bg-blue-50 text-blue-600',
+                        ].join(' ')}
+                      >
+                        {promo.visibility_type === 'action_required'
+                          ? t('visibilityAction')
+                          : t('visibilityVisible')}
+                      </span>
+                    </td>
                     <td className="px-4 py-3 text-espresso/60 text-xs">
                       {promo.valid_until ?? t('noExpiry')}
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-end gap-1">
+                        <button
+                          type="button"
+                          onClick={() => openDuplicate(promo)}
+                          aria-label="Duplicate"
+                          title={t('duplicate')}
+                          className="p-2 text-espresso/40 hover:text-caramel-dark transition-colors rounded-lg hover:bg-caramel/10"
+                        >
+                          <Copy size={15} />
+                        </button>
                         <button
                           type="button"
                           onClick={() => openEdit(promo)}
@@ -445,6 +505,69 @@ export default function AdminPromotionsPage() {
                       </span>
                     ))}
                   </div>
+                )}
+              </div>
+
+              {/* Visibility type */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <AdminFormField label={t('form.visibilityType')}>
+                  <select
+                    value={form.visibility_type}
+                    onChange={(e) =>
+                      setForm((p) => ({
+                        ...p,
+                        visibility_type: e.target.value as 'visible' | 'action_required',
+                      }))
+                    }
+                    className="admin-input"
+                  >
+                    <option value="visible">{t('form.visibilityVisible')}</option>
+                    <option value="action_required">{t('form.visibilityAction')}</option>
+                  </select>
+                </AdminFormField>
+                {form.visibility_type === 'action_required' && (
+                  <AdminFormField label={t('form.actionInstruction')}>
+                    <input
+                      type="text"
+                      value={form.action_instruction}
+                      onChange={(e) =>
+                        setForm((p) => ({ ...p, action_instruction: e.target.value }))
+                      }
+                      placeholder={t('form.actionInstructionPlaceholder')}
+                      className="admin-input"
+                    />
+                  </AdminFormField>
+                )}
+              </div>
+
+              {/* Discount type */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <AdminFormField label={t('form.discountType')}>
+                  <select
+                    value={form.discount_type}
+                    onChange={(e) =>
+                      setForm((p) => ({ ...p, discount_type: e.target.value }))
+                    }
+                    className="admin-input"
+                  >
+                    <option value="">{t('form.discountTypeNone')}</option>
+                    <option value="percent">{t('form.discountTypePercent')}</option>
+                    <option value="fixed">{t('form.discountTypeFixed')}</option>
+                    <option value="special">{t('form.discountTypeSpecial')}</option>
+                  </select>
+                </AdminFormField>
+                {form.discount_type && (
+                  <AdminFormField label={t('form.discountValue')}>
+                    <input
+                      type="text"
+                      value={form.discount_value}
+                      onChange={(e) =>
+                        setForm((p) => ({ ...p, discount_value: e.target.value }))
+                      }
+                      placeholder={t('form.discountValuePlaceholder')}
+                      className="admin-input"
+                    />
+                  </AdminFormField>
                 )}
               </div>
 

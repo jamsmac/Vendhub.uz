@@ -1,67 +1,61 @@
 import {
   Coffee,
-  CalendarCheck,
-  MessageSquare,
-  UserPlus,
   Cake,
-  ShoppingBag,
-  Flame,
-  Trophy,
-  Share2,
+  UserPlus,
   ShoppingCart,
   Gift,
   Star,
+  Send,
+  Phone,
+  Smartphone,
+  MessageCircle,
+  Share2,
+  Flame,
+  Trophy,
+  Coins,
   Check,
   X,
-  Send,
 } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import { supabase } from '@/lib/supabase'
-import { loyaltyTiers as fallbackTiers } from '@/lib/data'
-import type { LoyaltyTier } from '@/lib/types'
+import {
+  loyaltyTiers as fallbackTiers,
+  bonusActions as fallbackBonusActions,
+  loyaltyPrivileges as fallbackPrivileges,
+} from '@/lib/data'
+import type { LoyaltyTier, BonusAction, LoyaltyPrivilege } from '@/lib/types'
 import { formatPrice } from '@/lib/utils'
 
-const PRIVILEGE_KEYS = [
-  { key: 'cashback', tKey: 'cashback' as const },
-  { key: 'discount', tKey: 'orderDiscount' as const },
-  { key: 'priority_promos', tKey: 'priorityPromos' as const },
-  { key: 'special_codes', tKey: 'specialCodes' as const },
-  { key: 'birthday_bonus', tKey: 'birthdayBonus' as const },
-  { key: 'early_access', tKey: 'earlyAccess' as const },
-  { key: 'personal_offers', tKey: 'personalOffers' as const },
-  { key: 'free_drink_monthly', tKey: 'freeDrink' as const },
-]
+const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+  Coffee, Cake, UserPlus, ShoppingCart, Gift, Star, Send, Phone,
+  Smartphone, MessageCircle, Share2, Flame, Trophy, Coins,
+}
 
-const EARN_KEYS = [
-  { icon: Coffee, labelKey: 'purchases' as const, descKey: 'purchasesDesc' as const },
-  { icon: CalendarCheck, labelKey: 'dailyLogin' as const, descKey: 'dailyLoginDesc' as const },
-  { icon: MessageSquare, labelKey: 'reviews' as const, descKey: 'reviewsDesc' as const },
-  { icon: UserPlus, labelKey: 'referral' as const, descKey: 'referralDesc' as const },
-  { icon: Cake, labelKey: 'birthday' as const, descKey: 'birthdayDesc' as const },
-  { icon: ShoppingBag, labelKey: 'firstOrder' as const, descKey: 'firstOrderDesc' as const },
-  { icon: Flame, labelKey: 'streak' as const, descKey: 'streakDesc' as const },
-  { icon: Trophy, labelKey: 'achievements' as const, descKey: 'achievementsDesc' as const },
-  { icon: Share2, labelKey: 'social' as const, descKey: 'socialDesc' as const },
-]
-
-const SPEND_KEYS = [
-  { icon: ShoppingCart, labelKey: 'payments' as const, descKey: 'paymentsDesc' as const },
-  { icon: Gift, labelKey: 'gifts' as const, descKey: 'giftsDesc' as const },
-  { icon: Star, labelKey: 'merch' as const, descKey: 'merchDesc' as const },
-]
+function DynamicIcon({ name, size = 20, className }: { name: string; size?: number; className?: string }) {
+  const Icon = ICON_MAP[name] || Gift
+  return <Icon size={size} className={className} />
+}
 
 export default async function LoyaltyTab() {
   const t = await getTranslations('loyalty')
 
-  const { data } = await supabase
-    .from('loyalty_tiers')
-    .select('*')
-    .order('sort_order')
+  // Fetch all data in parallel
+  const [tiersRes, actionsRes, privsRes] = await Promise.all([
+    supabase.from('loyalty_tiers').select('*').order('sort_order'),
+    supabase.from('bonus_actions').select('*').eq('is_active', true).order('sort_order'),
+    supabase.from('loyalty_privileges').select('*').eq('is_active', true).order('sort_order'),
+  ])
 
-  const sortedTiers = (data?.length ? data as LoyaltyTier[] : fallbackTiers)
+  const sortedTiers = (tiersRes.data?.length ? tiersRes.data as LoyaltyTier[] : fallbackTiers)
     .sort((a, b) => a.sort_order - b.sort_order)
+
+  const allActions = actionsRes.data?.length ? actionsRes.data as BonusAction[] : fallbackBonusActions
+  const earnActions = allActions.filter((a) => a.type === 'earn')
+  const spendActions = allActions.filter((a) => a.type === 'spend')
+
+  const activePrivileges = privsRes.data?.length ? privsRes.data as LoyaltyPrivilege[] : fallbackPrivileges
 
   return (
     <div>
@@ -116,149 +110,160 @@ export default async function LoyaltyTab() {
       </div>
 
       {/* Privileges — mobile cards */}
-      <div className="sm:hidden mb-12 space-y-4">
-        <h3 className="font-display text-lg font-bold text-espresso-dark mb-4 text-center">
-          {t('privileges.title')}
-        </h3>
-        {sortedTiers.map((tier) => (
-          <Card key={tier.id} className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xl">{tier.emoji}</span>
-              <h4 className="font-medium text-espresso-dark">{tier.level}</h4>
-            </div>
-            <div className="space-y-2">
-              {PRIVILEGE_KEYS.map((row) => {
-                const val = tier.privileges[row.key]
-                return (
-                  <div
-                    key={row.key}
-                    className="flex items-center justify-between text-sm"
-                  >
-                    <span className="text-chocolate/70">{t(`privileges.${row.tKey}`)}</span>
-                    {typeof val === 'number' ? (
-                      val > 0 ? (
-                        <span className="text-espresso font-medium">
-                          {formatPrice(val)}
-                        </span>
-                      ) : (
-                        <X size={14} className="text-gray-300" />
-                      )
-                    ) : val ? (
-                      <Check size={14} className="text-mint" />
-                    ) : (
-                      <X size={14} className="text-gray-300" />
-                    )}
-                  </div>
-                )
-              })}
-            </div>
-          </Card>
-        ))}
-      </div>
-
-      {/* Privileges — desktop table */}
-      <Card className="mb-12 hidden sm:block">
-        <div className="p-5 sm:p-6">
-          <h3 className="font-display text-lg font-bold text-espresso-dark mb-4">
+      {activePrivileges.length > 0 && (
+        <div className="sm:hidden mb-12 space-y-4">
+          <h3 className="font-display text-lg font-bold text-espresso-dark mb-4 text-center">
             {t('privileges.title')}
           </h3>
-        </div>
-        <table className="w-full text-sm">
-          <caption className="sr-only">{t('privileges.title')}</caption>
-          <thead>
-            <tr className="border-t border-espresso/5">
-              <th scope="col" className="text-left px-5 py-3 text-chocolate/50 font-medium">
-                {t('privileges.header')}
-              </th>
-              {sortedTiers.map((tier) => (
-                <th
-                  key={tier.id}
-                  scope="col"
-                  className="text-center px-3 py-3 text-chocolate/70 font-medium"
-                >
-                  {tier.emoji} {tier.level}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {PRIVILEGE_KEYS.map((row) => (
-              <tr
-                key={row.key}
-                className="border-t border-espresso/5 hover:bg-foam/50 transition-colors"
-              >
-                <td className="px-5 py-3 text-chocolate/70">{t(`privileges.${row.tKey}`)}</td>
-                {sortedTiers.map((tier) => {
-                  const val = tier.privileges[row.key]
+          {sortedTiers.map((tier) => (
+            <Card key={tier.id} className="p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xl">{tier.emoji}</span>
+                <h4 className="font-medium text-espresso-dark">{tier.level}</h4>
+              </div>
+              <div className="space-y-2">
+                {activePrivileges.map((priv) => {
+                  const val = tier.privileges[priv.key]
                   return (
-                    <td key={tier.id} className="text-center px-3 py-3">
+                    <div
+                      key={priv.id}
+                      className="flex items-center justify-between text-sm"
+                    >
+                      <span className="text-chocolate/70">{priv.label}</span>
                       {typeof val === 'number' ? (
                         val > 0 ? (
                           <span className="text-espresso font-medium">
                             {formatPrice(val)}
                           </span>
                         ) : (
-                          <X size={16} className="text-gray-300 mx-auto" />
+                          <X size={14} className="text-gray-300" />
                         )
                       ) : val ? (
-                        <Check size={16} className="text-mint mx-auto" />
+                        <Check size={14} className="text-mint" />
                       ) : (
-                        <X size={16} className="text-gray-300 mx-auto" />
+                        <X size={14} className="text-gray-300" />
                       )}
-                    </td>
+                    </div>
                   )
                 })}
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {/* Privileges — desktop table */}
+      {activePrivileges.length > 0 && (
+        <Card className="mb-12 hidden sm:block">
+          <div className="p-5 sm:p-6">
+            <h3 className="font-display text-lg font-bold text-espresso-dark mb-4">
+              {t('privileges.title')}
+            </h3>
+          </div>
+          <table className="w-full text-sm">
+            <caption className="sr-only">{t('privileges.title')}</caption>
+            <thead>
+              <tr className="border-t border-espresso/5">
+                <th scope="col" className="text-left px-5 py-3 text-chocolate/50 font-medium">
+                  {t('privileges.header')}
+                </th>
+                {sortedTiers.map((tier) => (
+                  <th
+                    key={tier.id}
+                    scope="col"
+                    className="text-center px-3 py-3 text-chocolate/70 font-medium"
+                  >
+                    {tier.emoji} {tier.level}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </Card>
+            </thead>
+            <tbody>
+              {activePrivileges.map((priv) => (
+                <tr
+                  key={priv.id}
+                  className="border-t border-espresso/5 hover:bg-foam/50 transition-colors"
+                >
+                  <td className="px-5 py-3 text-chocolate/70">{priv.label}</td>
+                  {sortedTiers.map((tier) => {
+                    const val = tier.privileges[priv.key]
+                    return (
+                      <td key={tier.id} className="text-center px-3 py-3">
+                        {typeof val === 'number' ? (
+                          val > 0 ? (
+                            <span className="text-espresso font-medium">
+                              {formatPrice(val)}
+                            </span>
+                          ) : (
+                            <X size={16} className="text-gray-300 mx-auto" />
+                          )
+                        ) : val ? (
+                          <Check size={16} className="text-mint mx-auto" />
+                        ) : (
+                          <X size={16} className="text-gray-300 mx-auto" />
+                        )}
+                      </td>
+                    )
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Card>
+      )}
 
       {/* How to earn points */}
-      <div className="mb-12">
-        <h3 className="font-display text-lg font-bold text-espresso-dark mb-6 text-center">
-          {t('earn.title')}
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {EARN_KEYS.map((item) => {
-            const Icon = item.icon
-            return (
-              <Card key={item.labelKey} hover className="p-4 flex items-center gap-4">
+      {earnActions.length > 0 && (
+        <div className="mb-12">
+          <h3 className="font-display text-lg font-bold text-espresso-dark mb-6 text-center">
+            {t('earn.title')}
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {earnActions.map((action) => (
+              <Card key={action.id} hover className="p-4 flex items-center gap-4">
                 <div className="w-10 h-10 rounded-xl bg-mint/10 flex items-center justify-center shrink-0">
-                  <Icon size={20} className="text-mint" />
+                  <DynamicIcon name={action.icon} size={20} className="text-mint" />
                 </div>
-                <div>
+                <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-chocolate">
-                    {t(`earn.${item.labelKey}`)}
+                    {action.title}
                   </p>
-                  <p className="text-xs text-chocolate/50">{t(`earn.${item.descKey}`)}</p>
+                  {action.description && (
+                    <p className="text-xs text-chocolate/50">{action.description}</p>
+                  )}
                 </div>
+                {action.points_amount && (
+                  <span className="text-xs font-bold text-mint bg-mint/10 px-2.5 py-1 rounded-full shrink-0">
+                    {action.points_amount}
+                  </span>
+                )}
               </Card>
-            )
-          })}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* How to spend points */}
-      <div className="mb-12">
-        <h3 className="font-display text-lg font-bold text-espresso-dark mb-6 text-center">
-          {t('spend.title')}
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {SPEND_KEYS.map((item) => {
-            const Icon = item.icon
-            return (
-              <Card key={item.labelKey} hover className="p-5 text-center">
+      {spendActions.length > 0 && (
+        <div className="mb-12">
+          <h3 className="font-display text-lg font-bold text-espresso-dark mb-6 text-center">
+            {t('spend.title')}
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {spendActions.map((action) => (
+              <Card key={action.id} hover className="p-5 text-center">
                 <div className="w-12 h-12 rounded-xl bg-caramel/10 flex items-center justify-center mx-auto mb-3">
-                  <Icon size={24} className="text-caramel" />
+                  <DynamicIcon name={action.icon} size={24} className="text-caramel" />
                 </div>
-                <p className="font-medium text-chocolate">{t(`spend.${item.labelKey}`)}</p>
-                <p className="text-xs text-chocolate/50 mt-1">{t(`spend.${item.descKey}`)}</p>
+                <p className="font-medium text-chocolate">{action.title}</p>
+                {action.description && (
+                  <p className="text-xs text-chocolate/50 mt-1">{action.description}</p>
+                )}
               </Card>
-            )
-          })}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* CTA */}
       <Card className="p-6 sm:p-8 text-center bg-gradient-to-r from-espresso to-espresso-light text-white border-none">

@@ -85,6 +85,34 @@ export interface Promotion {
   is_active: boolean
   sort_order: number
   created_at: string
+  visibility_type: 'visible' | 'action_required'
+  action_instruction: string
+  discount_type: 'percent' | 'fixed' | 'special' | null
+  discount_value: string | null
+  updated_at: string
+}
+
+export interface BonusAction {
+  id: string
+  title: string
+  description: string
+  icon: string
+  points_amount: string
+  type: 'earn' | 'spend'
+  is_active: boolean
+  sort_order: number
+  created_at: string
+  updated_at: string
+}
+
+export interface LoyaltyPrivilege {
+  id: string
+  key: string
+  label: string
+  is_active: boolean
+  sort_order: number
+  created_at: string
+  updated_at: string
 }
 
 export interface LoyaltyTier {
@@ -96,6 +124,8 @@ export interface LoyaltyTier {
   cashback_percent: number
   privileges: Record<string, boolean | number | string>
   sort_order: number
+  created_at: string
+  updated_at: string
 }
 
 export interface SiteContent {

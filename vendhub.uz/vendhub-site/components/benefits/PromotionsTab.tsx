@@ -87,7 +87,14 @@ export default function PromotionsTab() {
                 {promo.description}
               </p>
 
-              {promo.promo_code && (
+              {promo.visibility_type === 'action_required' ? (
+                <div className="flex items-center gap-3 bg-amber-50 border border-amber-200/50 rounded-xl px-4 py-3 mb-4">
+                  <Zap size={18} className="text-amber-500 shrink-0" />
+                  <span className="text-sm text-amber-700">
+                    {promo.action_instruction}
+                  </span>
+                </div>
+              ) : promo.promo_code ? (
                 <button
                   type="button"
                   onClick={() => copyPromoCode(promo.promo_code!)}
@@ -101,7 +108,7 @@ export default function PromotionsTab() {
                     className="text-espresso/40 group-hover:text-caramel transition-colors shrink-0"
                   />
                 </button>
-              )}
+              ) : null}
 
               {/* Expandable conditions */}
               <button
