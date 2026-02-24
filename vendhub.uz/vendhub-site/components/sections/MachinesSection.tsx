@@ -2,12 +2,12 @@
 
 import { useState, useMemo } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { Search, X, ChevronDown, LocateFixed, Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { machines } from '@/lib/data'
 import { useModal } from '@/lib/modal-context'
 import { useGeolocation } from '@/lib/useGeolocation'
+import MachineTypeDetailModal from '@/components/modals/MachineTypeDetailModal'
 import { sortByDistance, formatDistance } from '@/lib/geo'
 import type { MachineWithDistance } from '@/lib/geo'
 import SectionHeader from '@/components/ui/SectionHeader'
@@ -52,6 +52,7 @@ export default function MachinesSection() {
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all')
   const [sortNearest, setSortNearest] = useState(false)
   const [expandedAccordion, setExpandedAccordion] = useState<number>(0)
+  const [detailType, setDetailType] = useState<'coffee' | 'cold' | null>(null)
 
   const hasLocation = geo.latitude != null && geo.longitude != null
   const userLocation = useMemo(
@@ -432,12 +433,13 @@ export default function MachinesSection() {
                       {t('types.featuresValue')}
                     </div>
                     <div className="pt-2">
-                      <Link
-                        href="/machines/jq-002-a"
+                      <button
+                        type="button"
+                        onClick={() => setDetailType('coffee')}
                         className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
                       >
                         {t('types.viewDetails')}
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -550,12 +552,13 @@ export default function MachinesSection() {
                       {t('types.coldFeaturesValue')}
                     </div>
                     <div className="pt-2">
-                      <Link
-                        href="/machines/js-001-a01"
+                      <button
+                        type="button"
+                        onClick={() => setDetailType('cold')}
                         className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
                       >
                         {t('types.viewDetails')}
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -564,6 +567,13 @@ export default function MachinesSection() {
           </div>
         )}
       </div>
+
+      {detailType && (
+        <MachineTypeDetailModal
+          type={detailType}
+          onClose={() => setDetailType(null)}
+        />
+      )}
     </section>
   )
 }
