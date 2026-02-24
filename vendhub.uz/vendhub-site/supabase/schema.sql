@@ -1,7 +1,7 @@
 -- ============================================================================
 -- VendHub.uz — Supabase database schema
 -- ============================================================================
--- 7 tables: products, machines, promotions, loyalty_tiers,
+-- 8 tables: products, machines, machine_types, promotions, loyalty_tiers,
 --           site_content, cooperation_requests, partners
 -- ============================================================================
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS machines (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name          TEXT NOT NULL,
   address       TEXT NOT NULL,
-  type          TEXT NOT NULL DEFAULT 'coffee' CHECK (type IN ('coffee', 'snack', 'cold')),
+  type          TEXT NOT NULL DEFAULT 'coffee',
   status        TEXT NOT NULL DEFAULT 'online' CHECK (status IN ('online', 'offline')),
   latitude      NUMERIC(8,4),
   longitude     NUMERIC(8,4),
@@ -53,6 +53,27 @@ CREATE TABLE IF NOT EXISTS machines (
   image_url     TEXT,
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- 2b. MACHINE TYPES (dynamic, managed via admin panel)
+-- ────────────────────────────────────────────────────────────────────────────
+
+CREATE TABLE IF NOT EXISTS machine_types (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  slug            TEXT UNIQUE NOT NULL,
+  name            TEXT NOT NULL,
+  model_name      TEXT,
+  description     TEXT DEFAULT '',
+  hero_image_url  TEXT,
+  specs           JSONB DEFAULT '[]'::jsonb,
+  advantages      JSONB DEFAULT '[]'::jsonb,
+  gallery_images  JSONB DEFAULT '[]'::jsonb,
+  is_active       BOOLEAN DEFAULT true,
+  badge           TEXT,
+  sort_order      INTEGER DEFAULT 0,
+  created_at      TIMESTAMPTZ DEFAULT now(),
+  updated_at      TIMESTAMPTZ DEFAULT now()
 );
 
 -- ────────────────────────────────────────────────────────────────────────────
@@ -149,6 +170,10 @@ CREATE TRIGGER set_machines_updated_at
   BEFORE UPDATE ON machines
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+CREATE TRIGGER set_machine_types_updated_at
+  BEFORE UPDATE ON machine_types
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
 CREATE TRIGGER set_site_content_updated_at
   BEFORE UPDATE ON site_content
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -159,6 +184,7 @@ CREATE TRIGGER set_site_content_updated_at
 
 ALTER TABLE products              ENABLE ROW LEVEL SECURITY;
 ALTER TABLE machines              ENABLE ROW LEVEL SECURITY;
+ALTER TABLE machine_types         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE promotions            ENABLE ROW LEVEL SECURITY;
 ALTER TABLE loyalty_tiers         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_content          ENABLE ROW LEVEL SECURITY;
@@ -175,6 +201,11 @@ CREATE POLICY "products_public_read"
 -- Anyone can read machines
 CREATE POLICY "machines_public_read"
   ON machines FOR SELECT
+  USING (true);
+
+-- Anyone can read machine types
+CREATE POLICY "machine_types_public_read"
+  ON machine_types FOR SELECT
   USING (true);
 
 -- Anyone can read active promotions only
@@ -241,6 +272,11 @@ CREATE POLICY "partners_auth_write"
   USING (auth.role() = 'authenticated')
   WITH CHECK (auth.role() = 'authenticated');
 
+CREATE POLICY "machine_types_auth_write"
+  ON machine_types FOR ALL
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
 -- ============================================================================
 -- INDEXES
 -- ============================================================================
@@ -253,6 +289,9 @@ CREATE INDEX IF NOT EXISTS idx_products_sort_order  ON products (sort_order);
 CREATE INDEX IF NOT EXISTS idx_machines_status      ON machines (status);
 CREATE INDEX IF NOT EXISTS idx_machines_type        ON machines (type);
 CREATE INDEX IF NOT EXISTS idx_machines_location    ON machines (location_type);
+
+CREATE INDEX IF NOT EXISTS idx_machine_types_slug   ON machine_types (slug);
+CREATE INDEX IF NOT EXISTS idx_machine_types_active ON machine_types (is_active) WHERE is_active = true;
 
 CREATE INDEX IF NOT EXISTS idx_promotions_active    ON promotions (is_active) WHERE is_active = true;
 

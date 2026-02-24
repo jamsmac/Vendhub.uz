@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 import { getProductPresentation } from '@/lib/productPresentation'
 import { useProductsData } from '@/lib/useProductsData'
 import { useModal } from '@/lib/modal-context'
@@ -24,6 +25,7 @@ const CATEGORY_GRADIENT: Record<string, string> = {
 }
 
 export default function PopularProducts() {
+  const t = useTranslations('popularProducts')
   const { products } = useProductsData()
   const { openProductModal } = useModal()
   const popularProducts = useMemo(
@@ -34,7 +36,7 @@ export default function PopularProducts() {
   return (
     <section className="mt-16 px-4">
       <div className="max-w-5xl mx-auto">
-        <SectionHeader title="Популярные товары" />
+        <SectionHeader title={t('title')} />
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {popularProducts.map((product) => {
@@ -89,7 +91,7 @@ export default function PopularProducts() {
                   )}
                   <PriceTag price={product.price} className="text-sm mt-1" />
                   <div className="text-espresso text-sm mt-2 font-medium">
-                    Нажмите для подробностей
+                    {t('clickDetails')}
                   </div>
                 </div>
               </Card>

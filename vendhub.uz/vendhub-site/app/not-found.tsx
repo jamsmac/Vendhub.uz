@@ -10,17 +10,17 @@ export default function NotFound() {
         </div>
         <h1 className="font-display text-5xl text-espresso font-bold mb-2">404</h1>
         <h2 className="font-display text-xl text-chocolate font-bold mb-2">
-          Страница не найдена
+          Sahifa topilmadi / Страница не найдена
         </h2>
         <p className="text-chocolate/50 text-sm mb-6">
-          Кажется, этот напиток закончился. Вернитесь на главную.
+          Bu ichimlik tugagan ko&apos;rinadi / Кажется, этот напиток закончился
         </p>
         <Link
           href="/"
           className="btn-espresso inline-flex items-center gap-2"
         >
           <ArrowLeft size={16} />
-          На главную
+          Bosh sahifa / На главную
         </Link>
       </div>
     </div>

@@ -21,10 +21,10 @@ export default function RootError({
           <AlertTriangle size={32} className="text-espresso/40" />
         </div>
         <h2 className="font-display text-2xl text-chocolate font-bold mb-2">
-          Что-то пошло не так
+          Xatolik yuz berdi / Что-то пошло не так
         </h2>
         <p className="text-chocolate/50 text-sm mb-6">
-          Произошла ошибка при загрузке страницы. Попробуйте обновить.
+          Sahifani yuklashda xatolik. Qayta urinib ko&apos;ring / Произошла ошибка. Попробуйте обновить.
         </p>
         <button
           type="button"
@@ -32,7 +32,7 @@ export default function RootError({
           className="btn-espresso inline-flex items-center gap-2"
         >
           <RefreshCw size={16} />
-          Попробовать снова
+          Qayta urinish / Попробовать снова
         </button>
       </div>
     </div>

@@ -47,7 +47,7 @@ export default function AboutSection() {
       label: t('contacts.address'),
       value: getContent('address'),
       href: getContent('address')
-        ? `https://yandex.com/maps/?text=${encodeURIComponent(getContent('address'))}`
+        ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(getContent('address'))}`
         : null,
       accent: 'bg-purple-100',
       accentText: 'text-purple-500',

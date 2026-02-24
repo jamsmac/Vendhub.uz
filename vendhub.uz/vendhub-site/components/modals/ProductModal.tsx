@@ -43,8 +43,14 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     [product.options]
   )
 
+  const fallbackOption: ProductOption = {
+    name: product.name,
+    price: product.price,
+    temperature: product.temperature === 'cold' ? 'cold' : 'hot',
+  }
+
   const [selectedOption, setSelectedOption] = useState<ProductOption>(
-    product.options[0]
+    product.options[0] ?? fallbackOption
   )
 
   const gradient =

@@ -48,9 +48,13 @@
   },
 
   "stats": {
+    "machinesValue": "16",
     "machines": "автоматов",
+    "drinksValue": "25+",
     "drinks": "напитков",
+    "ordersValue": "10K+",
     "orders": "заказов",
+    "ratingValue": "4.8",
     "rating": "рейтинг"
   },
 
@@ -59,6 +63,28 @@
     "catalogDesc": "Все напитки и снэки",
     "machines": "Автоматы",
     "machinesDesc": "Найти рядом"
+  },
+
+  "promoBanner": {
+    "badge": "Акция",
+    "more": "Подробнее"
+  },
+
+  "popularProducts": {
+    "title": "Популярные товары",
+    "clickDetails": "Нажмите для подробностей"
+  },
+
+  "whyVendHub": {
+    "title": "Почему VendHub?",
+    "drinks": "25+ напитков",
+    "drinksDesc": "Эспрессо, латте, капучино, матча и холодные напитки",
+    "machines": "16 автоматов",
+    "machinesDesc": "Больницы, университеты, госучреждения, маркеты, ЖК",
+    "loyalty": "Программа лояльности",
+    "loyaltyDesc": "Баллы, скидки до 10% и эксклюзивные бонусы",
+    "order": "Быстрый заказ",
+    "orderDesc": "Закажите заранее через Telegram Mini App"
   },
 
   "menu": {
