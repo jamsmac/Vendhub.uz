@@ -18,16 +18,18 @@ import {
   machines as fallbackMachines,
   promotions as fallbackPromotions,
   siteContent as fallbackContent,
+  partnershipModels as fallbackModels,
 } from '@/lib/data'
-import type { Partner, Machine, MachineTypeDetail, Promotion } from '@/lib/types'
+import type { Partner, Machine, MachineTypeDetail, Promotion, PartnershipModel } from '@/lib/types'
 
 export default async function Home() {
-  const [cmsResult, partnersResult, machinesResult, machineTypesResult, promosResult] = await Promise.all([
+  const [cmsResult, partnersResult, machinesResult, machineTypesResult, promosResult, modelsResult] = await Promise.all([
     supabase.from('site_content').select('section, key, value'),
     supabase.from('partners').select('*').order('sort_order', { ascending: true }),
     supabase.from('machines').select('*').order('name'),
     supabase.from('machine_types').select('*').eq('is_active', true).order('sort_order'),
     supabase.from('promotions').select('*').eq('is_active', true).order('sort_order'),
+    supabase.from('partnership_models').select('*').eq('is_active', true).order('sort_order'),
   ])
 
   // Group all CMS content by section
@@ -42,6 +44,7 @@ export default async function Home() {
   const machineList = (machinesResult.data?.length ? machinesResult.data : fallbackMachines) as Machine[]
   const machineTypeList = (machineTypesResult.data ?? []) as MachineTypeDetail[]
   const promoList = (promosResult.data?.length ? promosResult.data : fallbackPromotions) as Promotion[]
+  const modelList = (modelsResult.data?.length ? modelsResult.data : fallbackModels) as PartnershipModel[]
 
   return (
     <>
@@ -58,7 +61,7 @@ export default async function Home() {
         <MenuSection />
 
         <BenefitsSection loyaltyTab={<LoyaltyTab />} promotions={promoList} />
-        <PartnerSection partners={partnerList} />
+        <PartnerSection partners={partnerList} models={modelList} />
         <AboutSection />
       </main>
       <Footer />

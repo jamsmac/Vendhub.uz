@@ -146,7 +146,7 @@ export default function MachineModal({ machine, onClose, distance }: MachineModa
           latitude={machine.latitude!}
           longitude={machine.longitude!}
           name={machine.name}
-          address={machine.address}
+          address={machineAddress}
         />
       )}
     </Modal>

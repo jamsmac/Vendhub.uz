@@ -7,55 +7,52 @@ import {
   Package,
   TrendingUp,
   Building2,
+  Gift,
+  Coffee,
+  Star,
+  Send,
+  Phone,
+  Smartphone,
+  MessageCircle,
+  Share2,
+  Flame,
+  Trophy,
+  Cake,
+  Coins,
+  UserPlus,
+  ShoppingCart,
+  Briefcase,
+  Heart,
+  Zap,
   ChevronDown,
   ChevronUp,
+  type LucideIcon,
 } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Card from '@/components/ui/Card'
 import PartnerForm from '@/components/partner/PartnerForm'
-import type { Partner } from '@/lib/types'
+import { COLOR_SCHEMES } from '@/lib/data'
+import type { Partner, PartnershipModel } from '@/lib/types'
 
-const MODEL_KEYS = ['locations', 'suppliers', 'investors', 'franchise'] as const
-type ModelKey = (typeof MODEL_KEYS)[number]
-
-const MODEL_ICONS: Record<ModelKey, typeof MapPin> = {
-  locations: MapPin,
-  suppliers: Package,
-  investors: TrendingUp,
-  franchise: Building2,
-}
-
-const MODEL_ACCENTS: Record<ModelKey, { bg: string; text: string }> = {
-  locations: { bg: 'bg-mint/10', text: 'text-mint' },
-  suppliers: { bg: 'bg-caramel/10', text: 'text-caramel' },
-  investors: { bg: 'bg-espresso-50', text: 'text-espresso' },
-  franchise: { bg: 'bg-purple-100', text: 'text-purple-500' },
+const ICON_MAP: Record<string, LucideIcon> = {
+  MapPin, Package, TrendingUp, Building2, Gift, Coffee, Star, Send,
+  Phone, Smartphone, MessageCircle, Share2, Flame, Trophy, Cake,
+  Coins, UserPlus, ShoppingCart, Briefcase, Heart, Zap,
 }
 
 interface PartnerSectionProps {
   partners: Partner[]
+  models: PartnershipModel[]
 }
 
-export default function PartnerSection({ partners }: PartnerSectionProps) {
+export default function PartnerSection({ partners, models }: PartnerSectionProps) {
   const t = useTranslations('partner')
+  const locale = useLocale()
   const [expandedId, setExpandedId] = useState<string | null>(null)
 
   function toggleExpand(id: string) {
     setExpandedId((prev) => (prev === id ? null : id))
-  }
-
-  function getModelTitle(key: ModelKey): string {
-    return t(`models.${key}.title`)
-  }
-
-  function getModelDescription(key: ModelKey): string {
-    return t(`models.${key}.description`)
-  }
-
-  function getModelBenefits(key: ModelKey): string[] {
-    const i18nRaw = t.raw(`models.${key}.benefits`)
-    return Array.isArray(i18nRaw) ? i18nRaw : []
   }
 
   return (
@@ -68,39 +65,43 @@ export default function PartnerSection({ partners }: PartnerSectionProps) {
 
         {/* Model cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
-          {MODEL_KEYS.map((key) => {
-            const Icon = MODEL_ICONS[key]
-            const accent = MODEL_ACCENTS[key]
-            const isExpanded = expandedId === key
-            const benefits = getModelBenefits(key)
+          {models.map((model) => {
+            const Icon = ICON_MAP[model.icon] ?? Gift
+            const scheme = COLOR_SCHEMES[model.color_scheme] ?? COLOR_SCHEMES.mint
+            const isExpanded = expandedId === model.key
+            const title = locale === 'uz' && model.title_uz ? model.title_uz : model.title
+            const description = locale === 'uz' && model.description_uz ? model.description_uz : model.description
+            const benefits = locale === 'uz' && model.benefits_uz?.length ? model.benefits_uz : model.benefits
             return (
-              <Card key={key} hover className="p-6">
+              <Card key={model.id} hover className="p-6">
                 <div className="flex items-start gap-4">
                   <div
-                    className={`w-12 h-12 rounded-xl ${accent.bg} flex items-center justify-center shrink-0`}
+                    className={`w-12 h-12 rounded-xl ${scheme.bg} flex items-center justify-center shrink-0`}
                   >
-                    <Icon size={24} className={accent.text} />
+                    <Icon size={24} className={scheme.text} />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-display text-lg font-bold text-espresso-dark">
-                      {getModelTitle(key)}
+                      {title}
                     </h3>
                     <p className="text-sm text-chocolate/60 mt-1">
-                      {getModelDescription(key)}
+                      {description}
                     </p>
 
-                    <button
-                      type="button"
-                      onClick={() => toggleExpand(key)}
-                      className="flex items-center gap-1 text-sm text-caramel hover:text-caramel-dark transition-colors mt-3"
-                    >
-                      {t('moreInfo')}
-                      {isExpanded ? (
-                        <ChevronUp size={14} />
-                      ) : (
-                        <ChevronDown size={14} />
-                      )}
-                    </button>
+                    {benefits.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => toggleExpand(model.key)}
+                        className="flex items-center gap-1 text-sm text-caramel hover:text-caramel-dark transition-colors mt-3"
+                      >
+                        {t('moreInfo')}
+                        {isExpanded ? (
+                          <ChevronUp size={14} />
+                        ) : (
+                          <ChevronDown size={14} />
+                        )}
+                      </button>
+                    )}
 
                     {isExpanded && (
                       <ul className="mt-3 space-y-2 animate-fadeIn">
@@ -128,7 +129,7 @@ export default function PartnerSection({ partners }: PartnerSectionProps) {
             <h3 className="font-display text-xl font-bold text-espresso-dark mb-6 text-center">
               {t('leaveRequest')}
             </h3>
-            <PartnerForm />
+            <PartnerForm models={models} />
           </Card>
         </div>
 

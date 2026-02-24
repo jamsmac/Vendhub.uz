@@ -4,6 +4,8 @@ import { useEffect, useMemo } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import L from 'leaflet'
+import { useLocale } from 'next-intl'
+import { localized } from '@/lib/localize'
 import type { Machine } from '@/lib/types'
 
 import 'leaflet/dist/leaflet.css'
@@ -76,6 +78,7 @@ interface LeafletMapProps {
 }
 
 export default function LeafletMap({ machines, onMachineClick, userLocation }: LeafletMapProps) {
+  const locale = useLocale()
   const validMachines = useMemo(
     () => machines.filter((m) => m.latitude != null && m.longitude != null),
     [machines]
@@ -111,7 +114,7 @@ export default function LeafletMap({ machines, onMachineClick, userLocation }: L
             >
               <Popup>
                 <div className="text-sm font-medium">{machine.name}</div>
-                <div className="text-xs text-gray-500">{machine.address}</div>
+                <div className="text-xs text-gray-500">{localized(machine, 'address', locale)}</div>
               </Popup>
             </Marker>
           ))}

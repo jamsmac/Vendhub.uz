@@ -36,7 +36,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
   )
 
   const fallbackOption: ProductOption = {
-    name: product.name,
+    name: productName,
     price: product.price,
     temperature: product.temperature === 'cold' ? 'cold' : 'hot',
   }

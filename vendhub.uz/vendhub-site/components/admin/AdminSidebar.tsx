@@ -12,8 +12,7 @@ import {
   Award,
   Coins,
   FileText,
-  Inbox,
-  Users,
+  Handshake,
   X,
 } from 'lucide-react'
 import { ReactNode } from 'react'
@@ -33,8 +32,7 @@ const navItems: NavItem[] = [
   { key: 'bonusActions', icon: <Coins size={20} />, href: '/admin/bonus-actions' },
   { key: 'loyalty', icon: <Award size={20} />, href: '/admin/loyalty' },
   { key: 'content', icon: <FileText size={20} />, href: '/admin/content' },
-  { key: 'cooperation', icon: <Inbox size={20} />, href: '/admin/cooperation' },
-  { key: 'partners', icon: <Users size={20} />, href: '/admin/partners' },
+  { key: 'partnership', icon: <Handshake size={20} />, href: '/admin/partnership' },
 ]
 
 interface AdminSidebarProps {
@@ -104,7 +102,7 @@ export default function AdminSidebar({ isOpen, onClose, cooperationNewCount }: A
             >
               <span className="shrink-0">{item.icon}</span>
               <span className="flex-1">{t(item.key)}</span>
-              {item.key === 'cooperation' && !!cooperationNewCount && cooperationNewCount > 0 && (
+              {item.key === 'partnership' && !!cooperationNewCount && cooperationNewCount > 0 && (
                 <span className="min-w-5 h-5 flex items-center justify-center text-xs font-bold text-white bg-caramel rounded-full px-1.5">
                   {cooperationNewCount}
                 </span>

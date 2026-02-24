@@ -17,8 +17,7 @@ const pageTitleKeys: Record<string, string> = {
   '/admin/bonus-actions': 'bonusActions',
   '/admin/loyalty': 'loyalty',
   '/admin/content': 'content',
-  '/admin/cooperation': 'cooperation',
-  '/admin/partners': 'partners',
+  '/admin/partnership': 'partnership',
 }
 
 export default function AdminLayout({

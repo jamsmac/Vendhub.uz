@@ -14,6 +14,7 @@ import type {
   Partner,
   BonusAction,
   LoyaltyPrivilege,
+  PartnershipModel,
 } from './types'
 
 // ---------------------------------------------------------------------------
@@ -925,4 +926,62 @@ export const partners: Partner[] = [
   { id: 'partner-american-hospital', name: 'American Hospital', logo_url: null, website_url: null, description: null, sort_order: 2 },
   { id: 'partner-kiut', name: 'KIUT', logo_url: null, website_url: null, description: null, sort_order: 3 },
   { id: 'partner-grand-medical', name: 'Grand Medical', logo_url: null, website_url: null, description: null, sort_order: 4 },
+]
+
+// ---------------------------------------------------------------------------
+// COLOR SCHEMES (for partnership models & reusable)
+// ---------------------------------------------------------------------------
+
+export const COLOR_SCHEMES: Record<string, { bg: string; text: string; label: string }> = {
+  mint:     { bg: 'bg-mint/10',      text: 'text-mint',       label: 'Мятный' },
+  caramel:  { bg: 'bg-caramel/10',   text: 'text-caramel',    label: 'Карамель' },
+  espresso: { bg: 'bg-espresso/10',  text: 'text-espresso',   label: 'Эспрессо' },
+  purple:   { bg: 'bg-purple-100',   text: 'text-purple-500', label: 'Фиолетовый' },
+  blue:     { bg: 'bg-blue-50',      text: 'text-blue-500',   label: 'Синий' },
+  red:      { bg: 'bg-red-50',       text: 'text-red-500',    label: 'Красный' },
+  amber:    { bg: 'bg-amber-50',     text: 'text-amber-600',  label: 'Янтарный' },
+  rose:     { bg: 'bg-rose-50',      text: 'text-rose-500',   label: 'Розовый' },
+}
+
+// ---------------------------------------------------------------------------
+// PARTNERSHIP MODELS (4 total)
+// ---------------------------------------------------------------------------
+
+export const partnershipModels: PartnershipModel[] = [
+  {
+    id: 'pm-locations', key: 'locations', title: 'Локациям', title_uz: 'Joylashuvlar uchun',
+    description: 'У вас есть помещение с трафиком? Мы установим автомат бесплатно, вы получаете процент с продаж.',
+    description_uz: 'Sizda odamlar ko\'p keladigan joy bormi? Biz avtomatni bepul o\'rnatamiz, siz sotuvdan foiz olasiz.',
+    icon: 'MapPin', color_scheme: 'mint',
+    benefits: ['Бесплатная установка и обслуживание', 'Ежемесячные выплаты от продаж', 'Привлечение посетителей', 'Нет минимальных требований по площади'],
+    benefits_uz: ['Bepul o\'rnatish va texnik xizmat', 'Sotuvdan oylik to\'lovlar', 'Tashrif buyuvchilarni jalb qilish', 'Minimal maydon talablari yo\'q'],
+    is_active: true, sort_order: 1, created_at: '2025-01-01T00:00:00Z', updated_at: '2025-01-01T00:00:00Z',
+  },
+  {
+    id: 'pm-suppliers', key: 'suppliers', title: 'Поставщикам', title_uz: 'Yetkazib beruvchilar uchun',
+    description: 'Поставляете кофе, снеки или расходники? Станьте нашим партнёром-поставщиком.',
+    description_uz: 'Qahva, gazak yoki sarf materiallari yetkazib berasizmi? Bizning hamkor-yetkazib beruvchimiz bo\'ling.',
+    icon: 'Package', color_scheme: 'caramel',
+    benefits: ['Стабильные закупки', 'Долгосрочные контракты', 'Оплата в срок', 'Расширение географии поставок'],
+    benefits_uz: ['Barqaror xaridlar', 'Uzoq muddatli shartnomalar', 'O\'z vaqtida to\'lov', 'Yetkazib berish geografiyasini kengaytirish'],
+    is_active: true, sort_order: 2, created_at: '2025-01-01T00:00:00Z', updated_at: '2025-01-01T00:00:00Z',
+  },
+  {
+    id: 'pm-investors', key: 'investors', title: 'Инвесторам', title_uz: 'Investorlar uchun',
+    description: 'Стабильный доход от сети автоматов. Окупаемость от 12 месяцев.',
+    description_uz: 'Avtomat tarmog\'idan barqaror daromad. 12 oydan boshlab o\'zini qoplaydi.',
+    icon: 'TrendingUp', color_scheme: 'espresso',
+    benefits: ['ROI от 12 месяцев', 'Прозрачная отчётность', 'Пассивный доход', 'Масштабируемая модель'],
+    benefits_uz: ['12 oydan ROI', 'Shaffof hisobot', 'Passiv daromad', 'Kengaytiriladigan model'],
+    is_active: true, sort_order: 3, created_at: '2025-01-01T00:00:00Z', updated_at: '2025-01-01T00:00:00Z',
+  },
+  {
+    id: 'pm-franchise', key: 'franchise', title: 'Франшиза', title_uz: 'Franchayzing',
+    description: 'Запустите VendHub в своём городе. Полная поддержка и обучение.',
+    description_uz: 'O\'z shahringizda VendHub-ni ishga tushiring. To\'liq qo\'llab-quvvatlash va o\'qitish.',
+    icon: 'Building2', color_scheme: 'purple',
+    benefits: ['Готовая бизнес-модель', 'Обучение и поддержка', 'Маркетинговые материалы', 'Техническая инфраструктура'],
+    benefits_uz: ['Tayyor biznes-model', 'O\'qitish va qo\'llab-quvvatlash', 'Marketing materiallari', 'Texnik infratuzilma'],
+    is_active: true, sort_order: 4, created_at: '2025-01-01T00:00:00Z', updated_at: '2025-01-01T00:00:00Z',
+  },
 ]

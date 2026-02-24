@@ -1,21 +1,23 @@
 'use client'
 
 import { useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import Button from '@/components/ui/Button'
 import { useToast } from '@/components/ui/Toast'
 import { supabase } from '@/lib/supabase'
+import type { PartnershipModel } from '@/lib/types'
 
-type Model = 'locations' | 'suppliers' | 'investors' | 'franchise'
+interface PartnerFormProps {
+  models: PartnershipModel[]
+}
 
-const MODEL_KEYS: Model[] = ['locations', 'suppliers', 'investors', 'franchise']
-
-export default function PartnerForm() {
+export default function PartnerForm({ models }: PartnerFormProps) {
   const { showToast } = useToast()
   const t = useTranslations('partner.form')
+  const locale = useLocale()
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
-    model: 'locations' as Model,
+    model: models[0]?.key ?? '',
     name: '',
     phone: '',
     comment: '',
@@ -57,7 +59,7 @@ export default function PartnerForm() {
       if (error) throw error
 
       showToast(t('success'), 'success')
-      setForm({ model: 'locations', name: '', phone: '', comment: '' })
+      setForm({ model: models[0]?.key ?? '', name: '', phone: '', comment: '' })
     } catch {
       showToast(t('error'), 'error')
     } finally {
@@ -81,9 +83,9 @@ export default function PartnerForm() {
           onChange={handleChange}
           className={inputClass}
         >
-          {MODEL_KEYS.map((key) => (
-            <option key={key} value={key}>
-              {t(`modelOptions.${key}`)}
+          {models.map((m) => (
+            <option key={m.key} value={m.key}>
+              {locale === 'uz' && m.title_uz ? m.title_uz : m.title}
             </option>
           ))}
         </select>
