@@ -51,11 +51,20 @@ export const metadata: Metadata = {
     locale: 'ru_RU',
     alternateLocale: ['uz_UZ'],
     type: 'website',
+    images: [
+      {
+        url: `${BASE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: 'VendHub — Кофе из автоматов в Ташкенте',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'VendHub — Кофе из автоматов в пару кликов',
     description: '25+ видов напитков. 16 автоматов в Ташкенте.',
+    images: [`${BASE_URL}/opengraph-image`],
   },
 }
 
@@ -66,6 +75,7 @@ const jsonLd = JSON.stringify({
   name: 'VendHub',
   description: 'Сеть вендинговых автоматов в Ташкенте — кофе, чай, снеки',
   url: BASE_URL,
+  logo: `${BASE_URL}/images/brand/hub-logo.png`,
   telephone: '+998712003999',
   email: 'info@vendhub.uz',
   address: {
@@ -74,6 +84,23 @@ const jsonLd = JSON.stringify({
     addressCountry: 'UZ',
   },
   areaServed: 'Ташкент',
+  sameAs: [
+    'https://t.me/vendhub_support',
+    'https://instagram.com/vendhub.uz',
+    'https://youtube.com/@vendhub',
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.8',
+    reviewCount: '10000',
+    bestRating: '5',
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    opens: '06:00',
+    closes: '23:00',
+  },
 })
 
 type Props = {

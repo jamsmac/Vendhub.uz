@@ -1,8 +1,10 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { useModal } from '@/lib/modal-context'
-import ProductModal from '@/components/modals/ProductModal'
-import MachineModal from '@/components/modals/MachineModal'
+
+const ProductModal = dynamic(() => import('@/components/modals/ProductModal'), { ssr: false })
+const MachineModal = dynamic(() => import('@/components/modals/MachineModal'), { ssr: false })
 
 export default function ModalRoot() {
   const { modal, closeModal } = useModal()
