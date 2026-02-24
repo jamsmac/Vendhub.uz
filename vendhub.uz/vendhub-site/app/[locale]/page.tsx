@@ -17,24 +17,29 @@ import {
   partners as fallbackPartners,
   machines as fallbackMachines,
   promotions as fallbackPromotions,
+  siteContent as fallbackContent,
 } from '@/lib/data'
 import type { Partner, Machine, MachineTypeDetail, Promotion } from '@/lib/types'
 
 export default async function Home() {
   const [cmsResult, partnersResult, machinesResult, machineTypesResult, promosResult] = await Promise.all([
-    supabase.from('site_content').select('key, value').eq('section', 'partnership'),
+    supabase.from('site_content').select('section, key, value'),
     supabase.from('partners').select('*').order('sort_order', { ascending: true }),
     supabase.from('machines').select('*').order('name'),
     supabase.from('machine_types').select('*').eq('is_active', true).order('sort_order'),
     supabase.from('promotions').select('*').eq('is_active', true).order('sort_order'),
   ])
 
-  const partnerCmsData: Record<string, string> = {}
-  if (cmsResult.data) {
-    for (const item of cmsResult.data) {
-      partnerCmsData[item.key] = item.value
-    }
+  // Group all CMS content by section
+  const allCms: Record<string, Record<string, string>> = {}
+  const cmsRows = cmsResult.data?.length ? cmsResult.data : fallbackContent
+  for (const item of cmsRows) {
+    if (!allCms[item.section]) allCms[item.section] = {}
+    allCms[item.section][item.key] = item.value
   }
+  const partnerCmsData = allCms['partnership'] ?? {}
+  const statsCmsData = allCms['stats'] ?? {}
+  const aboutCmsData = allCms['about'] ?? {}
   const partnerList = (partnersResult.data?.length ? partnersResult.data : fallbackPartners) as Partner[]
   const machineList = (machinesResult.data?.length ? machinesResult.data : fallbackMachines) as Machine[]
   const machineTypeList = (machineTypesResult.data ?? []) as MachineTypeDetail[]
@@ -45,7 +50,7 @@ export default async function Home() {
       <Header />
       <main id="main" className="min-h-screen bg-cream">
         <HeroSection />
-        <StatsSection />
+        <StatsSection cmsData={statsCmsData} />
         <QuickActions />
         <PopularProducts />
         <PromoBanner promo={promoList[0] ?? null} />
@@ -56,7 +61,7 @@ export default async function Home() {
 
         <BenefitsSection loyaltyTab={<LoyaltyTab />} promotions={promoList} />
         <PartnerSection partners={partnerList} cmsData={partnerCmsData} />
-        <AboutSection />
+        <AboutSection cmsData={aboutCmsData} />
       </main>
       <Footer />
     </>

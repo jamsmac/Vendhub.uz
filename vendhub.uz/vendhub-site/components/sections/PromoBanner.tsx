@@ -20,11 +20,11 @@ export default async function PromoBanner({ promo }: PromoBannerProps) {
           </span>
 
           <h3 className="font-display text-2xl sm:text-3xl font-bold">
-            {promo?.title ?? t('badge')}
+            {promo.title}
           </h3>
 
           <p className="text-white/80 mt-2 max-w-md">
-            {promo?.description ?? ''}
+            {promo.description ?? ''}
           </p>
 
           <a

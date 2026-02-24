@@ -1,5 +1,4 @@
 import { getTranslations } from 'next-intl/server'
-import { supabase } from '@/lib/supabase'
 import Card from '@/components/ui/Card'
 
 const STATS = [
@@ -9,20 +8,13 @@ const STATS = [
   { emoji: '\u2B50', dbKey: 'rating', valueKey: 'ratingValue', labelKey: 'rating', accent: 'bg-yellow-50' },
 ] as const
 
-export default async function StatsSection() {
+interface StatsSectionProps {
+  cmsData: Record<string, string>
+}
+
+export default async function StatsSection({ cmsData }: StatsSectionProps) {
   const t = await getTranslations('stats')
-
-  const { data } = await supabase
-    .from('site_content')
-    .select('key, value')
-    .eq('section', 'stats')
-
-  const dbValues: Record<string, string> = {}
-  if (data) {
-    for (const row of data) {
-      dbValues[row.key] = row.value
-    }
-  }
+  const dbValues = cmsData
 
   return (
     <section aria-label={t('ariaLabel')} className="relative -mt-8 z-10">

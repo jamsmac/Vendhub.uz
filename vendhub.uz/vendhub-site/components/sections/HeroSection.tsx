@@ -83,7 +83,7 @@ export default function HeroSection() {
           <div className="hidden lg:flex items-end justify-center flex-shrink-0">
             <Image
               src="/images/machines/coffee-machine-hero.png"
-              alt="VendHub"
+              alt={t('machineImageAlt')}
               width={320}
               height={480}
               sizes="(min-width: 1024px) 320px"

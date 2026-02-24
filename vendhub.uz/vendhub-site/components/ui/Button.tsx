@@ -49,12 +49,14 @@ export default function Button({
     .join(' ')
 
   if (href) {
+    const isExternal = href.startsWith('http')
     return (
       <a
         href={href}
         className={classes}
         onClick={disabled ? undefined : onClick}
         aria-disabled={disabled}
+        {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
       >
         {icon && <span className="shrink-0">{icon}</span>}
         {children}

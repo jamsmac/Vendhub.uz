@@ -58,7 +58,8 @@
     "title": "Avtomatlardan kofe bir necha bosishda",
     "subtitle": "25+ turdagi ichimliklar. Toshkentdagi kasalxonalar, universitetlar va jamoat joylarida 16 ta avtomat.",
     "findMachine": "Avtomat topish",
-    "viewMenu": "Menyuni ko'rish"
+    "viewMenu": "Menyuni ko'rish",
+    "machineImageAlt": "VendHub kofe avtomati"
   },
 
   "stats": {
