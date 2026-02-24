@@ -6,6 +6,7 @@ import { X, Plus, Trash2 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useToast } from '@/components/ui/Toast'
 import ImageUpload from '@/components/admin/ImageUpload'
+import AdminFormField from '@/components/admin/AdminFormField'
 import type { Product, ProductOption } from '@/lib/types'
 
 interface ProductFormProps {
@@ -170,10 +171,7 @@ export default function ProductForm({
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Name + Price */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('name')}
-              </label>
+            <AdminFormField label={t('name')} required error={errors.name}>
               <input
                 type="text"
                 value={name}
@@ -181,12 +179,8 @@ export default function ProductForm({
                 required
                 className={`admin-input ${errors.name ? '!border-red-400' : ''}`}
               />
-              {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('price')}
-              </label>
+            </AdminFormField>
+            <AdminFormField label={t('price')} required error={errors.price}>
               <input
                 type="number"
                 value={price}
@@ -195,16 +189,12 @@ export default function ProductForm({
                 min={0}
                 className={`admin-input ${errors.price ? '!border-red-400' : ''}`}
               />
-              {errors.price && <p className="text-xs text-red-500 mt-1">{errors.price}</p>}
-            </div>
+            </AdminFormField>
           </div>
 
           {/* Category + Temperature */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('category')}
-              </label>
+            <AdminFormField label={t('category')}>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as Product['category'])}
@@ -216,11 +206,8 @@ export default function ProductForm({
                   </option>
                 ))}
               </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('temperature')}
-              </label>
+            </AdminFormField>
+            <AdminFormField label={t('temperature')}>
               <select
                 value={temperature}
                 onChange={(e) =>
@@ -234,40 +221,31 @@ export default function ProductForm({
                   </option>
                 ))}
               </select>
-            </div>
+            </AdminFormField>
           </div>
 
           {/* Image */}
-          <div>
-            <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-              {t('image')}
-            </label>
+          <AdminFormField label={t('image')}>
             <ImageUpload
               value={imageUrl || null}
               onChange={(url) => setImageUrl(url ?? '')}
               folder="products"
             />
-          </div>
+          </AdminFormField>
 
           {/* Description */}
-          <div>
-            <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-              {t('description')}
-            </label>
+          <AdminFormField label={t('description')}>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
               className="admin-input resize-y"
             />
-          </div>
+          </AdminFormField>
 
           {/* Rating + Sort + Discount */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('rating')}
-              </label>
+            <AdminFormField label={t('rating')} error={errors.rating}>
               <input
                 type="number"
                 value={rating}
@@ -277,12 +255,8 @@ export default function ProductForm({
                 step={0.1}
                 className={`admin-input ${errors.rating ? '!border-red-400' : ''}`}
               />
-              {errors.rating && <p className="text-xs text-red-500 mt-1">{errors.rating}</p>}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('discount')}
-              </label>
+            </AdminFormField>
+            <AdminFormField label={t('discount')} error={errors.discount}>
               <input
                 type="number"
                 value={discountPercent}
@@ -291,19 +265,15 @@ export default function ProductForm({
                 max={100}
                 className={`admin-input ${errors.discount ? '!border-red-400' : ''}`}
               />
-              {errors.discount && <p className="text-xs text-red-500 mt-1">{errors.discount}</p>}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('sortOrder')}
-              </label>
+            </AdminFormField>
+            <AdminFormField label={t('sortOrder')}>
               <input
                 type="number"
                 value={sortOrder}
                 onChange={(e) => setSortOrder(Number(e.target.value))}
                 className="admin-input"
               />
-            </div>
+            </AdminFormField>
           </div>
 
           {/* Toggles */}

@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Search, Pencil, Eye, EyeOff } from 'lucide-react'
+import { Pencil, Eye, EyeOff } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
 import { useToast } from '@/components/ui/Toast'
 import ProductForm from '@/components/admin/ProductForm'
+import AdminSearchToolbar from '@/components/admin/AdminSearchToolbar'
 import Pagination from '@/components/admin/Pagination'
 import TableSkeleton from '@/components/admin/TableSkeleton'
 import type { Product } from '@/lib/types'
@@ -229,30 +230,13 @@ export default function AdminProductsPage() {
 
   return (
     <div className="space-y-4">
-      {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="relative flex-1 max-w-sm">
-          <Search
-            size={16}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-espresso/30"
-          />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => { setSearch(e.target.value); setCurrentPage(1) }}
-            placeholder={t('searchPlaceholder')}
-            className="admin-input !pl-9 w-full"
-          />
-        </div>
-        <button
-          type="button"
-          onClick={openCreate}
-          className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-espresso to-espresso-light rounded-xl hover:shadow-lg transition-all shrink-0"
-        >
-          <Plus size={16} />
-          {t('add')}
-        </button>
-      </div>
+      <AdminSearchToolbar
+        search={search}
+        onSearchChange={(val) => { setSearch(val); setCurrentPage(1) }}
+        placeholder={t('searchPlaceholder')}
+        onAdd={openCreate}
+        addLabel={t('add')}
+      />
 
       {/* Category filter */}
       <div className="flex flex-wrap gap-2">

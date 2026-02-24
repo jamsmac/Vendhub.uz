@@ -6,6 +6,7 @@ import { X } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useToast } from '@/components/ui/Toast'
 import ImageUpload from '@/components/admin/ImageUpload'
+import AdminFormField from '@/components/admin/AdminFormField'
 import type { Machine } from '@/lib/types'
 
 interface MachineFormProps {
@@ -150,10 +151,7 @@ export default function MachineForm({
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Name */}
-          <div>
-            <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-              {t('name')}
-            </label>
+          <AdminFormField label={t('name')} required error={errors.name}>
             <input
               type="text"
               value={name}
@@ -161,14 +159,10 @@ export default function MachineForm({
               required
               className={`admin-input ${errors.name ? '!border-red-400' : ''}`}
             />
-            {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
-          </div>
+          </AdminFormField>
 
           {/* Address */}
-          <div>
-            <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-              {t('address')}
-            </label>
+          <AdminFormField label={t('address')} required error={errors.address}>
             <input
               type="text"
               value={address}
@@ -176,15 +170,11 @@ export default function MachineForm({
               required
               className={`admin-input ${errors.address ? '!border-red-400' : ''}`}
             />
-            {errors.address && <p className="text-xs text-red-500 mt-1">{errors.address}</p>}
-          </div>
+          </AdminFormField>
 
           {/* Type + Status */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('type')}
-              </label>
+            <AdminFormField label={t('type')}>
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
@@ -196,11 +186,8 @@ export default function MachineForm({
                   </option>
                 ))}
               </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('status')}
-              </label>
+            </AdminFormField>
+            <AdminFormField label={t('status')}>
               <select
                 value={status}
                 onChange={(e) =>
@@ -211,15 +198,12 @@ export default function MachineForm({
                 <option value="online">{tm('online')}</option>
                 <option value="offline">{tm('offline')}</option>
               </select>
-            </div>
+            </AdminFormField>
           </div>
 
           {/* Coordinates */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('latitude')}
-              </label>
+            <AdminFormField label={t('latitude')} error={errors.latitude}>
               <input
                 type="number"
                 value={latitude}
@@ -227,12 +211,8 @@ export default function MachineForm({
                 step="any"
                 className={`admin-input ${errors.latitude ? '!border-red-400' : ''}`}
               />
-              {errors.latitude && <p className="text-xs text-red-500 mt-1">{errors.latitude}</p>}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('longitude')}
-              </label>
+            </AdminFormField>
+            <AdminFormField label={t('longitude')} error={errors.longitude}>
               <input
                 type="number"
                 value={longitude}
@@ -240,16 +220,12 @@ export default function MachineForm({
                 step="any"
                 className={`admin-input ${errors.longitude ? '!border-red-400' : ''}`}
               />
-              {errors.longitude && <p className="text-xs text-red-500 mt-1">{errors.longitude}</p>}
-            </div>
+            </AdminFormField>
           </div>
 
           {/* Rating + Review Count + Product Count */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('rating')}
-              </label>
+            <AdminFormField label={t('rating')} error={errors.rating}>
               <input
                 type="number"
                 value={rating}
@@ -259,12 +235,8 @@ export default function MachineForm({
                 step={0.1}
                 className={`admin-input ${errors.rating ? '!border-red-400' : ''}`}
               />
-              {errors.rating && <p className="text-xs text-red-500 mt-1">{errors.rating}</p>}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('reviewCount')}
-              </label>
+            </AdminFormField>
+            <AdminFormField label={t('reviewCount')}>
               <input
                 type="number"
                 value={reviewCount}
@@ -272,11 +244,8 @@ export default function MachineForm({
                 min={0}
                 className="admin-input"
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('productCount')}
-              </label>
+            </AdminFormField>
+            <AdminFormField label={t('productCount')}>
               <input
                 type="number"
                 value={productCount}
@@ -284,26 +253,20 @@ export default function MachineForm({
                 min={0}
                 className="admin-input"
               />
-            </div>
+            </AdminFormField>
           </div>
 
           {/* Floor + Hours + Location Type */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('floor')}
-              </label>
+            <AdminFormField label={t('floor')}>
               <input
                 type="text"
                 value={floor}
                 onChange={(e) => setFloor(e.target.value)}
                 className="admin-input"
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('hours')}
-              </label>
+            </AdminFormField>
+            <AdminFormField label={t('hours')}>
               <input
                 type="text"
                 value={hours}
@@ -311,11 +274,8 @@ export default function MachineForm({
                 placeholder="24/7"
                 className="admin-input"
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                {t('locationType')}
-              </label>
+            </AdminFormField>
+            <AdminFormField label={t('locationType')}>
               <select
                 value={locationType}
                 onChange={(e) => setLocationType(e.target.value)}
@@ -328,20 +288,17 @@ export default function MachineForm({
                   </option>
                 ))}
               </select>
-            </div>
+            </AdminFormField>
           </div>
 
           {/* Image */}
-          <div>
-            <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-              {t('image')}
-            </label>
+          <AdminFormField label={t('image')}>
             <ImageUpload
               value={imageUrl || null}
               onChange={(url) => setImageUrl(url ?? '')}
               folder="machines"
             />
-          </div>
+          </AdminFormField>
 
           {/* Has Promotion */}
           <label className="flex items-center gap-2 cursor-pointer">

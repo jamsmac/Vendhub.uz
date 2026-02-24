@@ -8,6 +8,7 @@ import { useToast } from '@/components/ui/Toast'
 import ConfirmDialog from '@/components/ui/ConfirmDialog'
 import TableSkeleton from '@/components/admin/TableSkeleton'
 import Pagination from '@/components/admin/Pagination'
+import AdminFormField from '@/components/admin/AdminFormField'
 import type { Promotion } from '@/lib/types'
 
 const emptyPromotion = {
@@ -299,10 +300,7 @@ export default function AdminPromotionsPage() {
             <form onSubmit={handleSubmit} className="p-6 space-y-5">
               {/* Title + Badge */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                    {t('table.title')} *
-                  </label>
+                <AdminFormField label={t('table.title')} required>
                   <input
                     type="text"
                     value={form.title}
@@ -312,11 +310,8 @@ export default function AdminPromotionsPage() {
                     required
                     className="admin-input"
                   />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                    {t('table.badge')}
-                  </label>
+                </AdminFormField>
+                <AdminFormField label={t('table.badge')}>
                   <input
                     type="text"
                     value={form.badge}
@@ -325,14 +320,11 @@ export default function AdminPromotionsPage() {
                     }
                     className="admin-input"
                   />
-                </div>
+                </AdminFormField>
               </div>
 
               {/* Description */}
-              <div>
-                <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                  {t('form.description')}
-                </label>
+              <AdminFormField label={t('form.description')}>
                 <textarea
                   value={form.description}
                   onChange={(e) =>
@@ -341,14 +333,11 @@ export default function AdminPromotionsPage() {
                   rows={3}
                   className="admin-input resize-y"
                 />
-              </div>
+              </AdminFormField>
 
               {/* Promo code + Gradient */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                    {t('table.promoCode')}
-                  </label>
+                <AdminFormField label={t('table.promoCode')}>
                   <input
                     type="text"
                     value={form.promo_code}
@@ -358,11 +347,8 @@ export default function AdminPromotionsPage() {
                     placeholder="WELCOME20"
                     className="admin-input font-mono"
                   />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                    {t('form.gradient')}
-                  </label>
+                </AdminFormField>
+                <AdminFormField label={t('form.gradient')}>
                   <input
                     type="text"
                     value={form.gradient}
@@ -372,15 +358,12 @@ export default function AdminPromotionsPage() {
                     placeholder="from-caramel to-caramel-dark"
                     className="admin-input"
                   />
-                </div>
+                </AdminFormField>
               </div>
 
               {/* Valid until + Sort + Active */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                    {t('table.validUntil')}
-                  </label>
+                <AdminFormField label={t('table.validUntil')}>
                   <input
                     type="date"
                     value={form.valid_until}
@@ -389,11 +372,8 @@ export default function AdminPromotionsPage() {
                     }
                     className="admin-input"
                   />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                    {t('form.sortOrder')}
-                  </label>
+                </AdminFormField>
+                <AdminFormField label={t('form.sortOrder')}>
                   <input
                     type="number"
                     value={form.sort_order}
@@ -405,7 +385,7 @@ export default function AdminPromotionsPage() {
                     }
                     className="admin-input"
                   />
-                </div>
+                </AdminFormField>
                 <div className="flex items-end pb-1">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input

@@ -10,6 +10,7 @@ import ConfirmDialog from '@/components/ui/ConfirmDialog'
 import TableSkeleton from '@/components/admin/TableSkeleton'
 import Pagination from '@/components/admin/Pagination'
 import ImageUpload from '@/components/admin/ImageUpload'
+import AdminFormField from '@/components/admin/AdminFormField'
 import type { Partner } from '@/lib/types'
 
 export default function AdminPartnersPage() {
@@ -280,10 +281,7 @@ export default function AdminPartnersPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                  {t('form.name')}
-                </label>
+              <AdminFormField label={t('form.name')} required>
                 <input
                   type="text"
                   value={name}
@@ -291,21 +289,15 @@ export default function AdminPartnersPage() {
                   required
                   className="admin-input"
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                  {t('form.logo')}
-                </label>
+              </AdminFormField>
+              <AdminFormField label={t('form.logo')}>
                 <ImageUpload
                   value={logoUrl || null}
                   onChange={(url) => setLogoUrl(url ?? '')}
                   folder="partners"
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                  {t('form.website')}
-                </label>
+              </AdminFormField>
+              <AdminFormField label={t('form.website')}>
                 <input
                   type="url"
                   value={websiteUrl}
@@ -313,29 +305,23 @@ export default function AdminPartnersPage() {
                   placeholder="https://example.com"
                   className="admin-input"
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                  {t('form.description')}
-                </label>
+              </AdminFormField>
+              <AdminFormField label={t('form.description')}>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={3}
                   className="admin-input w-full resize-y"
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-espresso/70 mb-1.5">
-                  {t('form.sortOrder')}
-                </label>
+              </AdminFormField>
+              <AdminFormField label={t('form.sortOrder')}>
                 <input
                   type="number"
                   value={sortOrder}
                   onChange={(e) => setSortOrder(Number(e.target.value))}
                   className="admin-input"
                 />
-              </div>
+              </AdminFormField>
 
               <div className="flex items-center justify-end gap-3 pt-2">
                 <button
