@@ -190,7 +190,7 @@ export default function Header() {
 
       {/* Mobile dropdown */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden animate-expand bg-espresso-dark/95 backdrop-blur-lg border-t border-white/10">
+        <nav aria-label="Mobile navigation" className="lg:hidden animate-expand bg-espresso-dark/95 backdrop-blur-lg border-t border-white/10">
           <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
             {NAV_KEYS.map((item) => (
               <a
@@ -222,7 +222,7 @@ export default function Header() {
               </button>
             </div>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   )

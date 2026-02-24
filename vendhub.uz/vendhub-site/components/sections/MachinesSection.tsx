@@ -1,68 +1,40 @@
 'use client'
 
 import { useState, useMemo, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Search, X, ChevronDown, LocateFixed, Loader2 } from 'lucide-react'
-import { useLocale, useTranslations } from 'next-intl'
+import { Search, X, LocateFixed, Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { supabase } from '@/lib/supabase'
 import { machines } from '@/lib/data'
 import { useModal } from '@/lib/modal-context'
 import { useGeolocation } from '@/lib/useGeolocation'
-import MachineTypeDetailModal from '@/components/modals/MachineTypeDetailModal'
 import { sortByDistance, formatDistance } from '@/lib/geo'
 import type { MachineWithDistance } from '@/lib/geo'
 import type { MachineTypeDetail } from '@/lib/types'
 import SectionHeader from '@/components/ui/SectionHeader'
-import Card from '@/components/ui/Card'
-import Badge from '@/components/ui/Badge'
 import Pill from '@/components/ui/Pill'
 import LeafletMap from '@/components/map/DynamicMap'
+import MachineCard from '@/components/machines/MachineCard'
+import MachineTypesTab from '@/components/machines/MachineTypesTab'
 
 type Tab = 'map' | 'types'
 type StatusFilter = 'all' | 'online' | 'promo'
 type TypeFilter = 'all' | 'coffee' | 'snack' | 'cold'
-type MachineType = Exclude<TypeFilter, 'all'>
 
-const MACHINE_TYPE_META: Record<
-  MachineType,
-  { emoji: string; imageSrc?: string; imageAlt?: string }
-> = {
-  coffee: {
-    emoji: '\u2615',
-    imageSrc: '/images/machines/coffee-machine.png',
-    imageAlt: 'Coffee machine',
-  },
-  snack: {
-    emoji: '\uD83C\uDF6A',
-    imageSrc: '/images/machines/tcn-csc-8c-v49-hero.jpg',
-    imageAlt: 'Snack machine',
-  },
-  cold: {
-    emoji: '\uD83E\uDDCA',
-    imageSrc: '/images/machines/js-001-a01-hero.jpg',
-    imageAlt: 'Slushy vending machine',
-  },
-}
-
-const MACHINE_DETAIL_ROUTES: Partial<Record<MachineType, string>> = {
-  coffee: '/machines/jq-002-a',
-  snack: '/machines/tcn-csc-8c-v49',
-  cold: '/machines/js-001-a01',
-}
+const MACHINE_TYPE_META = {
+  coffee: { imageSrc: '/images/machines/coffee-machine.png' },
+  snack: { imageSrc: '/images/machines/tcn-csc-8c-v49-hero.jpg' },
+  cold: { imageSrc: '/images/machines/js-001-a01-hero.jpg' },
+} as const
 
 export default function MachinesSection() {
   const { openMachineModal } = useModal()
   const t = useTranslations('machines')
-  const locale = useLocale()
   const geo = useGeolocation()
   const [activeTab, setActiveTab] = useState<Tab>('map')
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all')
   const [sortNearest, setSortNearest] = useState(false)
-  const [expandedAccordion, setExpandedAccordion] = useState<number>(0)
-  const [detailType, setDetailType] = useState<MachineTypeDetail | null>(null)
   const [machineTypes, setMachineTypes] = useState<MachineTypeDetail[]>([])
 
   useEffect(() => {
@@ -84,7 +56,7 @@ export default function MachinesSection() {
         name: t('types.coffeeMachine'),
         model_name: 'JQ-002-A',
         description: '',
-        hero_image_url: MACHINE_TYPE_META.coffee.imageSrc ?? null,
+        hero_image_url: MACHINE_TYPE_META.coffee.imageSrc,
         specs: [
           { label: t('types.dimensions'), value: t('types.dimensionsValue') },
           { label: t('types.display'), value: t('types.displayValue') },
@@ -105,7 +77,7 @@ export default function MachinesSection() {
         name: t('types.snackMachine'),
         model_name: 'TCN CSC-8C(V49)',
         description: '',
-        hero_image_url: MACHINE_TYPE_META.snack.imageSrc ?? null,
+        hero_image_url: MACHINE_TYPE_META.snack.imageSrc,
         specs: [
           { label: t('types.dimensions'), value: t('types.snackDimensionsValue') },
           { label: t('types.display'), value: t('types.snackDisplayValue') },
@@ -126,7 +98,7 @@ export default function MachinesSection() {
         name: t('types.coldDrinks'),
         model_name: 'JS-001-A01',
         description: '',
-        hero_image_url: MACHINE_TYPE_META.cold.imageSrc ?? null,
+        hero_image_url: MACHINE_TYPE_META.cold.imageSrc,
         specs: [
           { label: t('types.dimensions'), value: t('types.coldDimensionsValue') },
           { label: t('types.display'), value: t('types.coldDisplayValue') },
@@ -182,7 +154,6 @@ export default function MachinesSection() {
 
   const filteredMachines: MachineWithDistance[] = useMemo(() => {
     const result = machines.filter((m) => {
-      // Search filter
       if (searchQuery) {
         const q = searchQuery.toLowerCase()
         if (
@@ -192,28 +163,20 @@ export default function MachinesSection() {
           return false
         }
       }
-      // Status filter
       if (statusFilter === 'online' && m.status !== 'online') return false
       if (statusFilter === 'promo' && !m.has_promotion) return false
-      // Type filter
       if (typeFilter !== 'all' && m.type !== typeFilter) return false
       return true
     })
 
-    // Attach distance + sort if user location is available and sort is active
     if (userLocation) {
       const withDist = sortByDistance(result, userLocation.lat, userLocation.lng)
       if (sortNearest) return withDist
-      // Even if not sorting, still attach distance for display
       return withDist
     }
 
     return result
   }, [searchQuery, statusFilter, typeFilter, userLocation, sortNearest])
-
-  const toggleAccordion = (index: number) => {
-    setExpandedAccordion(expandedAccordion === index ? -1 : index)
-  }
 
   return (
     <section id="map" className="section-padding">
@@ -383,90 +346,16 @@ export default function MachinesSection() {
             {/* Machine cards grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredMachines.map((machine) => {
-                const typeMeta = MACHINE_TYPE_META[machine.type as MachineType]
                 const dist = (machine as MachineWithDistance).distance
                 const distFormatted = dist != null ? formatDistance(dist) : null
 
                 return (
-                  <Card
+                  <MachineCard
                     key={machine.id}
-                    hover
+                    machine={machine}
+                    distFormatted={distFormatted}
                     onClick={() => openMachineModal(machine, distFormatted)}
-                  >
-                    <div className="p-4">
-                      {/* Header */}
-                      <div className="flex items-start justify-between mb-2 gap-3">
-                        <div className="flex items-center gap-3 min-w-0">
-                          <div className="relative w-11 h-11 rounded-xl bg-foam border border-espresso/10 overflow-hidden shrink-0">
-                            {machine.image_url ? (
-                              <Image
-                                src={machine.image_url}
-                                alt={machine.name}
-                                fill
-                                sizes="44px"
-                                className="object-cover"
-                              />
-                            ) : typeMeta?.imageSrc ? (
-                              <Image
-                                src={typeMeta.imageSrc}
-                                alt={typeMeta?.imageAlt ?? machine.name}
-                                fill
-                                sizes="44px"
-                                className="object-contain p-1"
-                              />
-                            ) : (
-                              <span className="w-full h-full flex items-center justify-center text-lg">
-                                {typeMeta?.emoji ?? '\u2615'}
-                              </span>
-                            )}
-                          </div>
-                          <h3 className="font-medium text-chocolate truncate">
-                            {machine.name}
-                          </h3>
-                        </div>
-                        <Badge
-                          variant={
-                            machine.status === 'online'
-                              ? 'status-online'
-                              : 'status-offline'
-                          }
-                          className="shrink-0 ml-2"
-                        >
-                          {machine.status === 'online'
-                            ? t('card.online')
-                            : t('card.offline')}
-                        </Badge>
-                      </div>
-
-                      {machine.has_promotion && (
-                        <div className="mb-2">
-                          <Badge variant="promo">{t('card.promotion')}</Badge>
-                        </div>
-                      )}
-
-                      <p className="text-sm text-chocolate/60 mb-3">
-                        {machine.address}
-                      </p>
-
-                      {/* Stats row */}
-                      <div className="text-xs text-chocolate/50 mb-4">
-                        {'\u2B50'} {machine.rating} ({machine.review_count}){' '}
-                        {'\u00B7'} {machine.product_count} {t('card.items')} {'\u00B7'}{' '}
-                        {machine.hours}
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <div className="text-sm text-espresso font-medium">
-                          {t('card.openLocation')}
-                        </div>
-                        {distFormatted && (
-                          <span className="text-xs text-chocolate/40 bg-foam px-2 py-0.5 rounded-full">
-                            {t('card.distance', { distance: distFormatted })}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </Card>
+                  />
                 )
               })}
             </div>
@@ -489,116 +378,9 @@ export default function MachinesSection() {
         )}
 
         {activeTab === 'types' && (
-          <div className="space-y-4 max-w-3xl mx-auto">
-            {resolvedMachineTypes.map((mt, index) => {
-              const fallback = MACHINE_TYPE_META[mt.slug as MachineType]
-              const thumbSrc = mt.hero_image_url || fallback?.imageSrc
-              const machineCount = machines.filter((m) => m.type === mt.slug).length
-              const previewSpecs = (mt.specs || []).slice(0, 4)
-              const detailsHref = MACHINE_DETAIL_ROUTES[mt.slug as MachineType]
-              const hasDetails =
-                Boolean(detailsHref) ||
-                (mt.specs || []).length > 0 ||
-                (mt.advantages || []).length > 0 ||
-                (mt.gallery_images || []).length > 0 ||
-                Boolean(mt.description)
-
-              return (
-                <div key={mt.id} className="bg-white rounded-2xl border border-espresso/5 overflow-hidden">
-                  <button
-                    type="button"
-                    onClick={() => toggleAccordion(index)}
-                    className="w-full flex items-center justify-between p-5 text-left"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="relative w-12 h-12 rounded-xl bg-foam border border-espresso/10 overflow-hidden shrink-0">
-                        {thumbSrc ? (
-                          <Image
-                            src={thumbSrc}
-                            alt={mt.name}
-                            fill
-                            sizes="48px"
-                            className="object-contain p-1.5"
-                          />
-                        ) : (
-                          <span className="w-full h-full flex items-center justify-center text-lg">
-                            {fallback?.emoji ?? '\u2615'}
-                          </span>
-                        )}
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-chocolate">{mt.name}</h3>
-                        <p className="text-sm text-chocolate/50">
-                          {mt.model_name ?? ''}
-                          {mt.model_name && machineCount > 0 ? ' · ' : ''}
-                          {machineCount > 0 ? t('types.count', { count: machineCount }) : ''}
-                        </p>
-                      </div>
-                      {mt.badge && (
-                        <Badge variant="new" className="ml-2">
-                          {mt.badge}
-                        </Badge>
-                      )}
-                    </div>
-                    <ChevronDown
-                      size={20}
-                      className={[
-                        'text-chocolate/30 transition-transform duration-300',
-                        expandedAccordion === index ? 'rotate-180' : '',
-                      ].join(' ')}
-                    />
-                  </button>
-                  {expandedAccordion === index && (
-                    <div className="px-5 pb-5 animate-expand overflow-hidden">
-                      <div className="border-t border-espresso/5 pt-4 space-y-3 text-sm text-chocolate/70">
-                        {previewSpecs.length > 0 ? (
-                          <>
-                            {previewSpecs.map((spec, si) => (
-                              <div key={si}>
-                                <span className="font-medium text-chocolate">{spec.label}</span>{' '}
-                                {spec.value}
-                              </div>
-                            ))}
-                            {hasDetails && (
-                              <div className="pt-2">
-                                {detailsHref ? (
-                                  <Link
-                                    href={`/${locale}${detailsHref}`}
-                                    className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
-                                  >
-                                    {t('types.viewDetails')}
-                                  </Link>
-                                ) : (
-                                  <button
-                                    type="button"
-                                    onClick={() => setDetailType(mt)}
-                                    className="inline-block text-sm font-medium text-espresso hover:text-espresso-dark transition-colors"
-                                  >
-                                    {t('types.viewDetails')}
-                                  </button>
-                                )}
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          <span className="text-chocolate/50">{t('types.infoSoon')}</span>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
+          <MachineTypesTab machineTypes={resolvedMachineTypes} />
         )}
       </div>
-
-      {detailType && (
-        <MachineTypeDetailModal
-          machineType={detailType}
-          onClose={() => setDetailType(null)}
-        />
-      )}
     </section>
   )
 }

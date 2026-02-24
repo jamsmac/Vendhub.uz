@@ -1,0 +1,117 @@
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import Card from '@/components/ui/Card'
+import Badge from '@/components/ui/Badge'
+import type { Machine } from '@/lib/types'
+
+type MachineType = 'coffee' | 'snack' | 'cold'
+
+const MACHINE_TYPE_META: Record<
+  MachineType,
+  { emoji: string; imageSrc?: string; imageAlt?: string }
+> = {
+  coffee: {
+    emoji: '\u2615',
+    imageSrc: '/images/machines/coffee-machine.png',
+    imageAlt: 'Coffee machine',
+  },
+  snack: {
+    emoji: '\uD83C\uDF6A',
+    imageSrc: '/images/machines/tcn-csc-8c-v49-hero.jpg',
+    imageAlt: 'Snack machine',
+  },
+  cold: {
+    emoji: '\uD83E\uDDCA',
+    imageSrc: '/images/machines/js-001-a01-hero.jpg',
+    imageAlt: 'Slushy vending machine',
+  },
+}
+
+interface MachineCardProps {
+  machine: Machine
+  distFormatted: string | null
+  onClick: () => void
+}
+
+export default function MachineCard({ machine, distFormatted, onClick }: MachineCardProps) {
+  const t = useTranslations('machines')
+  const typeMeta = MACHINE_TYPE_META[machine.type as MachineType]
+
+  return (
+    <Card hover onClick={onClick}>
+      <div className="p-4">
+        {/* Header */}
+        <div className="flex items-start justify-between mb-2 gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="relative w-11 h-11 rounded-xl bg-foam border border-espresso/10 overflow-hidden shrink-0">
+              {machine.image_url ? (
+                <Image
+                  src={machine.image_url}
+                  alt={machine.name}
+                  fill
+                  sizes="44px"
+                  className="object-cover"
+                />
+              ) : typeMeta?.imageSrc ? (
+                <Image
+                  src={typeMeta.imageSrc}
+                  alt={typeMeta?.imageAlt ?? machine.name}
+                  fill
+                  sizes="44px"
+                  className="object-contain p-1"
+                />
+              ) : (
+                <span className="w-full h-full flex items-center justify-center text-lg">
+                  {typeMeta?.emoji ?? '\u2615'}
+                </span>
+              )}
+            </div>
+            <h3 className="font-medium text-chocolate truncate">
+              {machine.name}
+            </h3>
+          </div>
+          <Badge
+            variant={
+              machine.status === 'online'
+                ? 'status-online'
+                : 'status-offline'
+            }
+            className="shrink-0 ml-2"
+          >
+            {machine.status === 'online'
+              ? t('card.online')
+              : t('card.offline')}
+          </Badge>
+        </div>
+
+        {machine.has_promotion && (
+          <div className="mb-2">
+            <Badge variant="promo">{t('card.promotion')}</Badge>
+          </div>
+        )}
+
+        <p className="text-sm text-chocolate/60 mb-3">
+          {machine.address}
+        </p>
+
+        {/* Stats row */}
+        <div className="text-xs text-chocolate/50 mb-4">
+          {'\u2B50'} {machine.rating} ({machine.review_count}){' '}
+          {'\u00B7'} {machine.product_count} {t('card.items')} {'\u00B7'}{' '}
+          {machine.hours}
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-espresso font-medium">
+            {t('card.openLocation')}
+          </div>
+          {distFormatted && (
+            <span className="text-xs text-chocolate/40 bg-foam px-2 py-0.5 rounded-full">
+              {t('card.distance', { distance: distFormatted })}
+            </span>
+          )}
+        </div>
+      </div>
+    </Card>
+  )
+}
