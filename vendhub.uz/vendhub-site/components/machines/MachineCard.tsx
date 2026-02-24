@@ -3,29 +3,7 @@ import { useTranslations } from 'next-intl'
 import Card from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
 import type { Machine } from '@/lib/types'
-
-type MachineType = 'coffee' | 'snack' | 'cold'
-
-const MACHINE_TYPE_META: Record<
-  MachineType,
-  { emoji: string; imageSrc?: string; imageAlt?: string }
-> = {
-  coffee: {
-    emoji: '\u2615',
-    imageSrc: '/images/machines/coffee-machine.png',
-    imageAlt: 'Coffee machine',
-  },
-  snack: {
-    emoji: '\uD83C\uDF6A',
-    imageSrc: '/images/machines/tcn-csc-8c-v49-hero.jpg',
-    imageAlt: 'Snack machine',
-  },
-  cold: {
-    emoji: '\uD83E\uDDCA',
-    imageSrc: '/images/machines/js-001-a01-hero.jpg',
-    imageAlt: 'Slushy vending machine',
-  },
-}
+import { MACHINE_TYPE_META, type MachineType } from '@/lib/machineTypeMeta'
 
 interface MachineCardProps {
   machine: Machine
@@ -55,7 +33,7 @@ export default function MachineCard({ machine, distFormatted, onClick }: Machine
               ) : typeMeta?.imageSrc ? (
                 <Image
                   src={typeMeta.imageSrc}
-                  alt={typeMeta?.imageAlt ?? machine.name}
+                  alt={t(`typeAlt.${machine.type}`)}
                   fill
                   sizes="44px"
                   className="object-contain p-1"

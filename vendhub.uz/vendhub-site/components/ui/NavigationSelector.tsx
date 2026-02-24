@@ -82,6 +82,9 @@ export default function NavigationSelector({
       onClick={onClose}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="nav-selector-title"
         className="w-full sm:max-w-sm bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl animate-slideUp"
         onClick={(e) => e.stopPropagation()}
       >
@@ -89,11 +92,12 @@ export default function NavigationSelector({
         <div className="flex items-center justify-between p-4 border-b border-espresso/10">
           <div className="flex items-center gap-2">
             <Navigation size={18} className="text-espresso" />
-            <h3 className="font-medium text-chocolate">{t('title')}</h3>
+            <h3 id="nav-selector-title" className="font-medium text-chocolate">{t('title')}</h3>
           </div>
           <button
             type="button"
             onClick={onClose}
+            aria-label={t('close')}
             className="p-1 rounded-lg hover:bg-foam transition-colors"
           >
             <X size={18} className="text-chocolate/40" />

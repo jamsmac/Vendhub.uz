@@ -186,6 +186,11 @@
       "viewDetails": "Model haqida batafsil →",
       "infoSoon": "Ma'lumot tez kunda mavjud bo'ladi"
     },
+    "typeAlt": {
+      "coffee": "Kofe avtomati",
+      "snack": "Gazak avtomati",
+      "cold": "Sovuq ichimliklar avtomati"
+    },
     "detail": {
       "specs": "Texnik xususiyatlari",
       "advantages": "Asosiy afzalliklar",
@@ -388,6 +393,7 @@
   "navigation": {
     "title": "Yo'nalish qurish",
     "subtitle": "Navigatorni tanlang",
+    "close": "Yopish",
     "googleMaps": "Google Maps",
     "yandexMaps": "Yandex Xaritalar",
     "twoGis": "2GIS",

@@ -9,6 +9,7 @@ import { useGeolocation } from '@/lib/useGeolocation'
 import { sortByDistance, formatDistance } from '@/lib/geo'
 import type { MachineWithDistance } from '@/lib/geo'
 import type { MachineTypeDetail } from '@/lib/types'
+import { MACHINE_TYPE_META } from '@/lib/machineTypeMeta'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Pill from '@/components/ui/Pill'
 import LeafletMap from '@/components/map/DynamicMap'
@@ -18,12 +19,6 @@ import MachineTypesTab from '@/components/machines/MachineTypesTab'
 type Tab = 'map' | 'types'
 type StatusFilter = 'all' | 'online' | 'promo'
 type TypeFilter = 'all' | 'coffee' | 'snack' | 'cold'
-
-const MACHINE_TYPE_META = {
-  coffee: { imageSrc: '/images/machines/coffee-machine.png' },
-  snack: { imageSrc: '/images/machines/tcn-csc-8c-v49-hero.jpg' },
-  cold: { imageSrc: '/images/machines/js-001-a01-hero.jpg' },
-} as const
 
 interface MachinesSectionProps {
   initialMachines: Machine[]
