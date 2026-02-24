@@ -24,16 +24,7 @@ function createMachineIcon(status: string) {
     iconSize: [36, 36],
     iconAnchor: [18, 18],
     popupAnchor: [0, -20],
-    html: `<div style="
-      width:36px;height:36px;border-radius:50%;
-      background:${color};border:3px solid white;
-      box-shadow:0 2px 8px rgba(0,0,0,0.25);
-      display:flex;align-items:center;justify-content:center;
-      font-size:16px;cursor:pointer;
-      transition:transform 0.15s ease;
-    " onmouseenter="this.style.transform='scale(1.2)'"
-       onmouseleave="this.style.transform='scale(1)'"
-    >☕</div>`,
+    html: `<div class="leaflet-machine-pin" style="background:${color}">☕</div>`,
   })
 }
 
@@ -75,19 +66,7 @@ const USER_ICON = L.divIcon({
   className: '',
   iconSize: [20, 20],
   iconAnchor: [10, 10],
-  html: `<div style="
-    width:20px;height:20px;border-radius:50%;
-    background:#4285F4;border:3px solid white;
-    box-shadow:0 0 0 0 rgba(66,133,244,0.4),0 2px 6px rgba(0,0,0,0.25);
-    animation:userPulse 2s ease-out infinite;
-  "></div>
-  <style>
-    @keyframes userPulse {
-      0% { box-shadow:0 0 0 0 rgba(66,133,244,0.4),0 2px 6px rgba(0,0,0,0.25); }
-      70% { box-shadow:0 0 0 20px rgba(66,133,244,0),0 2px 6px rgba(0,0,0,0.25); }
-      100% { box-shadow:0 0 0 0 rgba(66,133,244,0),0 2px 6px rgba(0,0,0,0.25); }
-    }
-  </style>`,
+  html: `<div class="leaflet-user-pin"></div>`,
 })
 
 interface LeafletMapProps {

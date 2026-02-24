@@ -23,22 +23,22 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('#home')
   const headerRef = useRef<HTMLElement>(null)
+  const isMobileMenuOpenRef = useRef(isMobileMenuOpen)
+  isMobileMenuOpenRef.current = isMobileMenuOpen
   const { showToast } = useToast()
 
   // Track scroll position
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
-
-      // Close mobile menu on scroll
-      if (isMobileMenuOpen) {
+      if (isMobileMenuOpenRef.current) {
         setIsMobileMenuOpen(false)
       }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [isMobileMenuOpen])
+  }, [])
 
   // Track active section with IntersectionObserver
   useEffect(() => {

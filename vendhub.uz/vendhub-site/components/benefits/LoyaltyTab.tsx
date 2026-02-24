@@ -164,14 +164,16 @@ export default async function LoyaltyTab() {
           </h3>
         </div>
         <table className="w-full text-sm">
+          <caption className="sr-only">{t('privileges.title')}</caption>
           <thead>
             <tr className="border-t border-espresso/5">
-              <th className="text-left px-5 py-3 text-chocolate/50 font-medium">
+              <th scope="col" className="text-left px-5 py-3 text-chocolate/50 font-medium">
                 {t('privileges.header')}
               </th>
               {sortedTiers.map((tier) => (
                 <th
                   key={tier.id}
+                  scope="col"
                   className="text-center px-3 py-3 text-chocolate/70 font-medium"
                 >
                   {tier.emoji} {tier.level}

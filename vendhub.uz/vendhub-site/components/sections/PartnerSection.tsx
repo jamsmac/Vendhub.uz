@@ -89,7 +89,8 @@ export default function PartnerSection() {
         // fall through to i18n
       }
     }
-    return t.raw(`models.${key}.benefits`) as string[]
+    const i18nRaw = t.raw(`models.${key}.benefits`)
+    return Array.isArray(i18nRaw) ? i18nRaw : []
   }
 
   return (

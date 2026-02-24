@@ -25,7 +25,7 @@ export default async function AboutSection() {
       icon: Phone,
       label: t('contacts.phone'),
       value: getContent('phone'),
-      href: `tel:${getContent('phone').replace(/\s/g, '')}`,
+      href: `tel:${getContent('phone').replace(/[^\d+]/g, '')}`,
       accent: 'bg-mint/10',
       accentText: 'text-mint',
     },

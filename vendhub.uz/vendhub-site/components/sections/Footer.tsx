@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
+import { getLocale } from 'next-intl/server'
 
 const NAV_KEYS = [
   { key: 'home' as const, href: '#home' },
@@ -58,6 +59,8 @@ const SOCIALS = [
 export default async function Footer() {
   const t = await getTranslations('footer')
   const nav = await getTranslations('nav')
+  const header = await getTranslations('header')
+  const locale = await getLocale()
 
   return (
     <footer className="bg-espresso-dark text-white/60 pt-16 pb-8">
@@ -79,7 +82,7 @@ export default async function Footer() {
                   VendHub
                 </span>
                 <span className="text-cream/60 text-xs block leading-tight">
-                  Coffee & Snacks
+                  {header('brandTagline')}
                 </span>
               </div>
             </div>
@@ -167,11 +170,11 @@ export default async function Footer() {
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
           <p>{t('copyright', { year: new Date().getFullYear() })}</p>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-white transition-colors">
+            <a href={`/${locale === 'uz' ? 'uz/' : ''}privacy`} className="hover:text-white transition-colors">
               {t('privacy')}
             </a>
             <span className="text-white/20">|</span>
-            <a href="#" className="hover:text-white transition-colors">
+            <a href={`/${locale === 'uz' ? 'uz/' : ''}terms`} className="hover:text-white transition-colors">
               {t('terms')}
             </a>
           </div>

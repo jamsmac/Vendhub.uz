@@ -32,8 +32,19 @@ export default function PromotionsTab() {
     .filter((p) => p.is_active)
     .sort((a, b) => a.sort_order - b.sort_order)
 
-  function copyPromoCode(code: string) {
-    navigator.clipboard.writeText(code)
+  async function copyPromoCode(code: string) {
+    try {
+      await navigator.clipboard.writeText(code)
+    } catch {
+      const ta = document.createElement('textarea')
+      ta.value = code
+      ta.style.position = 'fixed'
+      ta.style.opacity = '0'
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand('copy')
+      document.body.removeChild(ta)
+    }
     showToast(t('copied'), 'success')
   }
 
