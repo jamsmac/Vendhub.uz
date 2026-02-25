@@ -62,7 +62,7 @@ export default function PopularProducts() {
                       className="object-cover"
                     />
                   ) : (
-                    <span className="text-4xl">{emoji}</span>
+                    <span className="text-4xl" role="img" aria-label={productName}>{emoji}</span>
                   )}
 
                   {/* Rating badge */}

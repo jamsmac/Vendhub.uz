@@ -22,7 +22,7 @@ export default function Card({
       className={[
         'coffee-card',
         hover ? 'hover-lift' : '',
-        isInteractive ? 'cursor-pointer' : '',
+        isInteractive ? 'cursor-pointer focus-visible:ring-2 focus-visible:ring-espresso/40 focus-visible:outline-none' : '',
         className,
       ]
         .filter(Boolean)

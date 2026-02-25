@@ -22,17 +22,25 @@ export default function PromotionsTab({ promotions }: { promotions: Promotion[] 
   async function copyPromoCode(code: string) {
     try {
       await navigator.clipboard.writeText(code)
-    } catch {
-      const ta = document.createElement('textarea')
-      ta.value = code
-      ta.style.position = 'fixed'
-      ta.style.opacity = '0'
-      document.body.appendChild(ta)
-      ta.select()
-      document.execCommand('copy')
-      document.body.removeChild(ta)
+      showToast(t('copied'), 'success')
+    } catch (error: unknown) {
+      // Fallback for older browsers / insecure contexts
+      try {
+        const ta = document.createElement('textarea')
+        ta.value = code
+        ta.style.position = 'fixed'
+        ta.style.opacity = '0'
+        document.body.appendChild(ta)
+        ta.select()
+        const ok = document.execCommand('copy')
+        document.body.removeChild(ta)
+        if (ok) {
+          showToast(t('copied'), 'success')
+        }
+      } catch {
+        // Both methods failed — silently ignore
+      }
     }
-    showToast(t('copied'), 'success')
   }
 
   function toggleExpand(id: string) {

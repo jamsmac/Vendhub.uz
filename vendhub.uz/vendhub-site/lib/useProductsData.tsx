@@ -8,6 +8,7 @@ import type { Product } from '@/lib/types'
 interface ProductsContextValue {
   products: Product[]
   loading: boolean
+  isFallback: boolean
 }
 
 const ProductsContext = createContext<ProductsContextValue | null>(null)
@@ -15,6 +16,7 @@ const ProductsContext = createContext<ProductsContextValue | null>(null)
 export function ProductsProvider({ children, initialProducts }: { children: ReactNode; initialProducts?: Product[] }) {
   const [products, setProducts] = useState<Product[]>(initialProducts ?? fallbackProducts)
   const [loading, setLoading] = useState(!initialProducts?.length)
+  const [isFallback, setIsFallback] = useState(!initialProducts?.length)
 
   useEffect(() => {
     let active = true
@@ -29,8 +31,10 @@ export function ProductsProvider({ children, initialProducts }: { children: Reac
 
       if (error || !data) {
         console.error('Products fetch failed:', error?.message)
+        setIsFallback(true)
       } else {
         setProducts(data as Product[])
+        setIsFallback(false)
       }
 
       setLoading(false)
@@ -60,7 +64,7 @@ export function ProductsProvider({ children, initialProducts }: { children: Reac
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <ProductsContext.Provider value={{ products, loading }}>
+    <ProductsContext.Provider value={{ products, loading, isFallback }}>
       {children}
     </ProductsContext.Provider>
   )

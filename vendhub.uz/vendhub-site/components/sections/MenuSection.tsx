@@ -194,7 +194,7 @@ export default function MenuSection() {
                         className="object-cover"
                       />
                     ) : (
-                      <span className="text-5xl">{emoji}</span>
+                      <span className="text-5xl" role="img" aria-label={productName}>{emoji}</span>
                     )}
 
                     {/* Top-left badges */}
