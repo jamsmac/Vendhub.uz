@@ -101,7 +101,7 @@
 
   "menu": {
     "title": "Bizning menyu",
-    "itemsOf": "{total} dan {filtered} ta pozitsiya",
+    "itemsOf": "{total} tadan {filtered} ta pozitsiya",
     "items": "{count} ta pozitsiya",
     "categories": {
       "all": "Barchasi",
@@ -156,7 +156,7 @@
       "online": "Ishlaydi",
       "offline": "Ishlamaydi",
       "promotion": "Aksiya",
-      "items": " ta pozitsiya",
+      "items": "ta pozitsiya",
       "openLocation": "Joylashuvni ochish",
       "distance": "{distance}"
     },
@@ -1015,7 +1015,7 @@
       "add": "Amal qo'shish",
       "tabs": {
         "all": "Barchasi",
-        "earn": "Ishlash",
+        "earn": "To'plash",
         "spend": "Sarflash"
       },
       "count": "{count} ta amal",
@@ -1028,7 +1028,7 @@
         "sort": "Tartib",
         "actions": "Amallar"
       },
-      "typeEarn": "Ishlash",
+      "typeEarn": "To'plash",
       "typeSpend": "Sarflash",
       "activeYes": "Ha",
       "activeNo": "Yo'q",
