@@ -16,7 +16,7 @@ import {
   Check,
   X,
 } from 'lucide-react'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getLocale } from 'next-intl/server'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import { supabase } from '@/lib/supabase'
@@ -27,6 +27,7 @@ import {
 } from '@/lib/data'
 import type { LoyaltyTier, BonusAction, LoyaltyPrivilege } from '@/lib/types'
 import { formatPrice } from '@/lib/utils'
+import { localized } from '@/lib/localize'
 
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Coffee, Cake, UserPlus, ShoppingCart, Gift, Star, Send, Phone,
@@ -40,6 +41,7 @@ function DynamicIcon({ name, size = 20, className }: { name: string; size?: numb
 
 export default async function LoyaltyTab() {
   const t = await getTranslations('loyalty')
+  const locale = await getLocale()
 
   // Fetch all data in parallel
   const [tiersRes, actionsRes, privsRes] = await Promise.all([
@@ -129,7 +131,7 @@ export default async function LoyaltyTab() {
                       key={priv.id}
                       className="flex items-center justify-between text-sm"
                     >
-                      <span className="text-chocolate/70">{priv.label}</span>
+                      <span className="text-chocolate/70">{localized(priv, 'label', locale)}</span>
                       {typeof val === 'number' ? (
                         val > 0 ? (
                           <span className="text-espresso font-medium">
@@ -184,7 +186,7 @@ export default async function LoyaltyTab() {
                   key={priv.id}
                   className="border-t border-espresso/5 hover:bg-foam/50 transition-colors"
                 >
-                  <td className="px-5 py-3 text-chocolate/70">{priv.label}</td>
+                  <td className="px-5 py-3 text-chocolate/70">{localized(priv, 'label', locale)}</td>
                   {sortedTiers.map((tier) => {
                     const val = tier.privileges[priv.key]
                     return (
@@ -226,10 +228,10 @@ export default async function LoyaltyTab() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-chocolate">
-                    {action.title}
+                    {localized(action, 'title', locale)}
                   </p>
                   {action.description && (
-                    <p className="text-xs text-chocolate/50">{action.description}</p>
+                    <p className="text-xs text-chocolate/50">{localized(action, 'description', locale)}</p>
                   )}
                 </div>
                 {action.points_amount && (
@@ -255,9 +257,9 @@ export default async function LoyaltyTab() {
                 <div className="w-12 h-12 rounded-xl bg-caramel/10 flex items-center justify-center mx-auto mb-3">
                   <DynamicIcon name={action.icon} size={24} className="text-caramel" />
                 </div>
-                <p className="font-medium text-chocolate">{action.title}</p>
+                <p className="font-medium text-chocolate">{localized(action, 'title', locale)}</p>
                 {action.description && (
-                  <p className="text-xs text-chocolate/50 mt-1">{action.description}</p>
+                  <p className="text-xs text-chocolate/50 mt-1">{localized(action, 'description', locale)}</p>
                 )}
               </Card>
             ))}

@@ -107,7 +107,9 @@ export interface Promotion {
 export interface BonusAction {
   id: string
   title: string
+  title_uz?: string | null
   description: string
+  description_uz?: string | null
   icon: string
   points_amount: string
   type: 'earn' | 'spend'
@@ -121,6 +123,7 @@ export interface LoyaltyPrivilege {
   id: string
   key: string
   label: string
+  label_uz?: string | null
   is_active: boolean
   sort_order: number
   created_at: string
