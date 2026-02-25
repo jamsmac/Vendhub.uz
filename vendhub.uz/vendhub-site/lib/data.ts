@@ -26,6 +26,7 @@ export const products: Product[] = [
   {
     id: 'prod-espresso',
     name: 'Espresso',
+    name_uz: 'Espresso',
     price: 20000,
     category: 'coffee',
     temperature: 'hot',
@@ -33,6 +34,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Классический крепкий эспрессо',
+    description_uz: 'Klassik kuchli espresso',
+    detail_description: '100% арабика. Концентрированный кофе, приготовленный под высоким давлением. Насыщенный вкус с плотной крема-пенкой.',
+    detail_description_uz: '100% arabika. Yuqori bosim ostida tayyorlangan konsentrlangan qahva. Boy ta\'m va qalin krema ko\'pik bilan.',
+    calories: 5,
     rating: 4.8,
     options: [
       { name: 'С сахаром', price: 0, temperature: 'hot' },
@@ -47,6 +52,7 @@ export const products: Product[] = [
   {
     id: 'prod-americano',
     name: 'Americano',
+    name_uz: 'Americano',
     price: 20000,
     category: 'coffee',
     temperature: 'both',
@@ -54,6 +60,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Эспрессо с горячей водой',
+    description_uz: 'Espresso issiq suv bilan',
+    detail_description: 'Эспрессо, разбавленный горячей водой. Мягкий вкус с лёгкой кислинкой. Доступен с сахаром, ванильным и карамельным сиропом.',
+    detail_description_uz: 'Issiq suv bilan suyultirilgan espresso. Engil nordonlik bilan yumshoq ta\'m. Shakar, vanil va karamel siropi bilan mavjud.',
+    calories: 15,
     rating: 4.7,
     options: [
       { name: 'С сахаром', price: 0, temperature: 'hot' },
@@ -73,6 +83,7 @@ export const products: Product[] = [
   {
     id: 'prod-cappuccino',
     name: 'Cappuccino',
+    name_uz: 'Cappuccino',
     price: 20000,
     category: 'coffee',
     temperature: 'both',
@@ -80,6 +91,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Эспрессо с молочной пенкой',
+    description_uz: 'Espresso sutli ko\'pik bilan',
+    detail_description: 'Эспрессо с пышной молочной пенкой в пропорции 1:1:1. Нежный, сливочный вкус. Выбирайте классический, ванильный, карамельный или кокосовый.',
+    detail_description_uz: '1:1:1 nisbatda sut ko\'pigi bilan espresso. Nozik, kremli ta\'m. Klassik, vanil, karamel yoki kokos turini tanlang.',
+    calories: 120,
     rating: 4.9,
     options: [
       { name: 'С сахаром', price: 0, temperature: 'hot' },
@@ -101,6 +116,7 @@ export const products: Product[] = [
   {
     id: 'prod-latte',
     name: 'Latte',
+    name_uz: 'Latte',
     price: 20000,
     category: 'coffee',
     temperature: 'both',
@@ -108,6 +124,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Эспрессо с большим количеством молока',
+    description_uz: 'Espresso ko\'p miqdorda sut bilan',
+    detail_description: 'Эспрессо с большим количеством вспененного молока. Мягкий, молочный вкус идеален для тех, кто любит кофе не слишком крепким.',
+    detail_description_uz: 'Ko\'p miqdorda ko\'pikli sut bilan espresso. Yumshoq, sutli ta\'m — kuchli bo\'lmagan qahvani yaxshi ko\'ruvchilar uchun ideal.',
+    calories: 150,
     rating: 4.8,
     options: [
       { name: 'С сахаром', price: 0, temperature: 'hot' },
@@ -129,6 +149,7 @@ export const products: Product[] = [
   {
     id: 'prod-flat-white',
     name: 'Flat White',
+    name_uz: 'Flat White',
     price: 25000,
     category: 'coffee',
     temperature: 'hot',
@@ -136,6 +157,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Двойной эспрессо с бархатистым молоком',
+    description_uz: 'Ikki espresso baxmal sut bilan',
+    detail_description: 'Двойной эспрессо с тонким слоем бархатистого молока. Более крепкий и кофейный, чем латте.',
+    detail_description_uz: 'Yupqa baxmal sut qatlami bilan ikki espresso. Lattega qaraganda kuchliroq va qahvali.',
+    calories: 120,
     rating: 4.7,
     options: [
       { name: 'Flat White', price: 0, temperature: 'hot' },
@@ -149,6 +174,7 @@ export const products: Product[] = [
   {
     id: 'prod-maccoffee',
     name: 'MacCoffee 3-in-1',
+    name_uz: 'MacCoffee 3-in-1',
     price: 10000,
     category: 'coffee',
     temperature: 'hot',
@@ -156,6 +182,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Растворимый кофе 3-в-1',
+    description_uz: 'Tezkor qahva 3-in-1',
+    detail_description: 'Растворимый кофе с сухим молоком и сахаром. Быстро и удобно — готов за 30 секунд.',
+    detail_description_uz: 'Quruq sut va shakar bilan tezkor qahva. Tez va qulay — 30 soniyada tayyor.',
+    calories: 90,
     rating: 4.2,
     options: [
       { name: 'MacCoffee 3-in-1', price: 0, temperature: 'hot' },
@@ -169,6 +199,7 @@ export const products: Product[] = [
   {
     id: 'prod-ice-latte',
     name: 'Ice Latte',
+    name_uz: 'Ice Latte',
     price: 20000,
     category: 'coffee',
     temperature: 'cold',
@@ -176,6 +207,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Холодный латте со льдом',
+    description_uz: 'Muzli sovuq latte',
+    detail_description: 'Холодный латте со льдом. Освежающий кофейный напиток с молоком. Доступен без сахара, ванильный, карамельный и кокосовый.',
+    detail_description_uz: 'Muzli sovuq latte. Sut bilan tetiklantiruvchi qahva ichimligi. Shakarsiz, vanil, karamel va kokos turlarida mavjud.',
+    calories: 140,
     rating: 4.8,
     options: [
       { name: 'Без сахара', price: 0, temperature: 'cold' },
@@ -192,6 +227,7 @@ export const products: Product[] = [
   {
     id: 'prod-ice-americano',
     name: 'Ice Americano',
+    name_uz: 'Ice Americano',
     price: 20000,
     category: 'coffee',
     temperature: 'cold',
@@ -199,6 +235,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Холодный американо со льдом',
+    description_uz: 'Muzli sovuq americano',
+    detail_description: 'Холодный американо со льдом. Чистый кофейный вкус без молока. Доступен без сахара, ванильный и карамельный.',
+    detail_description_uz: 'Muzli sovuq americano. Sutsiz sof qahva ta\'mi. Shakarsiz, vanil va karamel turlarida mavjud.',
+    calories: 10,
     rating: 4.6,
     options: [
       { name: 'Без сахара', price: 0, temperature: 'cold' },
@@ -215,6 +255,7 @@ export const products: Product[] = [
   {
     id: 'prod-tea-lemon',
     name: 'Чай с лимоном',
+    name_uz: 'Limonli choy',
     price: 10000,
     category: 'tea',
     temperature: 'hot',
@@ -222,6 +263,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Чёрный чай с лимоном',
+    description_uz: 'Limonli qora choy',
+    detail_description: 'Чёрный чай с натуральным лимоном. Классический согревающий напиток с приятной цитрусовой кислинкой.',
+    detail_description_uz: 'Tabiiy limon bilan qora choy. Yoqimli sitrus nordonligi bilan klassik isituvchi ichimlik.',
+    calories: 25,
     rating: 4.5,
     options: [
       { name: 'Чай с лимоном', price: 0, temperature: 'hot' },
@@ -235,6 +280,7 @@ export const products: Product[] = [
   {
     id: 'prod-tea-fruit',
     name: 'Чай фруктовый',
+    name_uz: 'Mevali choy',
     price: 15000,
     category: 'tea',
     temperature: 'hot',
@@ -242,6 +288,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Ароматный фруктовый чай',
+    description_uz: 'Xushbo\'y mevali choy',
+    detail_description: 'Ароматный фруктовый чай из натуральных ингредиентов. Яркий вкус ягод и фруктов без кофеина.',
+    detail_description_uz: 'Tabiiy ingrediyentlardan xushbo\'y mevali choy. Kofeinsiz mevalar va rezavorlarning yorqin ta\'mi.',
+    calories: 35,
     rating: 4.4,
     options: [
       { name: 'Чай фруктовый', price: 0, temperature: 'hot' },
@@ -255,6 +305,7 @@ export const products: Product[] = [
   {
     id: 'prod-matcha-latte',
     name: 'Matcha Latte',
+    name_uz: 'Matcha Latte',
     price: 30000,
     category: 'tea',
     temperature: 'both',
@@ -262,6 +313,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Японский чай матча с молоком',
+    description_uz: 'Yaponiya matcha choyi sut bilan',
+    detail_description: 'Японский зелёный чай матча, взбитый с молоком. Кремовый вкус с лёгкой горчинкой и высоким содержанием антиоксидантов.',
+    detail_description_uz: 'Sut bilan ko\'pirilgan yapon yashil matcha choyi. Engil achchiqlik va yuqori antioksidant tarkibi bilan kremli ta\'m.',
+    calories: 160,
     rating: 4.6,
     options: [
       { name: 'Matcha Latte', price: 0, temperature: 'hot' },
@@ -277,6 +332,7 @@ export const products: Product[] = [
   {
     id: 'prod-cocoa',
     name: 'Какао',
+    name_uz: 'Kakao',
     price: 15000,
     category: 'other',
     temperature: 'hot',
@@ -284,6 +340,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Горячее какао с молоком',
+    description_uz: 'Sutli issiq kakao',
+    detail_description: 'Горячее какао с молоком. Насыщенный шоколадный вкус, идеален в холодную погоду.',
+    detail_description_uz: 'Sutli issiq kakao. Boy shokolad ta\'mi, sovuq ob-havoda ideal.',
+    calories: 190,
     rating: 4.5,
     options: [
       { name: 'Какао', price: 0, temperature: 'hot' },
@@ -297,6 +357,7 @@ export const products: Product[] = [
   {
     id: 'prod-ice',
     name: 'Лёд',
+    name_uz: 'Muz',
     price: 10000,
     category: 'other',
     temperature: 'cold',
@@ -304,6 +365,10 @@ export const products: Product[] = [
     available: true,
     image_url: null,
     description: 'Порция льда',
+    description_uz: 'Bir porsiya muz',
+    detail_description: 'Порция кубиков льда для любого напитка. Добавьте в кофе, чай или воду.',
+    detail_description_uz: 'Har qanday ichimlik uchun muz bo\'laklari porsiyasi. Qahva, choy yoki suvga qo\'shing.',
+    calories: 0,
     rating: 4.0,
     options: [
       { name: 'Лёд', price: 0, temperature: 'cold' },
@@ -319,6 +384,7 @@ export const products: Product[] = [
   {
     id: 'prod-water',
     name: 'Вода',
+    name_uz: 'Suv',
     price: 5000,
     category: 'snack',
     temperature: 'cold',
@@ -326,6 +392,10 @@ export const products: Product[] = [
     available: false,
     image_url: null,
     description: 'Питьевая вода',
+    description_uz: 'Ichimlik suvi',
+    detail_description: 'Чистая питьевая вода. Освежает и утоляет жажду.',
+    detail_description_uz: 'Toza ichimlik suvi. Tetiklantiradi va chanqoqni qondiradi.',
+    calories: 0,
     rating: 4.3,
     options: [
       { name: 'Вода', price: 0, temperature: 'cold' },
@@ -339,6 +409,7 @@ export const products: Product[] = [
   {
     id: 'prod-cola',
     name: 'Кола',
+    name_uz: 'Kola',
     price: 8000,
     category: 'snack',
     temperature: 'cold',
@@ -346,6 +417,10 @@ export const products: Product[] = [
     available: false,
     image_url: null,
     description: 'Газированный напиток',
+    description_uz: 'Gazlangan ichimlik',
+    detail_description: 'Классический газированный напиток. Охлаждённый, с насыщенным вкусом.',
+    detail_description_uz: 'Klassik gazlangan ichimlik. Sovutilgan, boy ta\'m bilan.',
+    calories: 139,
     rating: 4.4,
     options: [
       { name: 'Кола', price: 0, temperature: 'cold' },
@@ -359,6 +434,7 @@ export const products: Product[] = [
   {
     id: 'prod-orange-juice',
     name: 'Сок апельсин',
+    name_uz: 'Apelsin sharbati',
     price: 10000,
     category: 'snack',
     temperature: 'cold',
@@ -366,6 +442,10 @@ export const products: Product[] = [
     available: false,
     image_url: null,
     description: 'Апельсиновый сок',
+    description_uz: 'Tabiiy apelsin sharbati',
+    detail_description: 'Натуральный апельсиновый сок. Богат витамином C, освежающий цитрусовый вкус.',
+    detail_description_uz: 'Tabiiy apelsin sharbati. C vitamini bilan boy, tetiklantiruvchi sitrus ta\'mi.',
+    calories: 112,
     rating: 4.5,
     options: [
       { name: 'Сок апельсин', price: 0, temperature: 'cold' },
@@ -379,6 +459,7 @@ export const products: Product[] = [
   {
     id: 'prod-chocolate-bar',
     name: 'Шоколадный батончик',
+    name_uz: 'Shokolad batoncik',
     price: 7000,
     category: 'snack',
     temperature: 'none',
@@ -386,6 +467,10 @@ export const products: Product[] = [
     available: false,
     image_url: null,
     description: 'Шоколадный батончик',
+    description_uz: 'Sutli shokolad batoncik',
+    detail_description: 'Шоколадный батончик — сладкий перекус к кофе. Молочный шоколад с начинкой.',
+    detail_description_uz: 'Shokolad batoncik — qahvaga shirin gazak. Ichki bilan sutli shokolad.',
+    calories: 230,
     rating: 4.3,
     options: [
       { name: 'Шоколадный батончик', price: 0, temperature: 'cold' },
@@ -399,6 +484,7 @@ export const products: Product[] = [
   {
     id: 'prod-chips',
     name: 'Чипсы',
+    name_uz: 'Chipslar',
     price: 8000,
     category: 'snack',
     temperature: 'none',
@@ -406,6 +492,10 @@ export const products: Product[] = [
     available: false,
     image_url: null,
     description: 'Картофельные чипсы',
+    description_uz: 'Kartoshka chipslari',
+    detail_description: 'Хрустящие картофельные чипсы. Солёная закуска к любому напитку.',
+    detail_description_uz: 'Qarsildoq kartoshka chipslari. Har qanday ichimlikka tuzli gazak.',
+    calories: 270,
     rating: 4.2,
     options: [
       { name: 'Чипсы', price: 0, temperature: 'cold' },
@@ -419,6 +509,7 @@ export const products: Product[] = [
   {
     id: 'prod-croissant',
     name: 'Круассан',
+    name_uz: 'Kruassan',
     price: 12000,
     category: 'snack',
     temperature: 'none',
@@ -426,6 +517,10 @@ export const products: Product[] = [
     available: false,
     image_url: null,
     description: 'Свежий круассан',
+    description_uz: 'Yangi kruassan',
+    detail_description: 'Свежий слоёный круассан с маслом. Идеальное дополнение к утреннему кофе.',
+    detail_description_uz: 'Sariyog\'li yangi qatlamali kruassan. Ertalabki qahvaga ideal qo\'shimcha.',
+    calories: 310,
     rating: 4.6,
     options: [
       { name: 'Круассан', price: 0, temperature: 'cold' },
@@ -441,6 +536,7 @@ export const products: Product[] = [
   {
     id: 'prod-frappe',
     name: 'Frappe',
+    name_uz: 'Frappe',
     price: 26000,
     category: 'coffee',
     temperature: 'cold',
@@ -448,6 +544,10 @@ export const products: Product[] = [
     available: false,
     image_url: null,
     description: 'Холодный кофейный напиток с пенкой',
+    description_uz: 'Ko\'pikli sovuq qahva ichimligi',
+    detail_description: 'Холодный кофейный напиток с ледяной пенкой. Освежающий и сладкий — идеален в жаркий день.',
+    detail_description_uz: 'Muzli ko\'pikli sovuq qahva ichimligi. Tetiklantiruvchi va shirin — issiq kunda ideal.',
+    calories: 220,
     rating: 4.5,
     options: [
       { name: 'Frappe', price: 0, temperature: 'cold' },
