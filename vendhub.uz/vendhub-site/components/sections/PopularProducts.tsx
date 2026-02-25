@@ -60,6 +60,7 @@ export default function PopularProducts() {
                       fill
                       sizes="(min-width: 640px) 25vw, 50vw"
                       className="object-cover"
+                      loading="eager"
                     />
                   ) : (
                     <span className="text-4xl" role="img" aria-label={productName}>{emoji}</span>

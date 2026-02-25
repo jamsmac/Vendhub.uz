@@ -47,6 +47,10 @@ export default function AdminLayout({
         setEmail(data.session.user.email ?? null)
       }
       setLoading(false)
+    }).catch((err) => {
+      console.error('Admin auth check failed:', err)
+      if (!isLoginPage) router.push('/admin/login')
+      setLoading(false)
     })
 
     const { data: listener } = supabase.auth.onAuthStateChange(

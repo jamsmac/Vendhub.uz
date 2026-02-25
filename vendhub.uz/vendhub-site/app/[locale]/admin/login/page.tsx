@@ -1,10 +1,13 @@
 'use client'
 
-import { useState, useEffect, FormEvent } from 'react'
+import { useState, useEffect, useRef, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Coffee } from 'lucide-react'
 import { signIn, getSession } from '@/lib/admin-auth'
+
+const MAX_ATTEMPTS = 5
+const WINDOW_MS = 60_000
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -15,6 +18,7 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [checking, setChecking] = useState(true)
+  const attemptsRef = useRef<number[]>([])
 
   useEffect(() => {
     getSession().then((session) => {
@@ -29,6 +33,16 @@ export default function AdminLoginPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setError('')
+
+    // Rate limiting: max 5 attempts per 60 seconds
+    const now = Date.now()
+    attemptsRef.current = attemptsRef.current.filter((ts) => now - ts < WINDOW_MS)
+    if (attemptsRef.current.length >= MAX_ATTEMPTS) {
+      setError(t('tooManyAttempts'))
+      return
+    }
+    attemptsRef.current.push(now)
+
     setLoading(true)
 
     try {

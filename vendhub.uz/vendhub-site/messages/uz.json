@@ -596,7 +596,8 @@
       "password": "Parol",
       "submit": "Kirish",
       "logging": "Kirilmoqda...",
-      "error": "Avtorizatsiya xatosi"
+      "error": "Avtorizatsiya xatosi",
+      "tooManyAttempts": "Juda ko'p urinish. Bir daqiqa kuting."
     },
     "dashboard": {
       "products": "Mahsulotlar",

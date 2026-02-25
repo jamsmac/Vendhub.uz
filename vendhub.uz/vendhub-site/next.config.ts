@@ -50,12 +50,15 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
+              // unsafe-inline required by Next.js for hydration inline scripts
               "script-src 'self' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline' fonts.googleapis.com unpkg.com",
               "font-src 'self' fonts.gstatic.com",
               "img-src 'self' data: blob: *.supabase.co *.tile.openstreetmap.org unpkg.com",
               "connect-src 'self' *.supabase.co wss://*.supabase.co *.tile.openstreetmap.org",
               "frame-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
             ].join("; "),
           },
         ],

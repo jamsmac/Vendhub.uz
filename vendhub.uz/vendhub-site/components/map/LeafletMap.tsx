@@ -14,10 +14,10 @@ import 'leaflet/dist/leaflet.css'
 const CENTER: L.LatLngExpression = [41.31, 69.28]
 const ZOOM = 11
 
-// Design system colors
-const COLOR_ONLINE = '#7CB69D' // mint
-const COLOR_OFFLINE = '#E57373' // soft red
-const COLOR_CLUSTER = '#5D4037' // espresso-dark
+// Design system colors — keep in sync with tailwind.config.ts
+const COLOR_ONLINE = '#7CB69D' // colors.mint.DEFAULT
+const COLOR_OFFLINE = '#E57373' // status: offline (not in tailwind)
+const COLOR_CLUSTER = '#5D4037' // colors.espresso.DEFAULT
 
 function createMachineIcon(status: string) {
   const color = status === 'online' ? COLOR_ONLINE : COLOR_OFFLINE
