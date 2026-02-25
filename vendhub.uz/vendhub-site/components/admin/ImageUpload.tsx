@@ -60,7 +60,7 @@ export default function ImageUpload({ value, onChange, folder }: ImageUploadProp
     setUploading(true)
     try {
       await deleteImage(value)
-    } catch {
+    } catch (_error: unknown) {
       // Ignore delete errors — file may already be gone
     }
     onChange(null)

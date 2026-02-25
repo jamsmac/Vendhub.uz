@@ -167,7 +167,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             className="object-cover"
           />
         ) : (
-          <span className="text-6xl">{emoji}</span>
+          <span className="text-6xl" role="img" aria-label={productName}>{emoji}</span>
         )}
 
         {/* Close button */}

@@ -97,6 +97,40 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   const initialProducts = (productsResult.data?.length ? productsResult.data : fallbackProducts) as Product[]
 
+  // JSON-LD: Product catalog for SEO
+  const productListJsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'VendHub Menu',
+    numberOfItems: initialProducts.filter((p) => p.available).length,
+    itemListElement: initialProducts
+      .filter((p) => p.available)
+      .slice(0, 20)
+      .map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'Product',
+          name: p.name,
+          ...(p.description ? { description: p.description } : {}),
+          ...(p.image_url ? { image: p.image_url } : {}),
+          offers: {
+            '@type': 'Offer',
+            price: p.price,
+            priceCurrency: 'UZS',
+            availability: 'https://schema.org/InStock',
+          },
+          ...(p.rating ? {
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: String(p.rating),
+              bestRating: '5',
+            },
+          } : {}),
+        },
+      })),
+  })
+
   // JSON-LD structured data — locale-aware, built from trusted translation strings
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
@@ -145,6 +179,11 @@ export default async function LocaleLayout({ children, params }: Props) {
           type="application/ld+json"
           // Safe: content is built from trusted server-side translation strings
           dangerouslySetInnerHTML={{ __html: jsonLd }}
+        />
+        <script
+          type="application/ld+json"
+          // Safe: product data is from server-side Supabase query, serialized via JSON.stringify
+          dangerouslySetInnerHTML={{ __html: productListJsonLd }}
         />
         <NextIntlClientProvider messages={messages}>
           <ToastProvider>

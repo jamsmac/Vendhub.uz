@@ -60,7 +60,7 @@ export default function PartnerForm({ models }: PartnerFormProps) {
 
       showToast(t('success'), 'success')
       setForm({ model: models[0]?.key ?? '', name: '', phone: '', comment: '' })
-    } catch {
+    } catch (_error: unknown) {
       showToast(t('error'), 'error')
     } finally {
       setLoading(false)
