@@ -40,6 +40,11 @@ export default async function Home() {
     allCms[item.section][item.key] = item.value
   }
   const statsCmsData = allCms['stats'] ?? {}
+  // Dynamic machine count — override CMS value with real count
+  const machineCount = machinesResult.data?.length ?? 0
+  if (machineCount > 0) {
+    statsCmsData['machines_count'] = machineCount.toString()
+  }
   const partnerList = (partnersResult.data?.length ? partnersResult.data : fallbackPartners) as Partner[]
   const machineList = (machinesResult.data?.length ? machinesResult.data : fallbackMachines) as Machine[]
   const machineTypeList = (machineTypesResult.data ?? []) as MachineTypeDetail[]
