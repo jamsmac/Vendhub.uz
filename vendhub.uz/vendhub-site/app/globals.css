@@ -66,6 +66,11 @@ html {
 .d5 { animation-delay: 0.5s; }
 .d6 { animation-delay: 0.6s; }
 
+/* Leaflet: contain internal z-indexes so they don't overlap the fixed header */
+.leaflet-container {
+  isolation: isolate;
+}
+
 /* Leaflet map markers */
 .leaflet-machine-pin {
   width: 36px;

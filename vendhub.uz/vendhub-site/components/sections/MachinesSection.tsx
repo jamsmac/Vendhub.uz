@@ -169,7 +169,7 @@ export default function MachinesSection({ initialMachines, initialMachineTypes }
   }, [machines, searchQuery, statusFilter, typeFilter, userLocation, sortNearest, locale])
 
   return (
-    <section id="map" className="section-padding">
+    <section id="map" className="section-padding relative z-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           title={t('title')}
